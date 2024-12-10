@@ -1,0 +1,5 @@
+package other
+
+class MyTest {
+
+}
