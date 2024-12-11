@@ -18,9 +18,6 @@ class ExprFormatter{
         case Number(e)=>express
     }
 
-    val s:String="123.12"
-    s.split(".")
-
     private val onGroup = Array(
         Set("|","||"),
         Set("&","&&"),
