@@ -11,6 +11,5 @@ object ArrayTest extends App {
 
   Predef println a.apply(2)
 
-
   a.foreach(println)
 }
