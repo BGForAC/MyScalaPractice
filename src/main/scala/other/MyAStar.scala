@@ -28,7 +28,7 @@ object MyAStar {
     @tailrec
     def loop(current: Node, path: List[Node]): List[Node] = {
       current.parent match {
-        case Some(parent) => println(parent); loop(parent, current :: path)
+        case Some(parent) => loop(parent, current :: path)
         case None => current :: path
       }
     }
@@ -56,8 +56,21 @@ object MyAStar {
     val closedSet = new mutable.HashSet[Node]
     openSet.enqueue(start)
 
+    def printMap(): Unit = {
+      grid.indices.foreach { i =>
+        grid(i).indices.foreach { j =>
+          if (closedSet.exists(n => n.x == i && n.y == j)) print("C ")
+          else if (openSet.exists(n => n.x == i && n.y == j)) print("P ")
+          else print(s"${grid(i)(j)} ")
+        }
+        println()
+      }
+      println()
+    }
+
     @tailrec
     def f(): List[Node] = {
+      printMap()
       if (openSet.isEmpty) Nil
       else {
         val current = openSet.dequeue()
@@ -79,18 +92,32 @@ object MyAStar {
     f()
   }
 
+  def printPath(path: List[Node], grid: Array[Array[Int]]): Unit = {
+    if (path.isEmpty) {
+      println("No path found")
+      return
+    }
+    val pathSet = path.map(node => (node.x, node.y)).toSet
+    grid.indices.foreach { i =>
+      grid(i).indices.foreach { j =>
+        if (pathSet.contains((i, j))) print("P ")
+        else print(s"${grid(i)(j)} ")
+      }
+      println()
+    }
+  }
 
   def main(args: Array[String]): Unit = {
     val grid = Array(
-      Array(0, 1, 0, 0, 0),
-      Array(0, 1, 0, 1, 0),
       Array(0, 0, 0, 1, 0),
-      Array(0, 1, 0, 0, 0),
+      Array(0, 0, 0, 1, 0),
+      Array(0, 0, 0, 1, 0),
+      Array(0, 0, 0, 1, 0),
       Array(0, 0, 0, 1, 0)
     )
-    val start = Node(0, 0, 0, 0, None)
-    val goal = Node(4, 4, 0, 0, None)
+    val start = Node(2, 1, 0, 0, None)
+    val goal = Node(2, 4, 0, 0, None)
     val path = aStar(grid, start, goal)
-    path.foreach(node => println(s"(${node.x}, ${node.y})"))
+    printPath(path, grid)
   }
 }

@@ -1,6 +1,6 @@
-package gql
+package FeatureTest
 
-object TraitInherit extends App {
+object TraitInheritTest extends App {
   trait A {
     def message = "A"
   }
