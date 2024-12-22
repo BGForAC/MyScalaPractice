@@ -1,4 +1,4 @@
-package gql;
+package FeatureTest
 
 object ArrayTest extends App {
   val a = Array(1, 2, 3, 5, 4)

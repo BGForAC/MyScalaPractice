@@ -1,15 +1,18 @@
 package other
 
+import scala.annotation.tailrec
+import scala.collection.mutable
+
 case class Node(x: Int, y: Int, g: Double, h: Double, parent: Option[Node]) {
   def f: Double = g + h
 }
 
 object AStar {
-  def heuristic(a: Node, b: Node): Double = {
+  private def heuristic(a: Node, b: Node): Double = {
     Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
   }
 
-  def neighbors(node: Node, grid: Array[Array[Int]]): List[Node] = {
+  private def neighbors(node: Node, grid: Array[Array[Int]]): List[Node] = {
     val directions = List((0, 1), (1, 0), (0, -1), (-1, 0))
     directions.flatMap { case (dx, dy) =>
       val newX = node.x + dx
@@ -22,7 +25,8 @@ object AStar {
     }
   }
 
-  def reconstructPath(node: Node): List[Node] = {
+  private def reconstructPath(node: Node): List[Node] = {
+    @tailrec
     def loop(current: Node, path: List[Node]): List[Node] = {
       current.parent match {
         case Some(parent) => loop(parent, current :: path)
@@ -33,8 +37,8 @@ object AStar {
   }
 
   def aStar(start: Node, goal: Node, grid: Array[Array[Int]]): List[Node] = {
-    val openSet = scala.collection.mutable.PriorityQueue[Node]()(Ordering.by(-_.f))
-    val closedSet = scala.collection.mutable.Set[Node]()
+    val openSet = mutable.PriorityQueue[Node]()(Ordering.by(-_.f))
+    val closedSet = mutable.Set[Node]()
     openSet.enqueue(start)
 
     while (openSet.nonEmpty) {

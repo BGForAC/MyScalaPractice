@@ -1,6 +1,7 @@
 package Solutions
 
 import scala.collection.mutable
+import scala.math
 
 object Solution3 {
   private final val MOD = 1e9.toInt + 7
@@ -29,7 +30,7 @@ object Solution3 {
     val res = Array.fill(n)(0)
 
     implicit val nodeOrdering: Ordering[Node] =
-                Ordering.fromLessThan((a, b) => if (a.value != b.value) a.value < b.value else a.index < b.index)
+                math.Ordering.fromLessThan((a, b) => if (a.value != b.value) a.value < b.value else a.index < b.index)
 
     val pq = mutable.PriorityQueue.empty[Node](nodeOrdering.reverse)
     var maxVal = 0L

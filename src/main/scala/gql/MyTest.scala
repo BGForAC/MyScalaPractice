@@ -1,5 +1,0 @@
-package gql
-
-class MyTest {
-
-}

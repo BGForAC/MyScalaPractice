@@ -12,6 +12,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <scala.Version>2.12.20</scala.Version>
     </properties>
 
     <dependencies>
@@ -24,6 +25,12 @@
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-stream_2.12</artifactId>
             <version>2.6.19</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.12</artifactId>
+            <version>3.2.10</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

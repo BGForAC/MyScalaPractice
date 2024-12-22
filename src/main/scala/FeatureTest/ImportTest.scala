@@ -1,4 +1,5 @@
-package gql
+package FeatureTest
+
 import scala.collection.mutable
 
 object ImportTest {

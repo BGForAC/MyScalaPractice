@@ -1,4 +1,4 @@
-package gql
+package FeatureTest
 
 import scala.collection.immutable.Queue
 

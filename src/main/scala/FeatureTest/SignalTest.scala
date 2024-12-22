@@ -1,0 +1,9 @@
+package FeatureTest
+
+object SignalTest extends App {
+  val f: Double = 1.22222222222222222222222222222222222222222222222222
+  val f2: Double = 1.22222222222222222222222222222222222222222222222222233333
+  print(f == f2)
+
+  val a = 'aSymbol
+}

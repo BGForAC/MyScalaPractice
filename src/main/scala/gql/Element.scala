@@ -1,6 +1,6 @@
 package gql
 
-import gql.Element.{ArrayElement, elem}
+import Element.{ArrayElement, elem}
 
 object Spiral extends App {
   val a = List(1, 2, 3)

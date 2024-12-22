@@ -1,4 +1,4 @@
-package gql
+package Solutions
 
 import scala.collection.mutable
 

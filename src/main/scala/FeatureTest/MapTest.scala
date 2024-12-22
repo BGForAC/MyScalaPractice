@@ -1,4 +1,4 @@
-package gql
+package FeatureTest
 
 class MapTest {
   val a=Map(1 -> 2)

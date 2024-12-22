@@ -1,4 +1,4 @@
-package gql
+package FeatureTest
 
 object SetTest extends App{
   val set=Set(1,2,3)

@@ -1,4 +1,4 @@
-package gql
+package FeatureTest
 
 object ListTest extends App {
   val a = List(1, 2, 3, 4, 5)

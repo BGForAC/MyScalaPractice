@@ -1,10 +1,12 @@
 package gql
 
+import scala.collection.immutable
+
 class FuncQueue[T] private (val leading:List[T],val trailing:List[T]){
   def head: T =mirror.leading.head
 
   private def mirror={
-    if (leading.isEmpty) new FuncQueue(trailing.reverse,Nil)
+    if (leading.isEmpty) new FuncQueue(trailing.reverse,immutable.Nil)
     else this
   }
 
@@ -17,5 +19,5 @@ class FuncQueue[T] private (val leading:List[T],val trailing:List[T]){
 }
 
 object FuncQueue{
-  def apply[T](paras:T*)=new FuncQueue(paras.toList,Nil)
+  def apply[T](paras:T*)=new FuncQueue(paras.toList,immutable.Nil)
 }
