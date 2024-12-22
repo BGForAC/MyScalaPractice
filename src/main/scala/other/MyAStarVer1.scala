@@ -4,13 +4,18 @@ import scala.annotation.tailrec
 import scala.collection.mutable
 
 object MyAStarVer1 {
-  private val StraightMoveCost: Double = 10.0
-  private val DiagonalMoveCost: Double = 14.1
+  private final val StraightMoveCost: Double = 10.0
+  private final val DiagonalMoveCost: Double = 14.1
 
   case class Node(x: Int, y: Int, g: Double, h: Double, parent: Option[Node]) extends Ordered[Node] {
     def f: Double = g + h
 
-    override def compare(that: Node): Int = (if (this.f == that.f) that.h - this.h else that.f - this.f).toInt
+    override def compare(that: Node): Int = {
+      val n = if (this.f == that.f) that.h - this.h else that.f - this.f
+      println(this)
+      println(that)
+     if (n > 0) 1 else if (n < 0) -1 else 0
+    }
 
     override def equals(that: Any): Boolean = { that match {
       case (t1, t2) => t1 == this.x && t2 == this.y
@@ -58,6 +63,8 @@ object MyAStarVer1 {
     dx.min(dy) * DiagonalMoveCost + (dx - dy).abs * StraightMoveCost
   }
 
+  implicit val nodeOrdering: Ordering[Node] = Ordering.by(-_.f)
+
   private def AStar(start: Node, end: Node, grid: Array[Array[Int]]): List[Node] = {
     val open = mutable.PriorityQueue[Node]()
     val closed = mutable.HashSet[Node]()
@@ -87,7 +94,7 @@ object MyAStarVer1 {
           neighbors(current, grid)
             .filter(neighbor => !closed.contains(neighbor) &&
               !open.exists(node => node.g < neighbor.g && node == neighbor))
-            .map(neighbor => neighbor.copy(h = heuristic(current, end)))
+            .map(neighbor => neighbor.copy(h = heuristic(neighbor, end)))
             .foreach(open.enqueue(_))
           f()
         }
@@ -98,6 +105,10 @@ object MyAStarVer1 {
   }
 
   def main(args: Array[String]): Unit = {
+    Test3()
+  }
+
+  def Test1(): Unit = {
     val grid = Array(
       Array(0, 1, 0, 0, 0),
       Array(0, 1, 0, 1, 0),
@@ -107,6 +118,42 @@ object MyAStarVer1 {
     )
     val start = Node(0, 0, 0, 0, None)
     val goal = Node(4, 4, 0, 0, None)
+    val path = AStar(start, goal, grid)
+    path.foreach(node => println(s"(${node.x}, ${node.y})"))
+  }
+
+  def Test2(): Unit = {
+    val grid = Array(
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    )
+    val start = Node(2, 2, 0, 0, None)
+    val goal = Node(10, 11, 0, 0, None)
+    val path = AStar(start, goal, grid)
+    path.foreach(node => println(s"(${node.x}, ${node.y})"))
+  }
+
+  def Test3(): Unit = {
+    val grid = Array(
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    )
+    val start = Node(1, 1, 0, 0, None)
+    val goal = Node(5, 8, 0, 0, None)
     val path = AStar(start, goal, grid)
     path.foreach(node => println(s"(${node.x}, ${node.y})"))
   }
