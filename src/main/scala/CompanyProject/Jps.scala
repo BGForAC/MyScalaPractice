@@ -26,9 +26,28 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   private val closed = mutable.HashSet[(Int, Int)]()
   private val open = mutable.PriorityQueue[Node]()
 
-  private def isBlock(node: Node, direction: (Int, Int)): Boolean = {
-    if (outOfRange((node.x + direction._1, node.y + direction._2))) true
-    else grid(node.x + direction._1)(node.y + direction._2) == BLOCK
+  private def surroundedWithOnes(grid: Array[Array[Byte]]): Array[Array[Byte]] = {
+    val rows = grid.length
+    val cols = grid(0).length
+    val newGrid: Array[Array[Byte]] = Array.fill(rows + 2, cols + 2)(1)
+
+    for (i <- 0 until rows) {
+      for (j <- 0 until cols) {
+        newGrid(i + 1)(j + 1) = grid(i)(j)
+      }
+    }
+
+    newGrid
+  }
+
+  private val newGrid = surroundedWithOnes(grid)
+
+  private def isBlock(node: Node, dir: (Int, Int)): Boolean = {
+    isBlock((node.x + dir._1, node.y + dir._2))
+  }
+
+  private def isBlock(pos: (Int, Int)): Boolean = {
+    newGrid(pos._1 + 1)(pos._2 + 1) == BLOCK
   }
 
   private def heuristic(begin: (Int, Int), end: (Int, Int)): Double = {
@@ -48,22 +67,6 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
     loop(node, Nil)
   }
 
-  private def road(pos: (Int, Int), dir: (Int, Int)): List[(Int, Int)] = {
-    val (dx, dy) = dir
-
-    @tailrec
-    def f(pos: (Int, Int), list: List[(Int, Int)]): List[(Int, Int)] = {
-      if (outOfRange(pos) || grid(pos._1)(pos._2) == BLOCK) list
-      else f((pos._1 + dx, pos._2 + dy), pos :: list)
-    }
-
-    f((pos._1 + dx, pos._2 + dy), Nil)
-  }
-
-  private def outOfRange(pos: (Int, Int)) = {
-    pos._1 < 0 || pos._1 >= grid.length || pos._2 < 0 || pos._2 >= grid(0).length
-  }
-
   private def isDiagonalMove(dir: (Int, Int)): Boolean = {
     if (dir._1 == 0 || dir._2 == 0) false else true
   }
@@ -72,11 +75,6 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   private final def jpsSearch(): List[Node] = {
     if (open.isEmpty) Nil
     else {
-      //      open.foreach(println)
-      //      println()
-      //      closed.foreach(println)
-      //      println()
-      //      println()
       val current = open.dequeue()
       if (current == end) reconstructPath(current)
       else if (closed.contains(current)) jpsSearch()
@@ -127,73 +125,60 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
             }
           }
 
-          /**
-           * 获得3 * n的矩阵，n为包括node点到尽头（墙或边界）的长度
-           * @param node
-           * @param dir
-           * @param idx
-           * @return
-           */
           def getPath(node: (Int, Int), dir: (Int, Int), idx: Int): Array[BigInt] = {
+            var pointArray: Array[(Int, Int)] = new Array[(Int, Int)](3)
             val (dx, dy) = dir
-            var (x, y) = node
-            var (xu, yu) = (0, 0)
-            var (xd, yd) = (0, 0)
+            val (x, y) = node
+            pointArray(1) = node
             if (dx == 0) {
-              xu = x - dy
-              yu = y
-              xd = x + dy
-              yd = y
-            } else {
-              xu = x
-              yu = y + dx
-              xd = x
-              yd = y + dx
+              pointArray(0) = (x - dy, y)
+              pointArray(2) = (x + dy, y)
+            }else {
+              pointArray(0) = (x, y + dx)
+              pointArray(2) = (x, y - dx)
             }
             val array = Array.fill[BigInt](3)(BigInt(0))
-            val newGrid: Array[Array[Int]] = getNewGrid()
 
+            @tailrec
             def buildPath(idx: Int): Array[BigInt] = {
-              if (outOfRange(x, y) || grid(x)(y) == BLOCK) array
+              if (isBlock(pointArray(1))) {
+                array.map(_.setBit(idx))
+              }
               else {
-                if (newGrid(xu + 1)(yu + 1) == 1) array(0).setBit(idx)
-                if (newGrid(x + 1)(y + 1) == 1) array(1).setBit(idx)
-                if (newGrid(xd + 1)(yd + 1) == 1) array(2).setBit(idx)
-                x += dx
-                xu += dx
-                xd += dx
-                y += dy
-                yu += dy
-                yd += dy
+                pointArray.zipWithIndex.foreach{ p =>
+                  if (isBlock(p._1)) array(p._2) = array(p._2).setBit(idx)
+                }
+                pointArray = pointArray.map(t => (t._1 + dx, t._2 + dy))
                 buildPath(idx + 1)
               }
             }
             buildPath(idx)
           }
 
-          /**
-           * x  ? ? ? ? ? ?
-           * w  0 0 0 0 0 0
-           * x  ? ? ? ? ? ?
-           */
           val ud = getUdx(dir)
           val dd = getDdx(dir)
-          val route: Array[BigInt] = getPath(node, dir, 1)
-          val uPos = ~route(0) >> 1 & route(0)
-          val dPos = ~route(2) >> 1 & route(2)
-          for (i <- 0 until route(1).bitLength) {
+          val route: Array[BigInt] = getPath(node, dir, 0)
+          val uPos = (~route(0) >> 1) & route(0)
+          val dPos = (~route(2) >> 1) & route(2)
+          for (i <- 0 until route(1).bitLength - 1) {
             val b1 = isBitSet(uPos, i)
             val b2 = isBitSet(dPos, i)
-            if (b1 && b2) addJumpPoint(node, ud :: dd :: Nil)
-            else if (b1) addJumpPoint(node, ud :: Nil)
-            else if (b2) addJumpPoint(node, dd :: Nil)
+            val curNode = Node(node.x + dir._1 * i, node.y + dir._2 * i)
+            if (curNode == end) open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
             else {
-              //不需要做什么
+              if (b1 && b2) addJumpPoint(curNode, ud :: dd :: Nil)
+              else if (b1) addJumpPoint(curNode, ud :: Nil)
+              else if (b2) addJumpPoint(curNode, dd :: Nil)
+              else {
+                //不需要做什么
+              }
             }
           }
 
         }
 
+        open.foreach(println)
+        println()
         closed += current
         val directions = current.dir
         directions.foreach { dir =>
@@ -201,7 +186,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
           if (isDiagonalMove(dir)) {
             @tailrec
             def f(node: Node): Unit = {
-              if (!outOfRange(node)) {
+              if (!isBlock(node)) {
                 jumpPoints(node, dir)
                 jumpPointInLine(node, (dir._1, 0))
                 jumpPointInLine(node, (0, dir._2))
@@ -300,15 +285,15 @@ object Jps {
       Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0),
-      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       Array(0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0),
       Array(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0),
       Array(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0),
       Array(0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0),
       Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     )
-    val path = new Jps((2, 2), (10, 11), grid).jps()
+    val path = new Jps((2, 2), (10, 6), grid).jps()
     path.foreach(node => println(s"${node.x}, ${node.y}"))
   }
 

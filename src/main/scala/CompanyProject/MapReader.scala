@@ -72,12 +72,12 @@ object MapReader {
     var path = List[Jps.Node]()
     val jps = new Jps(start, end, map)
 
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//
     println(s"start: $start, end: $end")
 
     val startTime = System.nanoTime()
