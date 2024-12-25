@@ -95,18 +95,18 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
           val (dx, dy) = dir
           if (node == end) {
             open.enqueue(node.copy(g = 0, h = 0, parent = Some(current), dir = Nil))
-          } else {
+          } else if (!closed.contains(node)){
             f(node, (-dx, dy), (-dx, 0), (dx, -dy), (0, -dy))
           }
         }
 
-        def jumpPointInLine(node: Node, dir: (Int, Int)): Unit = {
+        def jumpPointsInLine(node: Node, dir: (Int, Int)): Unit = {
           def isBitSet(bigInt: BigInt, bitPosition: Int): Boolean = {
             (bigInt & (BigInt(1) << bitPosition)) != 0
           }
 
           //逆时针45度
-          def getUdx(tuple: (Int, Int)): (Int, Int) = {
+          def getUd(tuple: (Int, Int)): (Int, Int) = {
             tuple match {
               case (0, 1) => (-1, 1)
               case (1, 0) => (1, 1)
@@ -116,7 +116,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
           }
 
           //顺时针45度
-          def getDdx(tuple: (Int, Int)): (Int, Int) = {
+          def getDd(tuple: (Int, Int)): (Int, Int) = {
             tuple match {
               case (0, 1) => (1, 1)
               case (1, 0) => (1, -1)
@@ -126,7 +126,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
           }
 
           def getPath(node: (Int, Int), dir: (Int, Int), idx: Int): Array[BigInt] = {
-            var pointArray: Array[(Int, Int)] = new Array[(Int, Int)](3)
+            val pointArray: Array[(Int, Int)] = new Array[(Int, Int)](3)
             val (dx, dy) = dir
             val (x, y) = node
             pointArray(1) = node
@@ -145,18 +145,20 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
                 array.map(_.setBit(idx))
               }
               else {
-                pointArray.zipWithIndex.foreach{ p =>
-                  if (isBlock(p._1)) array(p._2) = array(p._2).setBit(idx)
-                }
-                pointArray = pointArray.map(t => (t._1 + dx, t._2 + dy))
+                if (isBlock(pointArray(0))) array(0) = array(0).setBit(idx)
+                if (isBlock(pointArray(2))) array(2) = array(2).setBit(idx)
+
+                pointArray(0) = (pointArray(0)._1 + dx, pointArray(0)._2 + dy)
+                pointArray(1) = (pointArray(1)._1 + dx, pointArray(1)._2 + dy)
+                pointArray(2) = (pointArray(2)._1 + dx, pointArray(2)._2 + dy)
                 buildPath(idx + 1)
               }
             }
             buildPath(idx)
           }
 
-          val ud = getUdx(dir)
-          val dd = getDdx(dir)
+          val ud = getUd(dir)
+          val dd = getDd(dir)
           val route: Array[BigInt] = getPath(node, dir, 0)
           val uPos = (~route(0) >> 1) & route(0)
           val dPos = (~route(2) >> 1) & route(2)
@@ -165,7 +167,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
             val b2 = isBitSet(dPos, i)
             val curNode = Node(node.x + dir._1 * i, node.y + dir._2 * i)
             if (curNode == end) open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
-            else {
+            else if (!closed.contains(curNode)) {
               if (b1 && b2) addJumpPoint(curNode, ud :: dd :: Nil)
               else if (b1) addJumpPoint(curNode, ud :: Nil)
               else if (b2) addJumpPoint(curNode, dd :: Nil)
@@ -174,11 +176,8 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
               }
             }
           }
-
         }
 
-        open.foreach(println)
-        println()
         closed += current
         val directions = current.dir
         directions.foreach { dir =>
@@ -188,15 +187,15 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
             def f(node: Node): Unit = {
               if (!isBlock(node)) {
                 jumpPoints(node, dir)
-                jumpPointInLine(node, (dir._1, 0))
-                jumpPointInLine(node, (0, dir._2))
+                jumpPointsInLine(node, (dir._1, 0))
+                jumpPointsInLine(node, (0, dir._2))
                 f(Node((node.x + dir._1, node.y + dir._2)))
               }
             }
 
             f(curNode)
           } else {
-            jumpPointInLine(curNode, dir)
+            jumpPointsInLine(curNode, dir)
           }
         }
         jpsSearch()
