@@ -5,6 +5,7 @@ import CompanyProject.Jps.Node
 import java.io.FileOutputStream
 import scala.annotation.tailrec
 import scala.collection.mutable
+import scala.language.implicitConversions
 
 class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   /**
@@ -71,11 +72,11 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   private final def jpsSearch(): List[Node] = {
     if (open.isEmpty) Nil
     else {
-//      open.foreach(println)
-//      println()
-//      closed.foreach(println)
-//      println()
-//      println()
+      //      open.foreach(println)
+      //      println()
+      //      closed.foreach(println)
+      //      println()
+      //      println()
       val current = open.dequeue()
       if (current == end) reconstructPath(current)
       else if (closed.contains(current)) jpsSearch()
@@ -84,43 +85,133 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
           open.enqueue(node.copy(g = heuristic(current, node) + current.g, h = heuristic(node, end), parent = Some(current), dir = dir))
         }
 
-        def isJumpPoint(node: Node, dir: (Int, Int)): Boolean = {
-          def f(node: Node, d1: (Int, Int), d2: (Int, Int), d3: (Int, Int), d4: (Int, Int)): Boolean = {
+        def jumpPoints(node: Node, dir: (Int, Int)): Unit = {
+          def f(node: Node, d1: (Int, Int), d2: (Int, Int), d3: (Int, Int), d4: (Int, Int)): Unit = {
             val b1 = !isBlock(node, d1) && isBlock(node, d2)
             val b2 = !isBlock(node, d3) && isBlock(node, d4)
             if (b1 && b2) addJumpPoint(node, d1 :: d3 :: Nil)
             else if (b1) addJumpPoint(node, d1 :: Nil)
             else if (b2) addJumpPoint(node, d3 :: Nil)
-            b1 || b2
           }
 
           val (dx, dy) = dir
           if (node == end) {
             open.enqueue(node.copy(g = 0, h = 0, parent = Some(current), dir = Nil))
-            true
-          } else if (isDiagonalMove(dir)) {
-            f(node, (-dx, dy), (-dx, 0), (dx, -dy), (0, -dy))
           } else {
-            if (dy == 0) {
-              f(node, (dx, 1), (0, 1), (dx, -1), (0, -1))
-            } else {
-              f(node, (1, dy), (1, 0), (-1, dy), (-1, 0))
-            }
+            f(node, (-dx, dy), (-dx, 0), (dx, -dy), (0, -dy))
           }
         }
 
-        def haveJumpPointInLine(node: Node, dir: (Int, Int)): Boolean = {
-          road(node, (dir._1, 0)).exists(pos => isJumpPoint(Node(pos), (dir._1, 0))) || road(node, (0, dir._2)).exists(pos => isJumpPoint(Node(pos), (0, dir._2)))
+        def jumpPointInLine(node: Node, dir: (Int, Int)): Unit = {
+          def isBitSet(bigInt: BigInt, bitPosition: Int): Boolean = {
+            (bigInt & (BigInt(1) << bitPosition)) != 0
+          }
+
+          //逆时针45度
+          def getUdx(tuple: (Int, Int)): (Int, Int) = {
+            tuple match {
+              case (0, 1) => (-1, 1)
+              case (1, 0) => (1, 1)
+              case (0, -1) => (1, -1)
+              case (-1, 0) => (-1, -1)
+            }
+          }
+
+          //顺时针45度
+          def getDdx(tuple: (Int, Int)): (Int, Int) = {
+            tuple match {
+              case (0, 1) => (1, 1)
+              case (1, 0) => (1, -1)
+              case (0, -1) => (-1, -1)
+              case (-1, 0) => (-1, 1)
+            }
+          }
+
+          /**
+           * 获得3 * n的矩阵，n为包括node点到尽头（墙或边界）的长度
+           * @param node
+           * @param dir
+           * @param idx
+           * @return
+           */
+          def getPath(node: (Int, Int), dir: (Int, Int), idx: Int): Array[BigInt] = {
+            val (dx, dy) = dir
+            var (x, y) = node
+            var (xu, yu) = (0, 0)
+            var (xd, yd) = (0, 0)
+            if (dx == 0) {
+              xu = x - dy
+              yu = y
+              xd = x + dy
+              yd = y
+            } else {
+              xu = x
+              yu = y + dx
+              xd = x
+              yd = y + dx
+            }
+            val array = Array.fill[BigInt](3)(BigInt(0))
+            val newGrid: Array[Array[Int]] = getNewGrid()
+
+            def buildPath(idx: Int): Array[BigInt] = {
+              if (outOfRange(x, y) || grid(x)(y) == BLOCK) array
+              else {
+                if (newGrid(xu + 1)(yu + 1) == 1) array(0).setBit(idx)
+                if (newGrid(x + 1)(y + 1) == 1) array(1).setBit(idx)
+                if (newGrid(xd + 1)(yd + 1) == 1) array(2).setBit(idx)
+                x += dx
+                xu += dx
+                xd += dx
+                y += dy
+                yu += dy
+                yd += dy
+                buildPath(idx + 1)
+              }
+            }
+            buildPath(idx)
+          }
+
+          /**
+           * x  ? ? ? ? ? ?
+           * w  0 0 0 0 0 0
+           * x  ? ? ? ? ? ?
+           */
+          val ud = getUdx(dir)
+          val dd = getDdx(dir)
+          val route: Array[BigInt] = getPath(node, dir, 1)
+          val uPos = ~route(0) >> 1 & route(0)
+          val dPos = ~route(2) >> 1 & route(2)
+          for (i <- 0 until route(1).bitLength) {
+            val b1 = isBitSet(uPos, i)
+            val b2 = isBitSet(dPos, i)
+            if (b1 && b2) addJumpPoint(node, ud :: dd :: Nil)
+            else if (b1) addJumpPoint(node, ud :: Nil)
+            else if (b2) addJumpPoint(node, dd :: Nil)
+            else {
+              //不需要做什么
+            }
+          }
+
         }
 
         closed += current
         val directions = current.dir
         directions.foreach { dir =>
-          road(current, dir).foreach { pos =>
-            if (!closed.contains(pos)) {
-              val node = Node(pos)
-              isJumpPoint(node, dir) || (isDiagonalMove(dir) && haveJumpPointInLine(node, dir))
+          val curNode = Node(current.x + dir._1, current.y + dir._2)
+          if (isDiagonalMove(dir)) {
+            @tailrec
+            def f(node: Node): Unit = {
+              if (!outOfRange(node)) {
+                jumpPoints(node, dir)
+                jumpPointInLine(node, (dir._1, 0))
+                jumpPointInLine(node, (0, dir._2))
+                f(Node((node.x + dir._1, node.y + dir._2)))
+              }
             }
+
+            f(curNode)
+          } else {
+            jumpPointInLine(curNode, dir)
           }
         }
         jpsSearch()
@@ -136,7 +227,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   }
 
   private def writeMap(): Unit = {
-    val fos = new FileOutputStream(s"jpsmap${start}${end}.txt")
+    val fos = new FileOutputStream(s"jpsmap$start$end.txt")
     println(s"closed: ${closed.size}, open: ${open.size}")
     println(s"grid.length: ${grid.length}, grid(0).length: ${grid(0).length}")
     grid.indices.foreach { i =>
@@ -203,7 +294,7 @@ object Jps {
     testGroup1()
   }
 
-  def testGroup1() = {
+  private def testGroup1(): Unit = {
     val grid: Array[Array[Byte]] = Array(
       Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
