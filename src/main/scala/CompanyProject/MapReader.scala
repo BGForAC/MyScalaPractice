@@ -68,17 +68,28 @@ object MapReader {
   }
 
   private def jpsTestGroup1(start: (Int, Int), end: (Int, Int), map: Array[Array[Byte]]) = {
-    println(s"start: $start, end: $end")
+    val iterCount = 1
+    var path = List[Jps.Node]()
     val jps = new Jps(start, end, map)
+
+    jps.jps()
+    jps.jps()
+    jps.jps()
+    jps.jps()
+    jps.jps()
+
+    println(s"start: $start, end: $end")
+
     val startTime = System.nanoTime()
-    val path = jps.jps()
+    for (_ <- 0 until iterCount) path = jps.jps()
     val endTime = System.nanoTime()
     println(s"Time: ${(endTime - startTime) / 1e9} seconds")
+
     path.foreach(node => println(s"${node.x} ${node.y}"))
   }
 
   def aStarTestGroup1(start: (Int, Int), end: (Int, Int), map: Array[Array[Byte]]): Unit = {
-    //    println(s"start: $start, end: $end")
+    println(s"start: $start, end: $end")
     val emptyMap = Array.ofDim[Byte](rows, cols)
     val aStar = new AStar(start, end, map)
     val startTime = System.nanoTime()

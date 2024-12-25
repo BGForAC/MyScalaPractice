@@ -23,45 +23,11 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   private final val DiagonalMoveCost = 14
 
   private val closed = mutable.HashSet[(Int, Int)]()
-  private val open = mutable.TreeSet[Node]()
-  open.add(Node(start))
+  private val open = mutable.PriorityQueue[Node]()
 
   private def isBlock(node: Node, direction: (Int, Int)): Boolean = {
     if (outOfRange((node.x + direction._1, node.y + direction._2))) true
     else grid(node.x + direction._1)(node.y + direction._2) == BLOCK
-  }
-
-  private def isJumpPoint(node: Node, dir: (Int, Int)): Boolean = {
-    def f(para: (Node, Array[(Int, Int)])): Boolean = {
-      val (node, Array(d1, d2, d3, d4)) = para
-      val (b1, b2) = (!isBlock(node, d1) && isBlock(node, d2), !isBlock(node, d3) && isBlock(node, d4))
-      if (b1 && b2) open.add(node.copy(g = heuristic(current, node) + current.g, h = heuristic(node, end), parent = current, dir = d1 :: d3 :: Nil))
-      else if (b1) open.add(node.copy(g = heuristic(current, node) + current.g, h = heuristic(node, end), parent = current, dir = d1 :: Nil))
-      else if (b2) open.add(node.copy(g = heuristic(current, node) + current.g, h = heuristic(node, end), parent = current, dir = d3 :: Nil))
-      b1 || b2
-    }
-
-    val (dx, dy) = dir
-    if (node == end) true
-    else if (isDiagonalMove(dir)) {
-      f((node, Array((-dx, dy), (-dx, 0), (dx, -dy), (0, -dy))))
-    } else {
-      if (dy == 0) {
-        f((node, Array((dx, 1), (0, 1), (dx, -1), (0, -1))))
-      } else {
-        f((node, Array((1, dy), (1, 0), (-1, dy), (-1, 0))))
-      }
-    }
-  }
-
-  private def haveJumpPointInLine(node: Node, dir: (Int, Int)): Boolean = {
-    val direction = Array((dir._1, 0), (0, dir._2))
-    var find = false
-    direction.foreach { dir =>
-      val isFind = road(node, dir).exists(pos => isJumpPoint(Node(pos), dir))
-      find = find || isFind
-    }
-    find
   }
 
   private def heuristic(begin: (Int, Int), end: (Int, Int)): Double = {
@@ -81,26 +47,20 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
     loop(node, Nil)
   }
 
-  private def road(pos: Any, dir: (Int, Int)): List[(Int, Int)] = {
+  private def road(pos: (Int, Int), dir: (Int, Int)): List[(Int, Int)] = {
     val (dx, dy) = dir
 
     @tailrec
     def f(pos: (Int, Int), list: List[(Int, Int)]): List[(Int, Int)] = {
-      val (x, y) = pos
-      if (outOfRange(pos) || grid(x)(y) == BLOCK) list
-      else f((x + dx, y + dy), pos :: list)
+      if (outOfRange(pos) || grid(pos._1)(pos._2) == BLOCK) list
+      else f((pos._1 + dx, pos._2 + dy), pos :: list)
     }
 
-    pos match {
-      case (x: Int, y: Int) => f((x + dx, y + dy), Nil)
-      case Node(x, y, _, _, _, _) => f((x + dx, y + dy), Nil)
-      case _ => Nil
-    }
+    f((pos._1 + dx, pos._2 + dy), Nil)
   }
 
   private def outOfRange(pos: (Int, Int)) = {
-    val (x, y) = pos
-    x < 0 || x >= grid.length || y < 0 || y >= grid(0).length
+    pos._1 < 0 || pos._1 >= grid.length || pos._2 < 0 || pos._2 >= grid(0).length
   }
 
   private def isDiagonalMove(dir: (Int, Int)): Boolean = {
@@ -111,24 +71,57 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   private final def jpsSearch(): List[Node] = {
     if (open.isEmpty) Nil
     else {
-      val current = open.last
-      open -= current
+//      open.foreach(println)
+//      println()
+//      closed.foreach(println)
+//      println()
+//      println()
+      val current = open.dequeue()
       if (current == end) reconstructPath(current)
       else if (closed.contains(current)) jpsSearch()
       else {
+        def addJumpPoint(node: Node, dir: List[(Int, Int)]): Unit = {
+          open.enqueue(node.copy(g = heuristic(current, node) + current.g, h = heuristic(node, end), parent = Some(current), dir = dir))
+        }
+
+        def isJumpPoint(node: Node, dir: (Int, Int)): Boolean = {
+          def f(node: Node, d1: (Int, Int), d2: (Int, Int), d3: (Int, Int), d4: (Int, Int)): Boolean = {
+            val b1 = !isBlock(node, d1) && isBlock(node, d2)
+            val b2 = !isBlock(node, d3) && isBlock(node, d4)
+            if (b1 && b2) addJumpPoint(node, d1 :: d3 :: Nil)
+            else if (b1) addJumpPoint(node, d1 :: Nil)
+            else if (b2) addJumpPoint(node, d3 :: Nil)
+            b1 || b2
+          }
+
+          val (dx, dy) = dir
+          if (node == end) {
+            open.enqueue(node.copy(g = 0, h = 0, parent = Some(current), dir = Nil))
+            true
+          } else if (isDiagonalMove(dir)) {
+            f(node, (-dx, dy), (-dx, 0), (dx, -dy), (0, -dy))
+          } else {
+            if (dy == 0) {
+              f(node, (dx, 1), (0, 1), (dx, -1), (0, -1))
+            } else {
+              f(node, (1, dy), (1, 0), (-1, dy), (-1, 0))
+            }
+          }
+        }
+
+        def haveJumpPointInLine(node: Node, dir: (Int, Int)): Boolean = {
+          road(node, (dir._1, 0)).exists(pos => isJumpPoint(Node(pos), (dir._1, 0))) || road(node, (0, dir._2)).exists(pos => isJumpPoint(Node(pos), (0, dir._2)))
+        }
+
         closed += current
         val directions = current.dir
-        directions.foreach {
-          dir =>
-            road(current, dir).foreach {
-              pos => {
-                val node = Node(pos)
-
-                if (!closed.contains(Node(pos)) && (isJumpPoint(node, dir) || (isDiagonalMove(dir) && haveJumpPointInLine(node, dir)))) {
-                  open.add(node.copy(g = current.g + heuristic(current, node), h = heuristic(current, end), parent = Some(current)))
-                }
-              }
+        directions.foreach { dir =>
+          road(current, dir).foreach { pos =>
+            if (!closed.contains(pos)) {
+              val node = Node(pos)
+              isJumpPoint(node, dir) || (isDiagonalMove(dir) && haveJumpPointInLine(node, dir))
             }
+          }
         }
         jpsSearch()
       }
@@ -136,14 +129,14 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   }
 
   def jps(): List[Node] = {
-    val iterCount = 1
-    var temp: List[Node] = Nil
-    for (_ <- 0 until iterCount) temp = jpsSearch()
-    temp
+    closed.clear()
+    open.clear()
+    open.enqueue(new Node(start._1, start._2, 0, 0, None, (0, 1) :: (0, -1) :: (1, 0) :: (-1, 0) :: (1, 1) :: (1, -1) :: (-1, 1) :: (-1, -1) :: Nil))
+    jpsSearch()
   }
 
   private def writeMap(): Unit = {
-    val fos = new FileOutputStream(s"jspmap${start}${end}.txt")
+    val fos = new FileOutputStream(s"jpsmap${start}${end}.txt")
     println(s"closed: ${closed.size}, open: ${open.size}")
     println(s"grid.length: ${grid.length}, grid(0).length: ${grid(0).length}")
     grid.indices.foreach { i =>
