@@ -26,11 +26,11 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   private val jumpPointSet = mutable.HashSet[Node]()
   private val directionMap = mutable.HashMap[Node,mutable.ListBuffer[(Int, Int)]]()
   private val closed = mutable.HashSet[Node]()
-  private val open = mutable.PriorityQueue[Node]()
+  private val open = mutable.TreeSet[Node]()
   jumpPointSet += new Node(start)
   jumpPointSet += new Node(end)
   directionMap(new Node(start)) = mutable.ListBuffer((1, 0), (0, 1), (1, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1))
-  open.enqueue(new Node(start))
+  open.add(new Node(start))
 
   private def isBlock(node: Node, direction: (Int, Int)): Boolean = {
     if (outOfRange((node.x + direction._1, node.y + direction._2))) true
@@ -80,7 +80,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
     find
   }
 
-  private def hasJumpPointInLine(node: Node, dir: (Int, Int)): Boolean = {
+  private def haveJumpPointInLine(node: Node, dir: (Int, Int)): Boolean = {
     val direction = Array((dir._1, 0), (0, dir._2))
     var find = false
     direction.foreach(
@@ -147,7 +147,8 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   private final def jpsSearch(): List[Node] = {
     if (open.isEmpty) Nil
     else {
-      val current = open.dequeue()
+      val current = open.last
+      open -= current
       if (current == end) reconstructPath(current)
       else if (closed.contains(current)) jpsSearch()
       else {
@@ -158,8 +159,8 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
             pos => {
               val node = new Node(pos._1, pos._2)
 
-              if (!closed.contains(new Node(pos)) && (isJumpPoint(node, dir) || (isDiagonalMove(dir) && hasJumpPointInLine(node, dir)))) {
-                open.enqueue(node.copy(g = current.g + heuristic(current, node), h = heuristic(current, new Node(end._1, end._2)), parent = Some(current)))
+              if (!closed.contains(new Node(pos)) && (isJumpPoint(node, dir) || (isDiagonalMove(dir) && haveJumpPointInLine(node, dir)))) {
+                open.add(node.copy(g = current.g + heuristic(current, node), h = heuristic(current, new Node(end._1, end._2)), parent = Some(current)))
               }
             }
           }
@@ -170,10 +171,9 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   }
 
   def jps(): List[Node] = {
-    val startTime = System.nanoTime()
-    val temp = jpsSearch()
-    val endTime = System.nanoTime()
-    println(s"Time: ${(endTime - startTime) / 1e9} seconds")
+    val iterCount = 1
+    var temp: List[Node] = Nil
+    for ( _ <- 0 until iterCount) temp = jpsSearch()
     temp
   }
 
