@@ -23,14 +23,9 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   private final val StraightMoveCost = 10
   private final val DiagonalMoveCost = 14
 
-  private val jumpPointSet = mutable.HashSet[Node]()
-  private val directionMap = mutable.HashMap[Node,mutable.ListBuffer[(Int, Int)]]()
-  private val closed = mutable.HashSet[Node]()
+  private val closed = mutable.HashSet[(Int, Int)]()
   private val open = mutable.TreeSet[Node]()
-  jumpPointSet += new Node(start)
-  jumpPointSet += new Node(end)
-  directionMap(new Node(start)) = mutable.ListBuffer((1, 0), (0, 1), (1, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1))
-  open.add(new Node(start))
+  open.add(Node(start))
 
   private def isBlock(node: Node, direction: (Int, Int)): Boolean = {
     if (outOfRange((node.x + direction._1, node.y + direction._2))) true
@@ -41,7 +36,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
     val (dx, dy) = dir
     val dirList = mutable.ListBuffer[(Int, Int)]()
     var find = false
-    if (jumpPointSet.contains(node)) find = true
+    if (node == end) find = true
     else if (isDiagonalMove(dir)) {
       if (!isBlock(node, (-dx, dy)) && isBlock(node, (-dx, 0))) {
         dirList += ((-dx, dy))
@@ -73,9 +68,6 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
       }
     }
     if (find) {
-      if (!directionMap.contains(node)) directionMap(node) = mutable.ListBuffer()
-      directionMap(node) ++= dirList
-      jumpPointSet += node
     }
     find
   }
@@ -85,8 +77,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
     var find = false
     direction.foreach(
       dir => {
-        val isFind = road(node, dir).exists(pos => isJumpPoint(new Node(pos._1, pos._2), dir))
-        if (isFind) directionMap(node) = directionMap.getOrElse(node, mutable.ListBuffer()) += dir
+        val isFind = road(node, dir).exists(pos => isJumpPoint(Node(pos), dir))
         find = find || isFind
       }
     )
@@ -129,7 +120,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
 
     pos match {
       case (x: Int, y: Int) => f((x + dx, y + dy), Nil)
-      case Node(x, y, _, _, _) => f((x + dx, y + dy), Nil)
+      case Node(x, y, _, _, _, _) => f((x + dx, y + dy), Nil)
       case _ => Nil
     }
   }
@@ -157,9 +148,9 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
         directions.foreach {
           dir => road(current, dir).foreach {
             pos => {
-              val node = new Node(pos._1, pos._2)
+              val node = Node(pos)
 
-              if (!closed.contains(new Node(pos)) && (isJumpPoint(node, dir) || (isDiagonalMove(dir) && haveJumpPointInLine(node, dir)))) {
+              if (!closed.contains(Node(pos)) && (isJumpPoint(node, dir) || (isDiagonalMove(dir) && haveJumpPointInLine(node, dir)))) {
                 open.add(node.copy(g = current.g + heuristic(current, node), h = heuristic(current, new Node(end._1, end._2)), parent = Some(current)))
               }
             }
@@ -205,14 +196,18 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
 }
 
 object Jps {
-  case class Node(x: Int, y: Int, g: Double, h: Double, parent: Option[Node]) extends Ordered[Node] {
+  object Node {
+    def apply(x: Int, y: Int): Node = {
+      new Node(x, y, 0, 0, None, Nil)
+    }
+
+    def apply(para: (Int, Int)): Node = {
+      new Node(para._1, para._2, 0, 0, None, Nil)
+    }
+  }
+
+  case class Node(x: Int, y: Int, g: Double, h: Double, parent: Option[Node], dir: List[(Int, Int)]) extends Ordered[Node] {
     def f: Double = g + h
-
-    def this(x: Int, y: Int) = this(x, y, 0, 0, None)
-
-    def this(x: Int, y: Int, g: Double) = this(x, y, g, 0, None)
-
-    def this(para: (Int, Int)) = this(para._1, para._2, 0, 0, None)
 
     override def equals(obj: Any): Boolean = obj match {
       case (x, y) => this.x == x && this.y == y
