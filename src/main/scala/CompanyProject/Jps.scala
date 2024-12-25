@@ -4,7 +4,6 @@ import CompanyProject.Jps.Node
 
 import java.io.FileOutputStream
 import scala.annotation.tailrec
-import scala.collection.immutable.List
 import scala.collection.mutable
 
 class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
@@ -33,59 +32,40 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   }
 
   private def isJumpPoint(node: Node, dir: (Int, Int)): Boolean = {
+    def f(para: (Node, Array[(Int, Int)])): Boolean = {
+      val (node, Array(d1, d2, d3, d4)) = para
+      val (b1, b2) = (!isBlock(node, d1) && isBlock(node, d2), !isBlock(node, d3) && isBlock(node, d4))
+      if (b1 && b2) open.add(node.copy(g = heuristic(current, node) + current.g, h = heuristic(node, end), parent = current, dir = d1 :: d3 :: Nil))
+      else if (b1) open.add(node.copy(g = heuristic(current, node) + current.g, h = heuristic(node, end), parent = current, dir = d1 :: Nil))
+      else if (b2) open.add(node.copy(g = heuristic(current, node) + current.g, h = heuristic(node, end), parent = current, dir = d3 :: Nil))
+      b1 || b2
+    }
+
     val (dx, dy) = dir
-    val dirList = mutable.ListBuffer[(Int, Int)]()
-    var find = false
-    if (node == end) find = true
+    if (node == end) true
     else if (isDiagonalMove(dir)) {
-      if (!isBlock(node, (-dx, dy)) && isBlock(node, (-dx, 0))) {
-        dirList += ((-dx, dy))
-        find = true
-      }
-      if (!isBlock(node, (dx, -dy)) && isBlock(node, (0, -dy))) {
-        dirList += ((dx, -dy))
-        find =true
-      }
+      f((node, Array((-dx, dy), (-dx, 0), (dx, -dy), (0, -dy))))
     } else {
       if (dy == 0) {
-        if (!isBlock(node, (dx, 1)) && isBlock(node, (0, 1))) {
-          dirList += ((dx, 1))
-          find = true
-        }
-        if (!isBlock(node, (dx, -1)) && isBlock(node, (0, -1))) {
-          dirList += ((dx, -1))
-          find = true
-        }
+        f((node, Array((dx, 1), (0, 1), (dx, -1), (0, -1))))
       } else {
-        if (!isBlock(node, (1, dy)) && isBlock(node, (1, 0))) {
-          dirList += ((1, dy))
-          find = true
-        }
-        if (!isBlock(node, (-1, dy)) && isBlock(node, (-1, 0))) {
-          dirList += ((-1, dy))
-          find = true
-        }
+        f((node, Array((1, dy), (1, 0), (-1, dy), (-1, 0))))
       }
     }
-    if (find) {
-    }
-    find
   }
 
   private def haveJumpPointInLine(node: Node, dir: (Int, Int)): Boolean = {
     val direction = Array((dir._1, 0), (0, dir._2))
     var find = false
-    direction.foreach(
-      dir => {
-        val isFind = road(node, dir).exists(pos => isJumpPoint(Node(pos), dir))
-        find = find || isFind
-      }
-    )
+    direction.foreach { dir =>
+      val isFind = road(node, dir).exists(pos => isJumpPoint(Node(pos), dir))
+      find = find || isFind
+    }
     find
   }
 
-  private def heuristic(begin: Node, end: Node): Double = {
-    val (dx, dy) = ((begin.x - end.x).abs, (begin.y - end.y).abs)
+  private def heuristic(begin: (Int, Int), end: (Int, Int)): Double = {
+    val (dx, dy) = ((begin._1 - end._1).abs, (begin._2 - end._2).abs)
     dx.min(dy) * DiagonalMoveCost + (dx - dy).abs * StraightMoveCost
   }
 
@@ -101,13 +81,6 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
     loop(node, Nil)
   }
 
-  /**
-   * 不包含pos的路径列表
-   *
-   * @param pos "位置"
-   * @param dir “移动方向”
-   * @return
-   */
   private def road(pos: Any, dir: (Int, Int)): List[(Int, Int)] = {
     val (dx, dy) = dir
 
@@ -144,17 +117,18 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
       else if (closed.contains(current)) jpsSearch()
       else {
         closed += current
-        val directions = directionMap(current)
+        val directions = current.dir
         directions.foreach {
-          dir => road(current, dir).foreach {
-            pos => {
-              val node = Node(pos)
+          dir =>
+            road(current, dir).foreach {
+              pos => {
+                val node = Node(pos)
 
-              if (!closed.contains(Node(pos)) && (isJumpPoint(node, dir) || (isDiagonalMove(dir) && haveJumpPointInLine(node, dir)))) {
-                open.add(node.copy(g = current.g + heuristic(current, node), h = heuristic(current, new Node(end._1, end._2)), parent = Some(current)))
+                if (!closed.contains(Node(pos)) && (isJumpPoint(node, dir) || (isDiagonalMove(dir) && haveJumpPointInLine(node, dir)))) {
+                  open.add(node.copy(g = current.g + heuristic(current, node), h = heuristic(current, end), parent = Some(current)))
+                }
               }
             }
-          }
         }
         jpsSearch()
       }
@@ -164,7 +138,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   def jps(): List[Node] = {
     val iterCount = 1
     var temp: List[Node] = Nil
-    for ( _ <- 0 until iterCount) temp = jpsSearch()
+    for (_ <- 0 until iterCount) temp = jpsSearch()
     temp
   }
 
@@ -174,7 +148,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
     println(s"grid.length: ${grid.length}, grid(0).length: ${grid(0).length}")
     grid.indices.foreach { i =>
       grid(i).indices.foreach { j =>
-        if (closed.exists(n => n.x == i && n.y == j)) fos.write("C ".getBytes)
+        if (closed.exists(n => n._1 == i && n._2 == j)) fos.write("C ".getBytes)
         else if (open.exists(n => n.x == i && n.y == j)) fos.write("P ".getBytes)
         else fos.write(s"${grid(i)(j)} ".getBytes)
       }
@@ -185,7 +159,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   private def printMap(): Unit = {
     grid.indices.foreach { i =>
       grid(i).indices.foreach { j =>
-        if (closed.exists(n => n.x == i && n.y == j)) print("C ")
+        if (closed.exists(n => n._1 == i && n._2 == j)) print("C ")
         else if (open.exists(n => n.x == i && n.y == j)) print("P ")
         else print(s"${grid(i)(j)} ")
       }
@@ -196,6 +170,8 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
 }
 
 object Jps {
+  implicit def nodeToTuple(node: Node): (Int, Int) = (node.x, node.y)
+
   object Node {
     def apply(x: Int, y: Int): Node = {
       new Node(x, y, 0, 0, None, Nil)
