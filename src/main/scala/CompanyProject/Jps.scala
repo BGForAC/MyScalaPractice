@@ -78,22 +78,18 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   var iterCount = 0
 
   private def perIter(): Unit = {
-    //    writeMap()
-    //    printMap()
-    //    open.foreach(println)
-    //    println(s"closed: ${closed.size}, open: ${open.size}")
-    //    printMapNearby((209, 360), 10)
-    //    printMapNearby((209, 416), 10)
-    //    if (iterCount == 0) iterCount = StdIn.readInt()
-    //    iterCount -= 1
+//    writeMap()
+//    printMap()
+//    open.foreach(println)
+//    println(s"closed: ${closed.size}, open: ${open.size}")
+//    printMapNearby((209, 360), 10)
+//    printMapNearby((209, 416), 10)
+//    if (iterCount == 0) iterCount = StdIn.readInt()
+//    iterCount -= 1
   }
 
   private def beforeIter(): Unit = {
 
-  }
-
-  private def isOpenOrClosed(pos: (Int, Int), dir: (Int, Int)) = {
-    open.exists(n => n.x == pos._1 + dir._1 && n.y == pos._2 + dir._2) || closed.contains((pos._1 + dir._1, pos._2 + dir._2))
   }
 
   @tailrec
@@ -116,25 +112,16 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
             //            斜向穿墙
             //            if (b1 && b2) addJumpPoint(node, d1 :: d3 :: Nil)
             if (b1) {
-              if (isOpenOrClosed(pos, d1)) {
-                closed += pos
-              } else {
-                addJumpPoint(Node(pos), d1 :: Nil)
-              }
+              addJumpPoint(Node(pos), d1 :: Nil)
             }
             else if (b2) {
-              if (isOpenOrClosed(pos, d3)) {
-                closed += pos
-              } else {
-                addJumpPoint(Node(pos), d3 :: Nil)
-              }
+              addJumpPoint(Node(pos), d3 :: Nil)
             }
           }
 
           val (dx, dy) = dir
           if (pos == end) {
-            val node = Node(pos)
-            open.enqueue(node.copy(g = 0, h = 0, parent = Some(current), dir = Nil))
+            open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
           } else if (!closed.contains(pos)) {
             f(pos, (-dx, dy), (-dx, 0), (dx, -dy), (0, -dy))
           }
@@ -178,7 +165,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
 
             @tailrec
             def buildPath(idx: Int, pre0: Boolean, pre2: Boolean): Unit = {
-              if (isBlock(pointArray(1)) || closed.contains(pointArray(1))) {
+              if (isBlock(pointArray(1))) {
                 //  不需要做什么
               } else if (pointArray(1) == end) {
                 open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
@@ -193,34 +180,14 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
                   if (curNode == end) {
                     open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
                   } else {
-                    if (b1 && b2) {
-                      val t1 = isOpenOrClosed(curNode, ud)
-                      val t2 = isOpenOrClosed(curNode, dd)
-                      if (t1 && t2) {
-                        closed += curNode
-                      } else if (t1) {
-                        addJumpPoint(curNode, dd :: Nil)
-                      }
-                      else if (t2) {
-                        addJumpPoint(curNode, ud :: Nil)
-                      }
-                      else {
-                        addJumpPoint(curNode, ud :: dd :: Nil)
-                      }
+                    if (b1 && b2 && !isBlock(pointArray(1))) {
+                      addJumpPoint(curNode, ud :: dd :: Nil)
                     }
                     else if (b1) {
-                      if (isOpenOrClosed(curNode, ud)) {
-                        closed += curNode
-                      } else {
-                        addJumpPoint(curNode, ud :: Nil)
-                      }
+                      addJumpPoint(curNode, ud :: Nil)
                     }
                     else if (b2) {
-                      if (isOpenOrClosed(curNode, dd)) {
-                        closed += curNode
-                      } else {
-                        addJumpPoint(curNode, dd :: Nil)
-                      }
+                      addJumpPoint(curNode, dd :: Nil)
                     }
                     else {
                       //不需要做什么
@@ -248,7 +215,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
           if (isDiagonalMove(dir)) {
             @tailrec
             def f(pos: (Int, Int)): Unit = {
-              if (!isBlock(pos) && !closed.contains(pos)) {
+              if (!isBlock(pos) && !closed.contains(pos) && !open.exists(n => n.x == pos._1 && n.y == pos._2)) {
                 jumpPoints(pos, dir)
                 jumpPointsInLine((pos._1 + dir._1, pos._2), (dir._1, 0))
                 jumpPointsInLine((pos._1, pos._2 + dir._2), (0, dir._2))
