@@ -88,6 +88,10 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
 
   }
 
+  private def isOpenOrClosed(pos: (Int, Int), dir: (Int, Int)) = {
+    open.exists(n => n.x == pos._1 + dir._1 && n.y == pos._2 + dir._2) || closed.contains((pos._1 + dir._1, pos._2 + dir._2))
+  }
+
   @tailrec
   private final def jpsSearch(): List[Node] = {
     if (open.isEmpty) Nil
@@ -190,9 +194,35 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
             val curNode = Node(node.x + dir._1 * i, node.y + dir._2 * i)
             if (curNode == end) open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
             else if (!closed.contains(curNode)) {
-              if (b1 && b2) addJumpPoint(curNode, ud :: dd :: Nil)
-              else if (b1) addJumpPoint(curNode, ud :: Nil)
-              else if (b2) addJumpPoint(curNode, dd :: Nil)
+              if (b1 && b2) {
+                val t1 = isOpenOrClosed(curNode, ud)
+                val t2 = isOpenOrClosed(curNode, dd)
+                if (t1 && t2) {
+                  closed += curNode
+                } else if (t1) {
+                  addJumpPoint(curNode, dd :: Nil)
+                }
+                else if (t2) {
+                  addJumpPoint(curNode, ud :: Nil)
+                }
+                else {
+                  addJumpPoint(curNode, ud :: dd :: Nil)
+                }
+              }
+              else if (b1) {
+                if (isOpenOrClosed(curNode, ud)) {
+                  closed += curNode
+                }else {
+                  addJumpPoint(curNode, ud :: Nil)
+                }
+              }
+              else if (b2) {
+                if (isOpenOrClosed(curNode, dd)) {
+                  closed += curNode
+                } else {
+                  addJumpPoint(curNode, dd :: Nil)
+                }
+              }
               else {
                 //不需要做什么
               }
