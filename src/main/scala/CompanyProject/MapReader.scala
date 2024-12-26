@@ -67,7 +67,7 @@ object MapReader {
 //    aStarTestGroup1(start, end, map)
   }
 
-  private def jpsTestGroup1(start: (Int, Int), end: (Int, Int), map: Array[Array[Byte]]) = {
+  private def jpsTestGroup1(start: (Int, Int), end: (Int, Int), map: Array[Array[Byte]]): Unit = {
     val iterCount = 1
     var path = List[Jps.Node]()
     val jps = new Jps(start, end, map)

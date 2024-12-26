@@ -5,6 +5,7 @@ import CompanyProject.Jps.Node
 import java.io.FileOutputStream
 import scala.annotation.tailrec
 import scala.collection.mutable
+import scala.io.StdIn
 import scala.language.implicitConversions
 
 class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
@@ -43,7 +44,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   private val newGrid = surroundedWithOnes(grid)
 
   private def isBlock(node: Node, dir: (Int, Int)): Boolean = {
-    isBlock((node.x + dir._1, node.y + dir._2))
+    newGrid(node.x + dir._1 + 1)(node.y + dir._2 + 1) == BLOCK
   }
 
   private def isBlock(pos: (Int, Int)): Boolean = {
@@ -71,10 +72,27 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
     if (dir._1 == 0 || dir._2 == 0) false else true
   }
 
+  var iterCount = 0
+  private def perIter(): Unit = {
+//    writeMap()
+//    printMap()
+//    open.foreach(println)
+//    println(s"closed: ${closed.size}, open: ${open.size}")
+//    printMapNearby((209, 360), 10)
+//    printMapNearby((209, 416), 10)
+//    if (iterCount == 0) iterCount = StdIn.readInt()
+//    iterCount -= 1
+  }
+
+  private def beforeIter(): Unit = {
+
+  }
+
   @tailrec
   private final def jpsSearch(): List[Node] = {
     if (open.isEmpty) Nil
     else {
+      perIter()
       val current = open.dequeue()
       if (current == end) reconstructPath(current)
       else if (closed.contains(current)) jpsSearch()
@@ -87,15 +105,16 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
           def f(node: Node, d1: (Int, Int), d2: (Int, Int), d3: (Int, Int), d4: (Int, Int)): Unit = {
             val b1 = !isBlock(node, d1) && isBlock(node, d2)
             val b2 = !isBlock(node, d3) && isBlock(node, d4)
-            if (b1 && b2) addJumpPoint(node, d1 :: d3 :: Nil)
-            else if (b1) addJumpPoint(node, d1 :: Nil)
+//            斜向穿墙
+//            if (b1 && b2) addJumpPoint(node, d1 :: d3 :: Nil)
+            if (b1) addJumpPoint(node, d1 :: Nil)
             else if (b2) addJumpPoint(node, d3 :: Nil)
           }
 
           val (dx, dy) = dir
           if (node == end) {
             open.enqueue(node.copy(g = 0, h = 0, parent = Some(current), dir = Nil))
-          } else if (!closed.contains(node)){
+          } else if (!closed.contains(node)) {
             f(node, (-dx, dy), (-dx, 0), (dx, -dy), (0, -dy))
           }
         }
@@ -125,7 +144,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
             }
           }
 
-          def getPath(node: (Int, Int), dir: (Int, Int), idx: Int): Array[BigInt] = {
+          def path(node: (Int, Int), dir: (Int, Int), idx: Int): Array[BigInt] = {
             val pointArray: Array[(Int, Int)] = new Array[(Int, Int)](3)
             val (dx, dy) = dir
             val (x, y) = node
@@ -133,7 +152,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
             if (dx == 0) {
               pointArray(0) = (x - dy, y)
               pointArray(2) = (x + dy, y)
-            }else {
+            } else {
               pointArray(0) = (x, y + dx)
               pointArray(2) = (x, y - dx)
             }
@@ -142,9 +161,11 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
             @tailrec
             def buildPath(idx: Int): Array[BigInt] = {
               if (isBlock(pointArray(1))) {
+                array(1) = array(1).setBit(idx)
                 array.map(_.setBit(idx))
-              }
-              else {
+              } else if (closed.contains(pointArray(1))) {
+                Array.fill[BigInt](3)(BigInt(0))
+              } else {
                 if (isBlock(pointArray(0))) array(0) = array(0).setBit(idx)
                 if (isBlock(pointArray(2))) array(2) = array(2).setBit(idx)
 
@@ -154,12 +175,13 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
                 buildPath(idx + 1)
               }
             }
+
             buildPath(idx)
           }
 
           val ud = getUd(dir)
           val dd = getDd(dir)
-          val route: Array[BigInt] = getPath(node, dir, 0)
+          val route: Array[BigInt] = path(node, dir, 0)
           val uPos = (~route(0) >> 1) & route(0)
           val dPos = (~route(2) >> 1) & route(2)
           for (i <- 0 until route(1).bitLength - 1) {
@@ -185,10 +207,10 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
           if (isDiagonalMove(dir)) {
             @tailrec
             def f(node: Node): Unit = {
-              if (!isBlock(node)) {
+              if (!isBlock(node) && !closed.contains(node)) {
                 jumpPoints(node, dir)
-                jumpPointsInLine(node, (dir._1, 0))
-                jumpPointsInLine(node, (0, dir._2))
+                jumpPointsInLine(Node(node.x + dir._1, node.y), (dir._1, 0))
+                jumpPointsInLine(Node(node.x, node.y + dir._2), (0, dir._2))
                 f(Node((node.x + dir._1, node.y + dir._2)))
               }
             }
@@ -207,6 +229,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
     closed.clear()
     open.clear()
     open.enqueue(new Node(start._1, start._2, 0, 0, None, (0, 1) :: (0, -1) :: (1, 0) :: (-1, 0) :: (1, 1) :: (1, -1) :: (-1, 1) :: (-1, -1) :: Nil))
+    beforeIter()
     jpsSearch()
   }
 
@@ -222,6 +245,24 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
       }
       fos.write("\n".getBytes)
     }
+  }
+
+  private def printMapNearby(pos: (Int, Int), sideLength: Int): Unit = {
+    val (x, y) = pos
+    val (rows, cols) = (grid.length, grid(0).length)
+    val (startX, startY) = (x - sideLength, y - sideLength)
+    val (endX, endY) = (x + sideLength, y + sideLength)
+    for (i <- startX to endX) {
+      for (j <- startY to endY) {
+        if (i == x && j == y) print("T ")
+        else if (closed.exists(n => n._1 == i && n._2 == j)) print("C ")
+        else if (open.exists(n => n.x == i && n.y == j)) print("P ")
+        else if (i < 0 || i >= rows || j < 0 || j >= cols) print("B ")
+        else print(s"${grid(i)(j)} ")
+      }
+      println()
+    }
+    println()
   }
 
   private def printMap(): Unit = {
@@ -266,7 +307,7 @@ object Jps {
       if (n > 0) 1 else if (n < 0) -1 else 0
     }
 
-    override def toString: String = s"Node($x, $y, $g, $h, $f, ${
+    override def toString: String = s"Node($x, $y, $g, $h, $f, $dir, ${
       parent match {
         case Some(p) => p
         case None => "None"
