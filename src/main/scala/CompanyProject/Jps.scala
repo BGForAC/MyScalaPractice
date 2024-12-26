@@ -5,7 +5,6 @@ import CompanyProject.Jps.Node
 import java.io.FileOutputStream
 import scala.annotation.tailrec
 import scala.collection.mutable
-import scala.io.StdIn
 import scala.language.implicitConversions
 
 class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
@@ -43,6 +42,10 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
 
   private val newGrid = surroundedWithOnes(grid)
 
+  private def isBlock(tuple: (Int, Int), tuple1: (Int, Int)): Boolean = {
+    newGrid(tuple._1 + tuple1._1 + 1)(tuple._2 + tuple1._2 + 1) == BLOCK
+  }
+
   private def isBlock(node: Node, dir: (Int, Int)): Boolean = {
     newGrid(node.x + dir._1 + 1)(node.y + dir._2 + 1) == BLOCK
   }
@@ -73,15 +76,16 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   }
 
   var iterCount = 0
+
   private def perIter(): Unit = {
-//    writeMap()
-//    printMap()
-//    open.foreach(println)
-//    println(s"closed: ${closed.size}, open: ${open.size}")
-//    printMapNearby((209, 360), 10)
-//    printMapNearby((209, 416), 10)
-//    if (iterCount == 0) iterCount = StdIn.readInt()
-//    iterCount -= 1
+    //    writeMap()
+    //    printMap()
+    //    open.foreach(println)
+    //    println(s"closed: ${closed.size}, open: ${open.size}")
+    //    printMapNearby((209, 360), 10)
+    //    printMapNearby((209, 416), 10)
+    //    if (iterCount == 0) iterCount = StdIn.readInt()
+    //    iterCount -= 1
   }
 
   private def beforeIter(): Unit = {
@@ -105,29 +109,38 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
           open.enqueue(node.copy(g = heuristic(current, node) + current.g, h = heuristic(node, end), parent = Some(current), dir = dir))
         }
 
-        def jumpPoints(node: Node, dir: (Int, Int)): Unit = {
-          def f(node: Node, d1: (Int, Int), d2: (Int, Int), d3: (Int, Int), d4: (Int, Int)): Unit = {
-            val b1 = !isBlock(node, d1) && isBlock(node, d2)
-            val b2 = !isBlock(node, d3) && isBlock(node, d4)
-//            斜向穿墙
-//            if (b1 && b2) addJumpPoint(node, d1 :: d3 :: Nil)
-            if (b1) addJumpPoint(node, d1 :: Nil)
-            else if (b2) addJumpPoint(node, d3 :: Nil)
+        def jumpPoints(pos: (Int, Int), dir: (Int, Int)): Unit = {
+          def f(pos: (Int, Int), d1: (Int, Int), d2: (Int, Int), d3: (Int, Int), d4: (Int, Int)): Unit = {
+            val b1 = !isBlock(pos, d1) && isBlock(pos, d2)
+            val b2 = !isBlock(pos, d3) && isBlock(pos, d4)
+            //            斜向穿墙
+            //            if (b1 && b2) addJumpPoint(node, d1 :: d3 :: Nil)
+            if (b1) {
+              if (isOpenOrClosed(pos, d1)) {
+                closed += pos
+              } else {
+                addJumpPoint(Node(pos), d1 :: Nil)
+              }
+            }
+            else if (b2) {
+              if (isOpenOrClosed(pos, d3)) {
+                closed += pos
+              } else {
+                addJumpPoint(Node(pos), d3 :: Nil)
+              }
+            }
           }
 
           val (dx, dy) = dir
-          if (node == end) {
+          if (pos == end) {
+            val node = Node(pos)
             open.enqueue(node.copy(g = 0, h = 0, parent = Some(current), dir = Nil))
-          } else if (!closed.contains(node)) {
-            f(node, (-dx, dy), (-dx, 0), (dx, -dy), (0, -dy))
+          } else if (!closed.contains(pos)) {
+            f(pos, (-dx, dy), (-dx, 0), (dx, -dy), (0, -dy))
           }
         }
 
-        def jumpPointsInLine(node: Node, dir: (Int, Int)): Unit = {
-          def isBitSet(bigInt: BigInt, bitPosition: Int): Boolean = {
-            (bigInt & (BigInt(1) << bitPosition)) != 0
-          }
-
+        def jumpPointsInLine(pos: (Int, Int), dir: (Int, Int)): Unit = {
           //逆时针45度
           def getUd(tuple: (Int, Int)): (Int, Int) = {
             tuple match {
@@ -148,7 +161,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
             }
           }
 
-          def path(node: (Int, Int), dir: (Int, Int), idx: Int): Array[BigInt] = {
+          def path(node: (Int, Int), dir: (Int, Int), idx: Int): Unit = {
             val pointArray: Array[(Int, Int)] = new Array[(Int, Int)](3)
             val (dx, dy) = dir
             val (x, y) = node
@@ -160,88 +173,86 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
               pointArray(0) = (x, y + dx)
               pointArray(2) = (x, y - dx)
             }
-            val array = Array.fill[BigInt](3)(BigInt(0))
+            val ud = getUd(dir)
+            val dd = getDd(dir)
 
             @tailrec
-            def buildPath(idx: Int): Array[BigInt] = {
-              if (isBlock(pointArray(1))) {
-                array(1) = array(1).setBit(idx)
-                array.map(_.setBit(idx))
-              } else if (closed.contains(pointArray(1))) {
-                Array.fill[BigInt](3)(BigInt(0))
+            def buildPath(idx: Int, pre0: Boolean, pre2: Boolean): Unit = {
+              if (isBlock(pointArray(1)) || closed.contains(pointArray(1))) {
+                //  不需要做什么
+              } else if (pointArray(1) == end) {
+                open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
               } else {
-                if (isBlock(pointArray(0))) array(0) = array(0).setBit(idx)
-                if (isBlock(pointArray(2))) array(2) = array(2).setBit(idx)
+                val c0 = isBlock(pointArray(0))
+                val c2 = isBlock(pointArray(2))
+                val b1 = !c0 && pre0
+                val b2 = !c2 && pre2
+
+                if (b1 || b2) {
+                  val curNode = Node(pointArray(1)._1 - dx, pointArray(1)._2 - dy)
+                  if (curNode == end) {
+                    open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
+                  } else {
+                    if (b1 && b2) {
+                      val t1 = isOpenOrClosed(curNode, ud)
+                      val t2 = isOpenOrClosed(curNode, dd)
+                      if (t1 && t2) {
+                        closed += curNode
+                      } else if (t1) {
+                        addJumpPoint(curNode, dd :: Nil)
+                      }
+                      else if (t2) {
+                        addJumpPoint(curNode, ud :: Nil)
+                      }
+                      else {
+                        addJumpPoint(curNode, ud :: dd :: Nil)
+                      }
+                    }
+                    else if (b1) {
+                      if (isOpenOrClosed(curNode, ud)) {
+                        closed += curNode
+                      } else {
+                        addJumpPoint(curNode, ud :: Nil)
+                      }
+                    }
+                    else if (b2) {
+                      if (isOpenOrClosed(curNode, dd)) {
+                        closed += curNode
+                      } else {
+                        addJumpPoint(curNode, dd :: Nil)
+                      }
+                    }
+                    else {
+                      //不需要做什么
+                    }
+                  }
+                }
 
                 pointArray(0) = (pointArray(0)._1 + dx, pointArray(0)._2 + dy)
                 pointArray(1) = (pointArray(1)._1 + dx, pointArray(1)._2 + dy)
                 pointArray(2) = (pointArray(2)._1 + dx, pointArray(2)._2 + dy)
-                buildPath(idx + 1)
+                buildPath(idx, c0, c2)
               }
             }
 
-            buildPath(idx)
+            buildPath(idx, false, false)
           }
 
-          val ud = getUd(dir)
-          val dd = getDd(dir)
-          val route: Array[BigInt] = path(node, dir, 0)
-          val uPos = (~route(0) >> 1) & route(0)
-          val dPos = (~route(2) >> 1) & route(2)
-          for (i <- 0 until route(1).bitLength - 1) {
-            val b1 = isBitSet(uPos, i)
-            val b2 = isBitSet(dPos, i)
-            val curNode = Node(node.x + dir._1 * i, node.y + dir._2 * i)
-            if (curNode == end) open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
-            else if (!closed.contains(curNode)) {
-              if (b1 && b2) {
-                val t1 = isOpenOrClosed(curNode, ud)
-                val t2 = isOpenOrClosed(curNode, dd)
-                if (t1 && t2) {
-                  closed += curNode
-                } else if (t1) {
-                  addJumpPoint(curNode, dd :: Nil)
-                }
-                else if (t2) {
-                  addJumpPoint(curNode, ud :: Nil)
-                }
-                else {
-                  addJumpPoint(curNode, ud :: dd :: Nil)
-                }
-              }
-              else if (b1) {
-                if (isOpenOrClosed(curNode, ud)) {
-                  closed += curNode
-                }else {
-                  addJumpPoint(curNode, ud :: Nil)
-                }
-              }
-              else if (b2) {
-                if (isOpenOrClosed(curNode, dd)) {
-                  closed += curNode
-                } else {
-                  addJumpPoint(curNode, dd :: Nil)
-                }
-              }
-              else {
-                //不需要做什么
-              }
-            }
-          }
+          path(pos, dir, 0)
         }
 
         closed += current
         val directions = current.dir
         directions.foreach { dir =>
-          val curNode = Node(current.x + dir._1, current.y + dir._2)
+          val curNode = (current.x + dir._1, current.y + dir._2)
           if (isDiagonalMove(dir)) {
             @tailrec
-            def f(node: Node): Unit = {
-              if (!isBlock(node) && !closed.contains(node)) {
-                jumpPoints(node, dir)
-                jumpPointsInLine(Node(node.x + dir._1, node.y), (dir._1, 0))
-                jumpPointsInLine(Node(node.x, node.y + dir._2), (0, dir._2))
-                f(Node((node.x + dir._1, node.y + dir._2)))
+            def f(pos: (Int, Int)): Unit = {
+              if (!isBlock(pos) && !closed.contains(pos)) {
+                jumpPoints(pos, dir)
+                jumpPointsInLine((pos._1 + dir._1, pos._2), (dir._1, 0))
+                jumpPointsInLine((pos._1, pos._2 + dir._2), (0, dir._2))
+                f(((pos._1 + dir._1, pos._2 + dir._2)))
               }
             }
 
