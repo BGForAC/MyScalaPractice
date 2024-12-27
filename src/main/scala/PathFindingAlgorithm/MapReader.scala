@@ -1,4 +1,4 @@
-package CompanyProject
+package PathFindingAlgorithm
 
 import java.io.{File, FileInputStream, IOException}
 import scala.collection.mutable.ArrayBuffer
@@ -13,6 +13,11 @@ object MapReader {
 //  val end = (-2333, -4172)
   val start = (4830, 13250)
   val end = (-7333, -6312)
+
+  var map: Array[Array[Byte]] = _
+
+  final val BLOCK = 0
+  final val EMPTY = 1
 
   private def getBlockPost(pos: (Int, Int)): (Int, Int) = {
     val (x, y) = pos
@@ -59,8 +64,9 @@ object MapReader {
   }
 
   def main(args: Array[String]): Unit = {
+    System.loadLibrary("NativeCall")
     val filePath = "map36.bytes"
-    val map = readMap(filePath)
+    this.map = readMap(filePath)
     val start = getBlockPost(this.start)
     val end = getBlockPost(this.end)
     jpsTestGroup1(start, end, map)
@@ -70,18 +76,18 @@ object MapReader {
   private def jpsTestGroup1(start: (Int, Int), end: (Int, Int), map: Array[Array[Byte]]): Unit = {
     val iterCount = 1
     var path = List[Jps.Node]()
-    val jps = new Jps(start, end, map)
+    val jps = new Jps(start, end, map, new JpsBitMap(map))
 
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
 
     println(s"start: $start, end: $end")
 

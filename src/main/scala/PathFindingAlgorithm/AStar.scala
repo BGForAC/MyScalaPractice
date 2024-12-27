@@ -1,4 +1,4 @@
-package CompanyProject
+package PathFindingAlgorithm
 
 import java.io.FileOutputStream
 import scala.annotation.tailrec
