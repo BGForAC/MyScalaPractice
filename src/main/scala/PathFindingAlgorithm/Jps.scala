@@ -81,13 +81,15 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
   var iterCount = 0
 
   private def perIter(): Unit = {
-    //    writeMap()
 //        printMap()
         open.foreach(println)
 //        println(s"closed: ${closed.size}, open: ${open.size}")
 //        printMapNearby((293, 446), 30)
     //    printMapNearby((209, 416), 10)
-        if (iterCount == 0) iterCount = StdIn.readInt()
+        if (iterCount == 0) {
+          printMap()
+          iterCount = StdIn.readInt()
+        }
         iterCount -= 1
   }
 
@@ -214,7 +216,11 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
             val (uPos, dPos, wallPos) = loop(fuPos, fdPos, fwallPos, 0)
 
 
-            if (uPos == dPos && uPos < wallPos - 1) {
+            if (node._1 == end._1 && (node._2 - end._2).abs < wallPos.max(if (uPos != 1 << 30) uPos else 0).max(if (dPos != 1 << 30) dPos else 0)) {
+              open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
+            } else if (node._2 == end._2 && (node._1 - end._1).abs < wallPos.max(if (uPos != 1 << 30) uPos else 0).max(if (dPos != 1 << 30) dPos else 0)) {
+              open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
+            }else if (uPos == dPos && uPos < wallPos - 1) {
               addJumpPoint(Node(getKthStep(node, uPos - 1 - maskOffset)), dir :: ud :: dd :: Nil)
             } else if (uPos < wallPos && uPos < dPos) {
               addJumpPoint(Node(getKthStep(node, uPos - 1 - maskOffset)), dir :: ud :: Nil)
