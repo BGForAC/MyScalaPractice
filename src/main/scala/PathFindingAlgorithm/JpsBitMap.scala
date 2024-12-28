@@ -1,15 +1,13 @@
 package PathFindingAlgorithm
 
-import scala.annotation.tailrec
-
 class JpsBitMap(grid: Array[Array[Byte]]) {
   final val BITSPERCELL = 32
   final val BITOFFSET = powerOfTwo(BITSPERCELL)
   final val BITMASK = ~(0xffffffff << BITOFFSET)
   final val OBSTACLE = 0
   final val EMPTY = 1
-  final val OBSTACLECELL = 0x00000000
-  final val EMPTYCELL = 0xffffffff
+  private final val OBSTACLECELL = 0x00000000
+  private final val EMPTYCELL = 0xffffffff
   private val totRows = grid.length
   private val totCols = grid(0).length
   private val rows = (totRows >> BITOFFSET) + 1

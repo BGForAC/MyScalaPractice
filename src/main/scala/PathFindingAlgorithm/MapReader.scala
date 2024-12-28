@@ -9,10 +9,10 @@ object MapReader {
   var offsetZ = 0
   var offsetX = 0
   var side_length = 0
-//  val start = (5561, 13422)
-//  val end = (-2333, -4172)
-  val start = (4830, 13250)
-  val end = (-7333, -6312)
+  val start = (5561, 13422)
+  val end = (-2333, -4172)
+//  val start = (4830, 13250)
+//  val end = (-7333, -6312)
 
   var map: Array[Array[Byte]] = _
 
@@ -74,7 +74,7 @@ object MapReader {
   }
 
   private def jpsTestGroup1(start: (Int, Int), end: (Int, Int), map: Array[Array[Byte]]): Unit = {
-    val iterCount = 100000
+    val iterCount = 1000
     var path = List[Jps.Node]()
     val jps = new Jps(start, end, map, new JpsBitMap(map))
 
