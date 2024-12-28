@@ -74,20 +74,20 @@ object MapReader {
   }
 
   private def jpsTestGroup1(start: (Int, Int), end: (Int, Int), map: Array[Array[Byte]]): Unit = {
-    val iterCount = 1
+    val iterCount = 10000
     var path = List[Jps.Node]()
-    val jps = new Jps(start, end, map, new JpsBitMap(map))
+    val jps = new Jps(start, (74, 32), map, new JpsBitMap(map))
 
-//    jps.jps()
-//    jps.jps()
-//    jps.jps()
-//    jps.jps()
-//    jps.jps()
-//    jps.jps()
-//    jps.jps()
-//    jps.jps()
-//    jps.jps()
-//    jps.jps()
+    jps.jps()
+    jps.jps()
+    jps.jps()
+    jps.jps()
+    jps.jps()
+    jps.jps()
+    jps.jps()
+    jps.jps()
+    jps.jps()
+    jps.jps()
 
     println(s"start: $start, end: $end")
 

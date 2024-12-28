@@ -7,5 +7,6 @@ object NativeCallTest extends App {
   System.out.println(new NativeCall().ffs(-1))
   System.out.println(new NativeCall().ffs(0xffffffff << 30))
   val x = -2147483648
+  println()
 //  println(System.getProperty("java.library.path"))
 }
