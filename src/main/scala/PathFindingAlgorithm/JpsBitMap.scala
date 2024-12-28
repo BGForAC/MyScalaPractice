@@ -109,21 +109,23 @@ class JpsBitMap(grid: Array[Array[Byte]]) {
   //低位取1，高位不变
   private def maskedByOffset(value: Int, offset: Int): Int = value | ~(0xffffffff << offset)
 
-  def getCells(pos: (Int, Int), dir: (Int, Int)): Int = {
-    val dx = dir._1
-    val dy = dir._2
-    if (dx == 0 && dy > 0){
-      getPosInMap(pos._1, pos._2)
-    } else if (dx == 0 && dy < 0){
-      getPosInMapReverseBit(pos._1, pos._2)
-    } else if (dx > 0 && dy == 0){
-      getPosInTransposeMap(pos._1, pos._2)
+  def getCells(x: Int, y: Int, dx: Int, dy: Int): Int = {
+    if (dx == 0) {
+      if (dy > 0) {
+        getPosInMap(x, y)
+      } else {
+        getPosInMapReverseBit(x, y)
+      }
     } else {
-      getPosInTransposeMapReverseBit(pos._1, pos._2)
+      if (dx > 0) {
+        getPosInTransposeMap(x, y)
+      } else {
+        getPosInTransposeMapReverseBit(x, y)
+      }
     }
   }
 
-  def getMaskedCells(pos: (Int, Int), dir: (Int, Int), offset: Int): Int = {
-    maskedByOffset(getCells(pos, dir), offset)
+  def getMaskedCells(x: Int, y: Int, dx: Int, dy: Int, offset: Int): Int = {
+    maskedByOffset(getCells(x, y, dx, dy), offset)
   }
 }

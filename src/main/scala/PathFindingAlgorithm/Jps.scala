@@ -21,18 +21,18 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
    */
   private final val nativeCallObj = new NativeCall()
 
-  private final val BLOCK = 0
-  private final val EMPTY = 1
+  private final val OBSTACLE: Byte = 0
+  private final val EMPTY: Byte = 1
   private final val StraightMoveCost = 10
   private final val DiagonalMoveCost = 14
 
-  private val closed = mutable.HashSet[(Int, Int)]()
+  private val closed = mutable.HashSet[Int]()
   private val open = mutable.PriorityQueue[Node]()
 
-  private def surroundedWithOnes(grid: Array[Array[Byte]]): Array[Array[Byte]] = {
+  private def surroundedWithObstacle(grid: Array[Array[Byte]]): Array[Array[Byte]] = {
     val rows = grid.length
     val cols = grid(0).length
-    val newGrid: Array[Array[Byte]] = Array.fill(rows + 2, cols + 2)(1)
+    val newGrid: Array[Array[Byte]] = Array.fill(rows + 2, cols + 2)(OBSTACLE)
 
     for (i <- 0 until rows) {
       for (j <- 0 until cols) {
@@ -43,22 +43,22 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
     newGrid
   }
 
-  private val gridSurroundedWithBLOCK = surroundedWithOnes(grid)
+  private val gridSurroundedByObstacle = surroundedWithObstacle(grid)
 
   private def isBlock(node: Node, dir: (Int, Int)): Boolean = {
-    gridSurroundedWithBLOCK(node.x + dir._1 + 1)(node.y + dir._2 + 1) == BLOCK
+    gridSurroundedByObstacle(node.x + dir._1 + 1)(node.y + dir._2 + 1) == OBSTACLE
   }
 
   private def isBlock(pos: (Int, Int), dir: (Int, Int)): Boolean = {
-    gridSurroundedWithBLOCK(pos._1 + dir._1 + 1)(pos._2 + dir._2 + 1) == BLOCK
+    gridSurroundedByObstacle(pos._1 + dir._1 + 1)(pos._2 + dir._2 + 1) == OBSTACLE
   }
 
   private def isBlock(pos: (Int, Int)): Boolean = {
-    gridSurroundedWithBLOCK(pos._1 + 1)(pos._2 + 1) == BLOCK
+    gridSurroundedByObstacle(pos._1 + 1)(pos._2 + 1) == OBSTACLE
   }
 
   private def isBlock(x: Int, y: Int): Boolean = {
-    gridSurroundedWithBLOCK(x + 1)(y + 1) == BLOCK
+    gridSurroundedByObstacle(x + 1)(y + 1) == OBSTACLE
   }
 
   private def heuristic(begin: (Int, Int), end: (Int, Int)): Double = {
@@ -102,18 +102,14 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
       perIter()
       val current = open.dequeue()
       if (current == end) reconstructPath(current)
-      else if (closed.contains(current)) jpsSearch()
+      else if (closed.contains((current.x << 16) | current.y)) jpsSearch()
       else {
         def addJumpPoint(node: Node, dir: List[(Int, Int)]): Unit = {
           open.enqueue(node.copy(g = heuristic(current, node) + current.g, h = heuristic(node, end), parent = Some(current), dir = dir))
         }
 
-        def jumpPoint(pos: (Int, Int), dir: (Int, Int)): Unit = {
-          val dx = dir._1
-          val dy = dir._2
-          val x = pos._1
-          val y = pos._2
-          if (pos == end) {
+        def jumpPoint(x: Int, y: Int, dx: Int, dy: Int): Unit = {
+          if ((x, y) == end) {
             open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
           } else {
             val b1 = !isBlock(x - dx, y + dy) && isBlock(x - dx, y)
@@ -121,41 +117,40 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
             //            斜向穿墙
             //            if (b1 && b2) addJumpPoint(node, d1 :: d3 :: Nil)
             if (b1) {
-              addJumpPoint(Node(pos), (-dx, dy) :: Nil)
+              addJumpPoint(Node(x, y), (-dx, dy) :: Nil)
             } else if (b2) {
-              addJumpPoint(Node(pos), (dx, -dy) :: Nil)
+              addJumpPoint(Node(x, y), (dx, -dy) :: Nil)
             }
           }
         }
 
-        def jumpPointsInLine(pos: (Int, Int), dir: (Int, Int)): Unit = {
+        def jumpPointsInLine(x: Int, y: Int, dx: Int, dy:Int): Unit = {
           //逆时针45度
-          def getUpDir(tuple: (Int, Int)): (Int, Int) = {
-            val dx = tuple._1
-            val dy = tuple._2
-            (dx - dy, dy + dx)
-          }
+//          def getUpDir(tuple: (Int, Int)): (Int, Int) = {
+//            val dx = tuple._1
+//            val dy = tuple._2
+//            (dx - dy, dy + dx)
+//          }
+//
+//          //顺时针45度
+//          def getDownDir(tuple: (Int, Int)): (Int, Int) = {
+//            val dx = tuple._1
+//            val dy = tuple._2
+//            (dx + dy, dy - dx)
+//          }
 
-          //顺时针45度
-          def getDownDir(tuple: (Int, Int)): (Int, Int) = {
-            val dx = tuple._1
-            val dy = tuple._2
-            (dx + dy, dy - dx)
-          }
-
-          def path(node: (Int, Int), dir: (Int, Int)): Unit = {
-            val dx = dir._1
-            val dy = dir._2
-            val upDir = getUpDir(dir)
-            val downDir = getDownDir(dir)
+          def path(x: Int, y: Int, dx:Int, dy: Int): Unit = {
+            val dir = (dx, dy)
+            val upDir = (dx - dy, dy + dx)
+            val downDir = (dx + dy, dy - dx)
 
             def getKthStep(pos: (Int, Int), k: Int): (Int, Int) = {
               (pos._1 + dx * k, pos._2 + dy * k)
             }
 
-            def getCurNodes(node: (Int, Int), offset: Int): ((Int, Int), (Int, Int), (Int, Int)) = {
-              val newNode = getKthStep(node, offset << jpsBitMap.BITOFFSET)
-              ((newNode._1 - dy , newNode._2 + dx), newNode, (newNode._1 + dy, newNode._2 - dx))
+//            def getCurNodes(node: (Int, Int), offset: Int): ((Int, Int), (Int, Int), (Int, Int)) = {
+//              val newNode = getKthStep(node, offset << jpsBitMap.BITOFFSET)
+//              ((newNode._1 - dy , newNode._2 + dx), newNode, (newNode._1 + dy, newNode._2 - dx))
 //              if (dx == 0 && dy > 0) {
 //                Array((newNode._1 - 1, newNode._2), newNode, (newNode._1 + 1, newNode._2))
 //              }else if (dx > 0 && dy == 0) {
@@ -165,7 +160,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
 //              } else {
 //                Array((newNode._1, newNode._2 - 1), newNode, (newNode._1, newNode._2 + 1))
 //              }
-            }
+//            }
 
 //            def getMaskOffSet(node: (Int, Int)): Int = {
 //              if (dx == 0 && dy > 0){
@@ -192,10 +187,15 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
                 val newWallPos = if (posWall == 0) (offset + 2) << jpsBitMap.BITOFFSET else posWall + (offset << jpsBitMap.BITOFFSET)
                 (newUPos, newDPos, newWallPos)
               } else {
-                val nodes = getCurNodes(node, offset + 2)
-                val pathMNext: Int = jpsBitMap.getCells(nodes._2, dir)
-                val pathUNext: Int = jpsBitMap.getCells(nodes._1, dir)
-                val pathDNext: Int = jpsBitMap.getCells(nodes._3, dir)
+//                val nodes = getCurNodes(node, offset + 2)
+//                val nodeM = getKthStep(node, offset << jpsBitMap.BITOFFSET)
+//                val nodeU = (nodeM._1 - dy, nodeM._2 + dx)
+//                val nodeD = (nodeM._1 + dy, nodeM._2 - dx)
+                val nX = x + (dx * ((offset + 2) << jpsBitMap.BITOFFSET))
+                val nY = y + (dy * ((offset + 2) << jpsBitMap.BITOFFSET))
+                val pathMNext: Int = jpsBitMap.getCells(nX, nY, dx, dy)
+                val pathUNext: Int = jpsBitMap.getCells(nX - dy, nY + dx, dx, dy)
+                val pathDNext: Int = jpsBitMap.getCells(nX + dy, nY - dx, dx, dy)
                 val pathM: Long = makeLong(pathMPre, pathMNext)
                 val pathU: Long = makeLong(pathUPre, pathUNext)
                 val pathD: Long = makeLong(pathDPre, pathDNext)
@@ -206,15 +206,20 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
               }
             }
 
-            val nodes = getCurNodes(node, 0)
+//            val nodes = getCurNodes(node, 0)
 //            val maskOffset = getMaskOffSet(node)
-            val maskOffset = dy * (node._2 & jpsBitMap.BITMASK) + dx * (node._1 & jpsBitMap.BITMASK) + (((dx | dy) - 1) >>> 27)
-            val pathMPre: Int = jpsBitMap.getMaskedCells(nodes._2, dir, maskOffset)
-            val pathUPre: Int = jpsBitMap.getMaskedCells(nodes._1, dir, maskOffset)
-            val pathDPre: Int = jpsBitMap.getMaskedCells(nodes._3, dir, maskOffset)
-            val pathMNext: Int = jpsBitMap.getCells(getKthStep(nodes._2, jpsBitMap.BITSPERCELL), dir)
-            val pathUNext: Int = jpsBitMap.getCells(getKthStep(nodes._1, jpsBitMap.BITSPERCELL), dir)
-            val pathDNext: Int = jpsBitMap.getCells(getKthStep(nodes._3, jpsBitMap.BITSPERCELL), dir)
+//            val nodeM = node
+//            val nodeU = (node._1 - dy, node._2 + dx)
+//            val nodeD = (node._1 + dy, node._2 - dx)
+            val maskOffset = dy * (y & jpsBitMap.BITMASK) + dx * (x & jpsBitMap.BITMASK) + (((dx | dy) - 1) >>> 27)
+            val pathMPre: Int = jpsBitMap.getMaskedCells(x, y, dx, dy, maskOffset)
+            val pathUPre: Int = jpsBitMap.getMaskedCells(x - dy, y + dx, dx, dy, maskOffset)
+            val pathDPre: Int = jpsBitMap.getMaskedCells(x + dy, y - dx, dx, dy, maskOffset)
+            val nX = x + (dx << jpsBitMap.BITOFFSET)
+            val nY = y + (dy << jpsBitMap.BITOFFSET)
+            val pathMNext: Int = jpsBitMap.getCells(nX, nY, dx, dy)
+            val pathUNext: Int = jpsBitMap.getCells(nX - dy, nY + dx, dx, dy)
+            val pathDNext: Int = jpsBitMap.getCells(nX + dy, nY - dx, dx, dy)
             val pathM: Long = makeLong(pathMPre, pathMNext)
             val pathU: Long = makeLong(pathUPre, pathUNext)
             val pathD: Long = makeLong(pathDPre, pathDNext)
@@ -224,41 +229,40 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
             val (newUPos, newDPos, newWallPos) = loop(firstPosU, firstPosD, firstPosWall, pathMNext, pathUNext, pathDNext, 0)
 
 
-            if (node._1 == end._1 && (node._2 - end._2).abs < newWallPos) {
+            if (x == end._1 && (y - end._2).abs < (newWallPos - maskOffset)) {
               open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
-            } else if (node._2 == end._2 && (node._1 - end._1).abs < newWallPos) {
+            } else if (x == end._2 && (y - end._1).abs < (newWallPos - maskOffset)) {
               open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
             }else if (newUPos == newDPos && newUPos < newWallPos - 1) {
-              addJumpPoint(Node(getKthStep(node, newUPos - 1 - maskOffset)), dir :: upDir :: downDir :: Nil)
+              addJumpPoint(Node(getKthStep((x, y), newUPos - 1 - maskOffset)), dir :: upDir :: downDir :: Nil)
             } else if (newUPos < newWallPos && newUPos < newDPos) {
-              addJumpPoint(Node(getKthStep(node, newUPos - 1 - maskOffset)), dir :: upDir :: Nil)
+              addJumpPoint(Node(getKthStep((x, y), newUPos - 1 - maskOffset)), dir :: upDir :: Nil)
             } else if (newDPos < newWallPos && newDPos < newUPos) {
-              addJumpPoint(Node(getKthStep(node, newDPos - 1 - maskOffset)), dir :: downDir :: Nil)
+              addJumpPoint(Node(getKthStep((x, y), newDPos - 1 - maskOffset)), dir :: downDir :: Nil)
             }
           }
 
-          path(pos, dir)
+          path(x, y, dx, dy)
         }
 
-        closed += current
+        closed += (current.x << 16) | current.y
         val directions = current.dir
         directions.foreach { dir =>
           val (dx, dy) = dir
-          val curNode = (current.x + dx, current.y + dy)
           if (DiagonalMove(dir)) {
             @tailrec
             def f(x: Int, y: Int): Unit = {
-              if (!isBlock(x, y) && !closed.contains((x, y))) {
-                jumpPoint((x, y), dir)
-                jumpPointsInLine((x + dx, y), (dx, 0))
-                jumpPointsInLine((x, y + dy), (0, dy))
+              if (!isBlock(x, y) && !closed.contains((x << 16) | y)) {
+                jumpPoint(x, y, dx, dy)
+                jumpPointsInLine(x + dx, y, dx, 0)
+                jumpPointsInLine(x, y + dy, 0, dy)
                 f(x + dx, y + dy)
               }
             }
 
             f(current.x + dx, current.y + dy)
           } else {
-            jumpPointsInLine(curNode, dir)
+            jumpPointsInLine(current.x + dx, current.y + dy, dx, dy)
           }
         }
         jpsSearch()
@@ -279,9 +283,9 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
     println(s"grid.length: ${grid.length}, grid(0).length: ${grid(0).length}")
     grid.indices.foreach { i =>
       grid(i).indices.foreach { j =>
-        if (closed.exists(n => n._1 == i && n._2 == j)) fos.write("C ".getBytes)
-        else if (open.exists(n => n.x == i && n.y == j)) fos.write("P ".getBytes)
-        else fos.write(s"${grid(i)(j)} ".getBytes)
+//        if (closed.exists(n => n._1 == i && n._2 == j)) fos.write("C ".getBytes)
+//        else if (open.exists(n => n.x == i && n.y == j)) fos.write("P ".getBytes)
+//        else fos.write(s"${grid(i)(j)} ".getBytes)
       }
       fos.write("\n".getBytes)
     }
@@ -295,9 +299,9 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
     for (i <- startX to endX) {
       for (j <- startY to endY) {
         if (i == x && j == y) print("T ")
-        else if (closed.exists(n => n._1 == i && n._2 == j)) print("C ")
-        else if (open.exists(n => n.x == i && n.y == j)) print("P ")
-        else if (i < 0 || i >= rows || j < 0 || j >= cols) print("B ")
+//        else if (closed.exists(n => n._1 == i && n._2 == j)) print("C ")
+//        else if (open.exists(n => n.x == i && n.y == j)) print("P ")
+//        else if (i < 0 || i >= rows || j < 0 || j >= cols) print("B ")
         else print(s"${grid(i)(j)} ")
       }
       println()
@@ -308,9 +312,9 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
   private def printMap(): Unit = {
     grid.indices.foreach { i =>
       grid(i).indices.foreach { j =>
-        if (closed.exists(n => n._1 == i && n._2 == j)) print("C ")
-        else if (open.exists(n => n.x == i && n.y == j)) print("P ")
-        else print(s"${grid(i)(j)} ")
+//        if (closed.exists(n => n._1 == i && n._2 == j)) print("C ")
+//        else if (open.exists(n => n.x == i && n.y == j)) print("P ")
+//        else print(s"${grid(i)(j)} ")
       }
       println()
     }
