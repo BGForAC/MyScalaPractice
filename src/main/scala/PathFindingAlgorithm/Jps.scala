@@ -70,8 +70,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
   private def reconstructPath(node: Node): List[Node] = {
     @tailrec
     def loop(current: Node, path: List[Node]): List[Node] = {
-      current.parent match {
-        case None => current :: path
+      current.parent match { case None => current :: path
         case Some(parent) => loop(parent, current :: path)
       }
     }
@@ -88,7 +87,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
 //        printMap()
 //        open.foreach(println)
 //        println(s"closed: ${closed.size}, open: ${open.size}")
-//        printMapNearby((293, 446), 30)
+//        printMapNearby((240, 439), 30)
 //        if (iterCount == 0) {
 //          printMap()
 //          iterCount = StdIn.readInt()
@@ -100,7 +99,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
   private final def jpsSearch(): List[Node] = {
     if (open.isEmpty) Nil
     else {
-//      perIter()
+      perIter()
       val current = open.dequeue()
       if (current == end) reconstructPath(current)
       else if (closed.contains(current)) jpsSearch()
@@ -122,7 +121,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
             //            斜向穿墙
             //            if (b1 && b2) addJumpPoint(node, d1 :: d3 :: Nil)
             if (b1) {
-              addJumpPoint(Node(pos), (-dx, dy)  :: Nil)
+              addJumpPoint(Node(pos), (-dx, dy) :: Nil)
             } else if (b2) {
               addJumpPoint(Node(pos), (dx, -dy) :: Nil)
             }
@@ -145,7 +144,8 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
           }
 
           def path(node: (Int, Int), dir: (Int, Int)): Unit = {
-            val (dx, dy) = dir
+            val dx = dir._1
+            val dy = dir._2
             val upDir = getUpDir(dir)
             val downDir = getDownDir(dir)
             def getKthStep(pos: (Int, Int), k: Int): (Int, Int) = {
@@ -153,7 +153,7 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
             }
 
             def getCurNodes(node: (Int, Int), offset: Int): Array[(Int, Int)] = {
-              val newNode = getKthStep(node, offset * 32)
+              val newNode = getKthStep(node, offset * jpsBitMap.BITSPERCELL)
               if (dx == 0 && dy > 0) {
                 Array((newNode._1 - 1, newNode._2), newNode, (newNode._1 + 1, newNode._2))
               }else if (dx > 0 && dy == 0) {
@@ -177,46 +177,60 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
               }
             }
 
+            //防止 -1 变为Long后仍是 -1
+            def makeLong(low: Int, high: Int): Long = {
+              (high.toLong << 32) | (low & 0xffffffffL)
+            }
+
             @tailrec
-            def loop(uPos: Int, dPos: Int, wallPos: Int, offset: Int): (Int, Int, Int) = {
-              if (uPos != 0 || dPos != 0 || wallPos != 0 && (if (offset == 0) uPos > offset || dPos > offset || wallPos > offset else true)) {
-                val newUPos = if (uPos == 0) 1 << 30 else uPos + offset * jpsBitMap.BITSPERCELL
-                val newDPos = if (dPos == 0) 1 << 30 else dPos + offset * jpsBitMap.BITSPERCELL
-                val newWallPos = if (wallPos == 0) 1 << 30 else wallPos + offset * jpsBitMap.BITSPERCELL
+            def loop(posU: Int, posD: Int, posWall: Int, pathMPre: Int, pathUPre: Int, pathDPre: Int, offset: Int): (Int, Int, Int) = {
+              if (posU != 0 || posD != 0 || posWall != 0 && (if (offset == 0) posU > offset || posD > offset || posWall > offset else true)) {
+                val newUPos = if (posU == 0) 1 << 30 else posU + offset * jpsBitMap.BITSPERCELL
+                val newDPos = if (posD == 0) 1 << 30 else posD + offset * jpsBitMap.BITSPERCELL
+                val newWallPos = if (posWall == 0) (offset + 2) * jpsBitMap.BITSPERCELL else posWall + offset * jpsBitMap.BITSPERCELL
                 (newUPos, newDPos, newWallPos)
               } else {
-                val nodes = getCurNodes(node, offset + 1)
-                val cPath: Int = jpsBitMap.getCells(nodes(1), dir)
-                val uPath: Int = jpsBitMap.getCells(nodes(0), dir)
-                val dPath: Int = jpsBitMap.getCells(nodes(2), dir)
-                val uPos = nativeCallObj.ffs((uPath >> 1) & ~uPath)
-                val dPos = nativeCallObj.ffs((dPath >> 1) & ~dPath)
-                val wallPos = nativeCallObj.ffs(~cPath)
-                loop(uPos, dPos, wallPos, offset + 1)
+                val nodes = getCurNodes(node, offset + 2)
+                val pathMNext: Int = jpsBitMap.getCells(nodes(1), dir)
+                val pathUNext: Int = jpsBitMap.getCells(nodes(0), dir)
+                val pathDNext: Int = jpsBitMap.getCells(nodes(2), dir)
+                val pathM: Long = makeLong(pathMPre, pathMNext)
+                val pathU: Long = makeLong(pathUPre, pathUNext)
+                val pathD: Long = makeLong(pathDPre, pathDNext)
+                val posU = nativeCallObj.ffsll((pathU >> 1) & ~pathU)
+                val posD = nativeCallObj.ffsll((pathD >> 1) & ~pathD)
+                val posWall = nativeCallObj.ffsll(~pathM)
+                loop(posU, posD, posWall, pathMNext, pathUNext, pathDNext, offset + 1)
               }
             }
 
             val nodes = getCurNodes(node, 0)
             val maskOffset = getMaskOffSet(node)
-            val cPath: Int = jpsBitMap.getMaskedCells(nodes(1), dir, maskOffset)
-            val uPath: Int = jpsBitMap.getMaskedCells(nodes(0), dir, maskOffset)
-            val dPath: Int = jpsBitMap.getMaskedCells(nodes(2), dir, maskOffset)
-            val fuPos = nativeCallObj.ffs((uPath >> 1) & ~uPath)
-            val fdPos = nativeCallObj.ffs((dPath >> 1) & ~dPath)
-            val fwallPos = nativeCallObj.ffs(~cPath)
-            val (uPos, dPos, wallPos) = loop(fuPos, fdPos, fwallPos, 0)
+            val pathMPre: Int = jpsBitMap.getMaskedCells(nodes(1), dir, maskOffset)
+            val pathUPre: Int = jpsBitMap.getMaskedCells(nodes(0), dir, maskOffset)
+            val pathDPre: Int = jpsBitMap.getMaskedCells(nodes(2), dir, maskOffset)
+            val pathMNext: Int = jpsBitMap.getCells(getKthStep(nodes(1), jpsBitMap.BITSPERCELL), dir)
+            val pathUNext: Int = jpsBitMap.getCells(getKthStep(nodes(0), jpsBitMap.BITSPERCELL), dir)
+            val pathDNext: Int = jpsBitMap.getCells(getKthStep(nodes(2), jpsBitMap.BITSPERCELL), dir)
+            val pathM: Long = makeLong(pathMPre, pathMNext)
+            val pathU: Long = makeLong(pathUPre, pathUNext)
+            val pathD: Long = makeLong(pathDPre, pathDNext)
+            val firstPosU = nativeCallObj.ffsll((pathU >> 1) & ~pathU)
+            val firstPosD = nativeCallObj.ffsll((pathD >> 1) & ~pathD)
+            val firstPosWall = nativeCallObj.ffsll(~pathM)
+            val (posU, posD, wallPos) = loop(firstPosU, firstPosD, firstPosWall, pathMNext, pathUNext, pathDNext, 0)
 
 
-            if (node._1 == end._1 && (node._2 - end._2).abs < wallPos.max(if (uPos != 1 << 30) uPos else 0).max(if (dPos != 1 << 30) dPos else 0)) {
+            if (node._1 == end._1 && (node._2 - end._2).abs < wallPos) {
               open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
-            } else if (node._2 == end._2 && (node._1 - end._1).abs < wallPos.max(if (uPos != 1 << 30) uPos else 0).max(if (dPos != 1 << 30) dPos else 0)) {
+            } else if (node._2 == end._2 && (node._1 - end._1).abs < wallPos) {
               open.enqueue(Node(end._1, end._2, 0, 0, Some(current), Nil))
-            }else if (uPos == dPos && uPos < wallPos - 1) {
-              addJumpPoint(Node(getKthStep(node, uPos - 1 - maskOffset)), dir :: upDir :: downDir :: Nil)
-            } else if (uPos < wallPos && uPos < dPos) {
-              addJumpPoint(Node(getKthStep(node, uPos - 1 - maskOffset)), dir :: upDir :: Nil)
-            } else if (dPos < wallPos && dPos < uPos) {
-              addJumpPoint(Node(getKthStep(node, dPos - 1 - maskOffset)), dir :: downDir :: Nil)
+            }else if (posU == posD && posU < wallPos - 1) {
+              addJumpPoint(Node(getKthStep(node, posU - 1 - maskOffset)), dir :: upDir :: downDir :: Nil)
+            } else if (posU < wallPos && posU < posD) {
+              addJumpPoint(Node(getKthStep(node, posU - 1 - maskOffset)), dir :: upDir :: Nil)
+            } else if (posD < wallPos && posD < posU) {
+              addJumpPoint(Node(getKthStep(node, posD - 1 - maskOffset)), dir :: downDir :: Nil)
             }
           }
 
