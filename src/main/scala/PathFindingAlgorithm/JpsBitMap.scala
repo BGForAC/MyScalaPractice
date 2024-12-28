@@ -5,6 +5,7 @@ import scala.annotation.tailrec
 class JpsBitMap(grid: Array[Array[Byte]]) {
   final val BITSPERCELL = 32
   final val BITOFFSET = powerOfTwo(BITSPERCELL)
+  final val BITMASK = ~(0xffffffff << BITOFFSET)
   final val BLOCK = 0
   final val EMPTY = 1
   final val BLOCKCELL = 0x00000000
@@ -20,11 +21,7 @@ class JpsBitMap(grid: Array[Array[Byte]]) {
 
   private def powerOfTwo(n: Int): Int = {
     require(n > 0 && (n & (n - 1)) == 0, "n must be a power of 2")
-    var count = 0
-    while (Math.pow(2, count).toInt != n) {
-      count += 1
-    }
-    count
+    new NativeCall().ffs(n) - 1
   }
 
   makeMap()

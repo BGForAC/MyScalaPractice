@@ -14,5 +14,9 @@ object NativeCallTest extends App {
   println(new NativeCall().clz(32))
   val a: Long = 12.toLong
   val x = -2147483648
+  println(((-1 | 0) - 1) >>> 27)
+  println(((1 | 0) - 1) >>> 27)
+  println( ~(-1 << 5))
+
 //  println(System.getProperty("java.library.path"))
 }
