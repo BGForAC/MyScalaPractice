@@ -74,7 +74,7 @@ object MapReader {
   }
 
   private def jpsTestGroup1(start: (Int, Int), end: (Int, Int), map: Array[Array[Byte]]): Unit = {
-    val iterCount = 10000
+    val iterCount = 100000
     var path = List[Jps.Node]()
     val jps = new Jps(start, end, map, new JpsBitMap(map))
 
