@@ -80,8 +80,8 @@ class SaveImageExample {
     //路径
     g2d.setColor(COLOR_PATH)
     if (null != path)
-      for (i <- 0 until path.length - 1) {
-        g2d.drawLine(path(i)._1 * 4 + 2, path(i)._2 * 4 + 2, path(i + 1)._1 * 4 + 2, path(i + 1)._2 * 4 + 2)
+      for (i <- path.indices) {
+        g2d.fillRect(path(i)._1 * 4, path(i)._2 * 4, 4, 4)
         //      println(path(i)._1 + " " + path(i)._2)
       }
 
