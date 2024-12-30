@@ -1,0 +1,5 @@
+package MailSystem
+
+object MailSystem {
+
+}

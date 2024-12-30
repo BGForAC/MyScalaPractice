@@ -193,11 +193,41 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
     }
   }
 
+  private def fixPath(nodes: List[Node]): List[(Int, Int)] = {
+    @tailrec
+    def loop(nodes: List[Node], path: List[(Int, Int)]): List[(Int, Int)] = {
+      nodes match {
+        case Nil => path
+        case first :: second :: tail if (first.x - second.x).abs != (first.y - second.y).abs =>
+          //对角线移动到second所在行或列
+          val (dx, dy) = (second.x - first.x, second.y - first.y)
+          val sign = (dx, dy) match {
+            case (0, _) => (0, dy / dy.abs)
+            case (_, 0) => (dx / dx.abs, 0)
+            case _ => (dx / dx.abs, dy / dy.abs)
+          }
+          val min = dx.abs.min(dy.abs)
+          val mid = (first.x + sign._1 * min, first.y + sign._2 * min)
+          loop(second :: tail, mid :: (first.x, first.y) :: path)
+        case first :: tail => loop(tail, (first.x, first.y) :: path)
+      }
+    }
+
+    loop(nodes, Nil)
+  }
+
   def jps(): List[Node] = {
     closed.clear()
     open.clear()
     open.enqueue(new Node(start._1, start._2, 0, 0, None, (0, 1) :: (0, -1) :: (1, 0) :: (-1, 0) :: (1, 1) :: (1, -1) :: (-1, 1) :: (-1, -1) :: Nil))
-    jpsSearch()
+    val path = jpsSearch()
+//    val recordNodes = closed.map(i => (i >>> 16, i & 0x0000ffff)).toArray ++ open.map(node => (node.x, node.y)).toArray
+    val fixedPath = fixPath(path)
+    fixedPath.foreach(println)
+    val closedNodes = closed.map(i => (i >>> 16, i & 0x0000ffff)).toArray
+    val openNodes = open.map(node => (node.x, node.y)).toArray
+    new SaveImageExample().test2(grid, closedNodes, openNodes, fixedPath, s"${start}_${end}_map")
+    path
   }
 }
 

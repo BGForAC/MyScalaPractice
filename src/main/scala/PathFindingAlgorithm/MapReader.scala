@@ -1,7 +1,6 @@
 package PathFindingAlgorithm
 
-import java.io.{File, FileInputStream, IOException}
-import scala.collection.mutable.ArrayBuffer
+import java.io.FileInputStream
 
 object MapReader {
   var rows = 0
@@ -9,8 +8,8 @@ object MapReader {
   var offsetZ = 0
   var offsetX = 0
   var side_length = 0
-//  val start = (5561, 13422)
-//  val end = (-2333, -4172)
+  //  val start = (5561, 13422)
+  //  val end = (-2333, -4172)
   val start = (4830, 13250)
   val end = (-2333, -4132)
 
@@ -39,8 +38,8 @@ object MapReader {
     val inputStream = new FileInputStream(filePath)
     val intBuffer = new Array[Byte](4)
     val seq = for {_ <- 0 until 5
-                     _ = inputStream.read(intBuffer)
-                     res = bytesToInt(intBuffer)} yield(res)
+                   _ = inputStream.read(intBuffer)
+                   res = bytesToInt(intBuffer)} yield (res)
     val IndexedSeq(cols, rows, offsetZ, offsetX, side_length) = seq
     this.rows = rows
     this.cols = cols
@@ -70,25 +69,25 @@ object MapReader {
     val start = getBlockPost(this.start)
     val end = getBlockPost(this.end)
     jpsTestGroup1(start, end, map)
-//    aStarTestGroup1(start, end, map)
+    //    aStarTestGroup1(start, end, map)
   }
 
 
   private def jpsTestGroup1(start: (Int, Int), end: (Int, Int), map: Array[Array[Byte]]): Unit = {
-    val iterCount = 10000
+    val iterCount = 1
     var path = List[Jps.Node]()
     val jps = new Jps(start, end, map, new JpsBitMap(map))
 
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
-    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
+//    jps.jps()
 
     println(s"start: $start, end: $end")
 
