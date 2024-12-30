@@ -1,6 +1,6 @@
-package CompanyProject
+package PathFindingAlgorithm
 
-import CompanyProject.Jps.Node
+import PathFindingAlgorithm.Jps.Node
 
 import java.io.FileOutputStream
 import scala.annotation.tailrec

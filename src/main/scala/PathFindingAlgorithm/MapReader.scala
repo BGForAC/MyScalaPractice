@@ -1,4 +1,4 @@
-package CompanyProject
+package PathFindingAlgorithm
 
 import java.io.{File, FileInputStream, IOException}
 import scala.collection.mutable.ArrayBuffer

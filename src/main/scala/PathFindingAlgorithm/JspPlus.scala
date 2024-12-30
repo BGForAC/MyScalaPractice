@@ -1,0 +1,5 @@
+package PathFindingAlgorithm
+
+class JspPlus {
+
+}
