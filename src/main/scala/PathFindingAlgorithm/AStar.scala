@@ -3,40 +3,15 @@ package PathFindingAlgorithm
 import java.io.FileOutputStream
 import scala.annotation.tailrec
 import scala.collection.mutable
+import AStar.Node
 
 class AStar(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
   private final val StraightMoveCost = 10
   private final val DiagonalMoveCost = 14
+  private final val OBSTACLE: Byte = 0
 
   private val open = mutable.PriorityQueue[Node]()
-  open.enqueue(Node(start._1, start._2, 0, 0, None))
   private val closed = mutable.HashSet[Node]()
-
-  case class Node(x: Int, y: Int, g: Double, h: Double, parent: Option[Node]) extends Ordered[Node] {
-    def f: Double = g + h
-
-    override def compare(that: Node): Int = {
-      val n = if (this.f == that.f) that.h - this.h else that.f - this.f
-      if (n > 0) 1 else if (n < 0) -1 else 0
-    }
-
-    override def equals(that: Any): Boolean = {
-      that match {
-        case (t1, t2) => t1 == this.x && t2 == this.y
-        case obj: Node => obj.x == this.x && obj.y == this.y
-        case _ => false
-      }
-    }
-
-    override def hashCode(): Int = ((this.x * 41) + y) * 41
-
-    override def toString: String = s"Node($x, $y, $g, $h, $f, ${
-      parent match {
-        case Some(p) => p
-        case None => "None"
-      }
-    })"
-  }
 
   private def heuristic(begin: Node, end: Node): Double = {
     val (dx, dy) = ((begin.x - end.x).abs, (begin.y - end.y).abs)
@@ -60,7 +35,7 @@ class AStar(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
     val directions: List[(Int, Int)] = List((1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1))
     directions.flatMap { case (dx, dy) =>
       val (x, y) = (node.x + dx, node.y + dy)
-      if (x < 0 || mx <= x || y < 0 || my <= y || grid(x)(y) == 0) None
+      if (x < 0 || mx <= x || y < 0 || my <= y || grid(x)(y) == OBSTACLE) None
       else {
         val cost = if (dx.abs == dy.abs) DiagonalMoveCost else StraightMoveCost
         Some(Node(x, y, node.g + cost, 0, Some(node)))
@@ -111,9 +86,43 @@ class AStar(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]]) {
       }
     }
   }
+
+
+  def aStarSearch(): List[Node] = {
+    open.clear()
+    closed.clear()
+    open.enqueue(Node(start._1, start._2, 0, 0, None))
+    aStar()
+  }
 }
 
 object AStar {
+  case class Node(x: Int, y: Int, g: Double, h: Double, parent: Option[Node]) extends Ordered[Node] {
+    def f: Double = g + h
+
+    override def compare(that: Node): Int = {
+      val n = if (this.f == that.f) that.h - this.h else that.f - this.f
+      if (n > 0) 1 else if (n < 0) -1 else 0
+    }
+
+    override def equals(that: Any): Boolean = {
+      that match {
+        case (t1, t2) => t1 == this.x && t2 == this.y
+        case obj: Node => obj.x == this.x && obj.y == this.y
+        case _ => false
+      }
+    }
+
+    override def hashCode(): Int = ((this.x * 41) + y) * 41
+
+    override def toString: String = s"Node($x, $y, $g, $h, $f, ${
+      parent match {
+        case Some(p) => p
+        case None => "None"
+      }
+    })"
+  }
+
   def main(args: Array[String]): Unit = {
     Test3()
   }

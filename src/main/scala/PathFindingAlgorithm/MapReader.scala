@@ -9,10 +9,10 @@ object MapReader {
   var offsetZ = 0
   var offsetX = 0
   var side_length = 0
-  val start = (5561, 13422)
-  val end = (-2333, -4172)
-//  val start = (4830, 13250)
-//  val end = (-7333, -6312)
+//  val start = (5561, 13422)
+//  val end = (-2333, -4172)
+  val start = (4830, 13250)
+  val end = (-2333, -4132)
 
   var map: Array[Array[Byte]] = _
 
@@ -73,8 +73,9 @@ object MapReader {
 //    aStarTestGroup1(start, end, map)
   }
 
+
   private def jpsTestGroup1(start: (Int, Int), end: (Int, Int), map: Array[Array[Byte]]): Unit = {
-    val iterCount = 1000
+    val iterCount = 10000
     var path = List[Jps.Node]()
     val jps = new Jps(start, end, map, new JpsBitMap(map))
 
@@ -103,8 +104,24 @@ object MapReader {
     println(s"start: $start, end: $end")
     val emptyMap = Array.ofDim[Byte](rows, cols)
     val aStar = new AStar(start, end, map)
+    val iterCount = 100
+    var path = List[AStar.Node]()
+
+    aStar.aStar()
+    aStar.aStar()
+    aStar.aStar()
+    aStar.aStar()
+    aStar.aStar()
+    aStar.aStar()
+    aStar.aStar()
+    aStar.aStar()
+    aStar.aStar()
+    aStar.aStar()
+    aStar.aStar()
+    aStar.aStar()
+
     val startTime = System.nanoTime()
-    val path = aStar.aStar()
+    for (_ <- 0 until iterCount) path = aStar.aStarSearch()
     val endTime = System.nanoTime()
     println(s"Time: ${(endTime - startTime) / 1e9} seconds")
     path.foreach(node => println(s"${node.x} ${node.y}"))
@@ -113,6 +130,4 @@ object MapReader {
     //    val path1 = new AStar((35, 410), (73, 110), map).aStar()
     //    path1.foreach(node => println(s"${node.x}, ${node.y}"))
   }
-
-
 }

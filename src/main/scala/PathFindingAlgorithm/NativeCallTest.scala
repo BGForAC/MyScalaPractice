@@ -6,7 +6,7 @@ object NativeCallTest extends App {
   println(Integer.reverse(-16777216))
   System.out.println(new NativeCall().ffs(32))
   println(new NativeCall().ffs(~32))
-  println(new NativeCall().clz(32))
+  println(new NativeCall().clzll(32.toLong))
   val a: Long = 12.toLong
   val x = -2147483648
   println(((-1 | 0) - 1) >>> 27)

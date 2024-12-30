@@ -8,3 +8,6 @@ class NativeCall {
   @native def ffsll(value: Long): Int
   @native def clzll(value: Long): Int
 }
+
+object NativeCall {
+}
