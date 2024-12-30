@@ -216,6 +216,51 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
     loop(nodes, Nil)
   }
 
+  def straightReachable(start: (Int, Int), end: (Int, Int)): Boolean = {
+    val (x0, y0) = start
+    val (x1, y1) = end
+    val dx = (x1 - x0).abs
+    val dy = (y1 - y0).abs
+    val sx = if (x0 < x1) 1 else -1
+    val sy = if (y0 < y1) 1 else -1
+    var err = dx - dy
+
+    var x = x0
+    var y = y0
+
+    while (x != x1 || y != y1) {
+      if (gridSurroundedByObstacle(x + 1)(y + 1) == OBSTACLE) return false
+      val e2 = 2 * err
+      if (e2 > -dy) {
+        err -= dy
+        x += sx
+      }
+      if (e2 < dx) {
+        err += dx
+        y += sy
+      }
+    }
+    true
+  }
+
+  def pathOptimize(path: List[(Int, Int)]): List[(Int, Int)] = {
+    @tailrec
+    def loop(path: List[(Int, Int)], optimizedPath: List[(Int, Int)]): List[(Int, Int)] = {
+      path match {
+        case Nil => optimizedPath
+        case first :: second :: third :: tail =>
+          if (straightReachable(first, third)) loop(first :: third :: tail, optimizedPath)
+          else loop(second :: third :: tail, first :: optimizedPath)
+        case first :: second :: Nil => second :: first ::optimizedPath
+      }
+    }
+
+    loop(path, Nil)
+  }
+//  def straightReachable(pos1: Int, pos2: Int): Boolean = {
+//
+//  }
+
   def jps(): List[Node] = {
     closed.clear()
     open.clear()
@@ -223,10 +268,12 @@ class Jps(start: (Int, Int), end: (Int, Int), grid: Array[Array[Byte]], jpsBitMa
     val path = jpsSearch()
 //    val recordNodes = closed.map(i => (i >>> 16, i & 0x0000ffff)).toArray ++ open.map(node => (node.x, node.y)).toArray
     val fixedPath = fixPath(path)
+    val pathOptimized = pathOptimize(fixedPath)
     fixedPath.foreach(println)
+    pathOptimized.foreach(println)
     val closedNodes = closed.map(i => (i >>> 16, i & 0x0000ffff)).toArray
     val openNodes = open.map(node => (node.x, node.y)).toArray
-    new SaveImageExample().test2(grid, closedNodes, openNodes, fixedPath, s"${start}_${end}_map")
+    new SaveImageExample().test2(grid, closedNodes, openNodes, pathOptimized, s"${start}_${end}_map")
     path
   }
 }
