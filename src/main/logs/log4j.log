@@ -1,0 +1,16 @@
+2024-12-31 17:41:48 DEBUG Log4jExample$:9 - This is a debug message
+2024-12-31 17:41:48 INFO  Log4jExample$:10 - This is an info message
+2024-12-31 17:41:48 WARN  Log4jExample$:11 - This is a warning message
+2024-12-31 17:41:48 ERROR Log4jExample$:12 - This is an error message
+2024-12-31 17:42:49 DEBUG Log4jExample$:9 - This is a debug message
+2024-12-31 17:42:49 INFO  Log4jExample$:10 - This is an info message
+2024-12-31 17:42:49 WARN  Log4jExample$:11 - This is a warning message
+2024-12-31 17:42:49 ERROR Log4jExample$:12 - This is an error message
+2024-12-31 17:42:56 DEBUG Log4jExample$:9 - This is a debug message
+2024-12-31 17:42:56 INFO  Log4jExample$:10 - This is an info message
+2024-12-31 17:42:56 WARN  Log4jExample$:11 - This is a warning message
+2024-12-31 17:42:56 ERROR Log4jExample$:12 - This is an error message
+2024-12-31 17:59:49 DEBUG Log4jExample$:6 - This is a debug message
+2024-12-31 17:59:49 INFO  Log4jExample$:7 - This is an info message
+2024-12-31 17:59:49 WARN  Log4jExample$:8 - This is a warning message
+2024-12-31 17:59:49 ERROR Log4jExample$:9 - This is an error message

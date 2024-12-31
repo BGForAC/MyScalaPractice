@@ -2,17 +2,17 @@ package FeatureTest
 
 import akka.actor._
 
-class MyActor extends Actor{
+class MyActor extends Actor {
   override def receive: Receive = {
-      case "hh" => println("hello")
-      case _ => println("world")
+    case "hh" => println("hello")
+    case _ => println("world")
   }
 }
 
-object ActorTest extends App{
+object ActorTest extends App {
   private val system = ActorSystem("MyActorSystem")
   private val myActor = system.actorOf(Props[MyActor], name = "MyActor")
   myActor ! "hh"
-  myActor ! "h"
+  myActor ! "world"
   system.terminate()
 }

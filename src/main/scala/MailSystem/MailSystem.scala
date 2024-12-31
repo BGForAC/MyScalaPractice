@@ -1,5 +1,0 @@
-package MailSystem
-
-object MailSystem {
-
-}
