@@ -2,8 +2,9 @@ package mailSystem.service
 
 import mailSystem.dao.DBHelper
 import mailSystem.entity.{Mail, PersonalMail, SystemMail}
-import mailSystem.utils.{GsonUtils, SnowflakeIdGenerator}
+import mailSystem.utils.SnowflakeIdGenerator
 
+import java.time.LocalDateTime
 import scala.collection.mutable.ListBuffer
 
 object MailService {
@@ -12,34 +13,45 @@ object MailService {
   def systemMails(): ListBuffer[Mail] = {
     val sql = "select * from system_mail"
     val rs = DBHelper.query(sql)
-    var mails: ListBuffer[Mail] = ListBuffer()
+    val mails: ListBuffer[Mail] = ListBuffer()
     while (rs.next()) {
       val mailId = rs.getLong("mail_id")
       val content = rs.getString("content")
       val title = rs.getString("title")
       val attachment = rs.getString("attachment")
       val filter = rs.getString("filter")
-      val publicTime = rs.getDate("public_time")
-      val deadline = rs.getDate("deadline")
-      val createTime = rs.getDate("create_time")
-      val updateTime = rs.getDate("update_time")
-      mails += new SystemMail(mailId, content, title, attachment, filter, publicTime, deadline, createTime, updateTime)
-//      mails += new SystemMail(mailId, senderId, receiverId, title, content, attachment)
+      val publicTime = rs.getTimestamp("public_time")
+      val deadline = rs.getTimestamp("deadline")
+      val createTime = rs.getTimestamp("create_time")
+      val updateTime = rs.getTimestamp("update_time")
+      if (publicTime == null || deadline == null || createTime == null || updateTime == null) {
+        throw new Exception(s"Invalid mail, time is null, check the mail: $mailId in system_mail")
+      }
+      mails += SystemMail(mailId, content, title, attachment, filter, publicTime.toLocalDateTime, deadline.toLocalDateTime, createTime.toLocalDateTime, updateTime.toLocalDateTime)
     }
     mails
   }
 
   def personalMails(playerId: Long): ListBuffer[Mail] = {
-    val sql = "select * from personal_mail where receiver = ?"
+    val sql = "select mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time, sender_id, receiver_id from personal_mail where receiver_id = ?"
     val rs = DBHelper.query(sql, playerId)
-    var mails: ListBuffer[Mail] = ListBuffer()
+    val mails: ListBuffer[Mail] = ListBuffer()
     while (rs.next()) {
-      val mailId = rs.getLong("id")
-      val senderId = rs.getLong("sender_id")
-      val title = rs.getString("title")
+      val mailId = rs.getLong("mail_id")
       val content = rs.getString("content")
+      val title = rs.getString("title")
       val attachment = rs.getString("attachment")
-//      mails += new PersonalMail(mailId, senderId, playerId, title, content, attachment)
+      val filter = rs.getString("filter")
+      val publicTime = rs.getTimestamp("public_time")
+      val deadline = rs.getTimestamp("deadline")
+      val createTime = rs.getTimestamp("create_time")
+      val updateTime = rs.getTimestamp("update_time")
+      val senderId = rs.getLong("sender_id")
+      val receiverId = rs.getLong("receiver_id")
+      if (publicTime == null || deadline == null || createTime == null || updateTime == null) {
+        throw new Exception(s"Invalid mail, time is null, check the mail: $mailId in personal_mail")
+      }
+      mails += PersonalMail(mailId, content, title, attachment, filter, publicTime.toLocalDateTime, deadline.toLocalDateTime, createTime.toLocalDateTime, updateTime.toLocalDateTime, senderId, receiverId)
     }
     mails
   }
@@ -48,9 +60,10 @@ object MailService {
     systemMails() ++ personalMails(playerId)
   }
 
-  def sendMail(senderId: Long, receiverId: Long, title: String, content: String, attachment: String): Unit = {
-    val sql = "insert into personal_mail (sender_id, receiver_id, title, content, attachment) values (?, ?, ?, ?, ?)"
-    DBHelper.add(sql, senderId, receiverId, title, content, attachment)
+  def sendMail(mail: PersonalMail): Unit = {
+    val mailId = snowflakeIdGenerator.nextId()
+    val sql = "insert into personal_mail (mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time, sender_id, receiver_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    DBHelper.add(sql, mailId, mail.content, mail.title, mail.attachment, mail.filter, LocalDateTime.now, LocalDateTime.now.plusMonths(1), LocalDateTime.now, LocalDateTime.now, mail.senderId, mail.receiverId)
   }
 
   def delMail(mailId: Long): Unit = {
@@ -58,17 +71,14 @@ object MailService {
     DBHelper.delete(sql, mailId)
   }
 
-  def addSystemMail(senderId: Long, receiverId: Long, title: String, content: String, attachment: String): Unit = {
+  def addSystemMail(mail: SystemMail): Unit = {
     val mailId = snowflakeIdGenerator.nextId()
-    val sql = "insert into system_mail (id, sender_id, receiver_id, title, content, attachment) values (?, ?, ?, ?, ?, ?)"
-    DBHelper.add(sql, mailId, senderId, receiverId, title, content, attachment)
+    val sql = "insert into system_mail (mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    DBHelper.add(sql, mailId, mail.content, mail.title, mail.attachment, mail.filter, LocalDateTime.now, LocalDateTime.now.plusMonths(1), LocalDateTime.now, LocalDateTime.now)
   }
 
   def delSystemMail(mailId: Long): Unit = {
     val sql = "delete from system_mail where mail_id = ?"
     DBHelper.delete(sql, mailId)
   }
-
-
-
 }

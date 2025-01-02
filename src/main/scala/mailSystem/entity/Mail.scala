@@ -1,27 +1,15 @@
 package mailSystem.entity
 
-trait Mail {
-  protected var mailId: Long = _
-  protected var content: String = _
-  protected var title: String = _
-  protected var attachment: String = _
-  protected var filter: String = _
-  protected var publicTime: java.util.Date = _
-  protected var deadline: java.util.Date = _
-  protected var createTime: java.util.Date = _
-  protected var updateTime: java.util.Date = _
+import java.time.LocalDateTime
 
-  override def toString: String = {
-    "Mail{" +
-      "mailId=" + mailId +
-      ", content='" + content + '\'' +
-      ", title='" + title + '\'' +
-      ", attachment='" + attachment + '\'' +
-      ", filter='" + filter + '\'' +
-      ", publicTime=" + publicTime +
-      ", deadline=" + deadline +
-      ", createTime=" + createTime +
-      ", updateTime=" + updateTime +
-      '}'
-  }
+trait Mail {
+  protected var mailId: Long
+  protected var content: String
+  protected var title: String
+  protected var attachment: String
+  protected var filter: String
+  protected var publicTime: LocalDateTime
+  protected var deadline: LocalDateTime
+  protected var createTime: LocalDateTime
+  protected var updateTime: LocalDateTime
 }

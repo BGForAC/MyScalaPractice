@@ -11,10 +11,15 @@ object DBHelper {
   private final val URL = s"jdbc:mysql://$HOST:$PORT/$DATABASE?useSSL=$SSL&serverTimezone=$TIMEZONE"
 
   private def connection: java.sql.Connection = {
-    java.sql.DriverManager.getConnection(URL, USER, PASSWORD)
+    val connection = java.sql.DriverManager.getConnection(URL, USER, PASSWORD)
+    if (connection == null) {
+      throw new Exception("Failed to connect to database")
+    }
+
+    connection
   }
 
-  def closeConnection(connection: java.sql.Connection): Unit = {
+  private def closeConnection(connection: java.sql.Connection): Unit = {
     connection.close()
   }
 
@@ -49,7 +54,6 @@ object DBHelper {
       val connection = DBHelper.connection
       val ps = connection.prepareStatement(sql)
       for (i <- para.indices) {
-        println(para(i))
         ps.setObject(i + 1, para(i))
       }
       ps.executeUpdate()
@@ -86,7 +90,9 @@ object DBHelper {
       }
       ps.executeQuery()
     } catch {
-      case e: Exception => throw new Exception("Failed to query")
+      case e: Exception => {
+        throw new Exception("Failed to query")
+      }
     }
   }
 

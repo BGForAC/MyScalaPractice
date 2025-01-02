@@ -1,16 +1,13 @@
 package mailSystem.entity
 
-class Item {
-  private var itemId: Long = _
-  private var typeId: Long = _
-  private var name: String = _
-  private var description: String = _
-
-  def this(itemId: Long, typeId: Long, name: String, description: String) {
-    this()
-    this.itemId = itemId
-    this.typeId = typeId
-    this.name = name
-    this.description = description
-  }
+case class Item(
+  private var itemId: Long,
+  private var typeId: Long,
+  private var name: String,
+  private var description: String
+) {
+  def getItemId: Long = itemId
+  def getTypeId: Long = typeId
+  def getName: String = name
+  def getDescription: String = description
 }
