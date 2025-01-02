@@ -1,4 +1,4 @@
-package mailSystem.tools
+package mailSystem.utils
 
 object Log4jExample extends App {
   val logger = Log4jUtils.getLogger(getClass)

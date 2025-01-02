@@ -1,7 +1,7 @@
-package mailSystem.tools
+package mailSystem.utils
 
-object Utils {
-  private def generateRandomString(rules: Int => Iterable[Char])(offset: Int)(length: Int): String = {
+object MyUtils {
+  def generateRandomString(rules: Int => Iterable[Char])(offset: Int)(length: Int): String = {
     val random = new scala.util.Random
     val fixedLength = (if (offset == 0) 0 else random.nextInt(offset)) + length
     rules(fixedLength).mkString

@@ -1,4 +1,4 @@
-package com.nirvana.core
+package mailSystem.utils
 
 import grizzled.slf4j.Logging
 import org.apache.commons.lang3.StringUtils

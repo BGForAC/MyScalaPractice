@@ -1,4 +1,4 @@
-package mailSystem.tools
+package mailSystem.utils
 
 import org.apache.log4j.LogManager
 
