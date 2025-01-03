@@ -8,18 +8,18 @@ object MyUtils {
     now.plusYears(year).plusMonths(month).plusDays(day).plusHours(hour).plusMinutes(minute).plusSeconds(seconds)
   }
 
-  val nextYear: LocalDateTime => LocalDateTime = nextMoment(1)(0)(0)(0)(0)(0)
-  val nextMonth: LocalDateTime => LocalDateTime = nextMoment(0)(1)(0)(0)(0)(0)
-  val nextDay: LocalDateTime => LocalDateTime = nextMoment(0)(0)(1)(0)(0)(0)
-  val nextHour: LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(1)(0)(0)
-  val nextMinute: LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(0)(1)(0)
-  val nextSecond: LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(0)(0)(1)
-  val momentNext: Int => Int => Int => Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment
-  val yearNext: Int => Int => Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment(1)
-  val monthNext: Int => Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(1)
-  val dayNext: Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(1)
-  val hourNext: Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(1)
-  val minuteNext: Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(0)(1)
+//  val nextYear: LocalDateTime => LocalDateTime = nextMoment(1)(0)(0)(0)(0)(0)
+//  val nextMonth: LocalDateTime => LocalDateTime = nextMoment(0)(1)(0)(0)(0)(0)
+//  val nextDay: LocalDateTime => LocalDateTime = nextMoment(0)(0)(1)(0)(0)(0)
+//  val nextHour: LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(1)(0)(0)
+//  val nextMinute: LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(0)(1)(0)
+//  val nextSecond: LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(0)(0)(1)
+//  val momentNext: Int => Int => Int => Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment
+//  val yearNext: Int => Int => Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment(1)
+//  val monthNext: Int => Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(1)
+//  val dayNext: Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(1)
+//  val hourNext: Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(1)
+//  val minuteNext: Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(0)(1)
 
   val generateAlphaNumericRandomLength = generateStringRandomLength(RandomGenerator.generateRandomAlphaNumeric) _
   val generateAlphaRandomLength = generateStringRandomLength(RandomGenerator.generateRandomAlpha) _

@@ -99,7 +99,7 @@ object PlayerService {
     if (player.getMailsCollect.contains(mail.getMailId.toString)) throw new Exception(s"玩家 ${player.getName} 已经领取过邮件 ${mail.getMailId} 的附件")
     //    if (player.getMailsCollect.contains(mail.getMailId.toString)) println(s"玩家 ${player.getName} 已经领取过邮件 ${mail.getMailId} 的附件")
 
-    attachment.foreach(println)
+//    attachment.foreach(println)
     val sql1 = s"update $tableName set mails_collect = concat(coalesce(mails_collect), ?) where player_id = ?"
     val sql2 = s"insert into $tableNameForItem (player_id, item_id, quantity) values (?, ?, ?)" +
       s"on duplicate key update quantity = quantity + values(quantity)"

@@ -79,14 +79,10 @@ object DBHelper {
     val connection = DBHelper.getConnection
     try {
       val ps = connection.prepareStatement(sql)
-      try {
-        for (i <- para.indices) {
-          ps.setObject(i + 1, para(i))
-        }
-        (ps.executeQuery(), connection)
-      } finally {
-        ps.close()
+      for (i <- para.indices) {
+        ps.setObject(i + 1, para(i))
       }
+      (ps.executeQuery(), connection)
     } catch {
       case e: Exception =>
         DBHelper.closeConnection(connection)
