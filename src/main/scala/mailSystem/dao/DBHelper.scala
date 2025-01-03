@@ -17,10 +17,9 @@ object DBHelper {
       try {
         dataSource = DruidDataSourceFactory.createDataSource(druidProps)
       } catch {
-        case e: Exception => {
+        case e: Exception =>
           Log4jUtils.getLogger(this.getClass).error("数据库连接池初始化失败")
           throw new Exception(e)
-        }
       }
     }
   }
@@ -45,11 +44,16 @@ object DBHelper {
   private def executeUpdate(sql: String, para: Seq[Any], failComment: String): Int = {
     val connection = DBHelper.getConnection
     try {
+      var rows = 0
       val ps = connection.prepareStatement(sql)
-      for (i <- para.indices) {
-        ps.setObject(i + 1, para(i))
+      try {
+        for (i <- para.indices) {
+          ps.setObject(i + 1, para(i))
+        }
+        rows = ps.executeUpdate()
+      } finally {
+        ps.close()
       }
-      val rows = ps.executeUpdate()
       connection.commit()
       rows
     } catch {
@@ -75,14 +79,49 @@ object DBHelper {
     val connection = DBHelper.getConnection
     try {
       val ps = connection.prepareStatement(sql)
-      for (i <- para.indices) {
-        ps.setObject(i + 1, para(i))
+      try {
+        for (i <- para.indices) {
+          ps.setObject(i + 1, para(i))
+        }
+        (ps.executeQuery(), connection)
+      } finally {
+        ps.close()
       }
-      (ps.executeQuery(), connection)
     } catch {
       case e: Exception =>
         DBHelper.closeConnection(connection)
         throw new Exception("查询失败" + e)
+    }
+  }
+
+  def closeRsConn(rs: (java.sql.ResultSet, Connection)): Unit = {
+    if (rs._1 != null) {
+      rs._1.close()
+    }
+    DBHelper.closeConnection(rs._2)
+  }
+
+  def atomicUpdate(paras: Seq[Seq[Any]]): Unit = {
+    val connection = DBHelper.getConnection
+    try {
+      for (i <- paras.indices) {
+        val ps = connection.prepareStatement(paras(i).head.asInstanceOf[String])
+        try {
+          for (j <- 1 until paras(i).length) {
+            ps.setObject(j, paras(i)(j))
+          }
+          ps.executeUpdate()
+        } finally {
+          ps.close()
+        }
+      }
+      connection.commit()
+    } catch {
+      case e: Exception =>
+        connection.rollback()
+        throw new Exception("事务执行失败" + e)
+    } finally {
+      DBHelper.closeConnection(connection)
     }
   }
 }

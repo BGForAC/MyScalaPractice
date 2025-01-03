@@ -70,10 +70,9 @@ object MyUtils {
       for (line <- source.getLines) {
         if (line.exists(_ == '=')) {
           val Array(key, value) = line.split("=", 2)
-          println(s"key: $key, value: $value")
           key match {
-            case _ if key.startsWith("//") => println(s"一个注释: $value")
-            case _ if key.trim.isEmpty => println("空键")
+            case _ if key.startsWith("//") => // 注释，忽略
+            case _ if key.trim.isEmpty => // 空键，忽略
             case _ => config.setProperty(key.trim, value.trim)
           }
         }

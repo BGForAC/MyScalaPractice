@@ -14,4 +14,12 @@ trait Mail {
   protected var updateTime: LocalDateTime
 
   def getMailId: Long = mailId
+  def getContent: String = content
+  def getTitle: String = title
+  def getAttachment: String = attachment
+  def getFilter: String = filter
+  def getPublicTime: LocalDateTime = publicTime
+  def getDeadline: LocalDateTime = deadline
+  def getCreateTime: LocalDateTime = createTime
+  def getUpdateTime: LocalDateTime = updateTime
 }

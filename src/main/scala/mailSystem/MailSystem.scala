@@ -2,23 +2,23 @@ package mailSystem
 
 import mailSystem.entity.{Mail, PersonalMail, SystemMail}
 import mailSystem.service.{ItemService, MailService, PlayerService}
-import mailSystem.utils.{GsonUtils, MyUtils}
+import mailSystem.utils.{MapBeanUtils, MyUtils}
 
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
 object MailSystem {
   def main(args: Array[String]): Unit = {
-    actionCollectAttachments(5)
+    actionReadMails(20)
   }
 
-  private def getAllPlayersId(): Array[Long] = {
+  private def allPlayersId: Array[Long] = {
     val players = PlayerService.players()
     if (players.isEmpty) throw new Exception("没有找到任何玩家")
     players.map(player => player.getPlayerId).toArray
   }
 
-  private def getAllItemsId(): Array[Long] = {
+  private def allItemsID: Array[Long] = {
     val items = ItemService.items()
     if (items.isEmpty) throw new Exception("没有找到任何物品")
     items.map(item => item.getItemId).toArray
@@ -37,7 +37,7 @@ object MailSystem {
   }
 
   def actionLoadRandomPlayerMails(): (ArrayBuffer[Mail], Long) = {
-    val playerId = getRandom(getAllPlayersId())
+    val playerId = getRandom(allPlayersId)
     (actionLoadPlayerMails(playerId), playerId)
   }
 
@@ -52,13 +52,14 @@ object MailSystem {
   }
 
   private def generateRandomItemIds(offset: Int)(length: Int): Array[Long] = {
-    val itemsId = getAllItemsId()
+    val itemsId = allItemsID
     val fixedLength = (if (offset == 0) 0 else Random.nextInt(offset)) + length
     (for (_ <- 1 to fixedLength) yield getRandom(itemsId)).toArray
   }
 
   private def generateRandomAttachment(): String = {
-    GsonUtils.map2Json(generateRandomItemIds(0)(Random.nextInt(5)).map(id => (id.toString, MyUtils.generateNumericRandomLength(5)(0))).toMap)
+    val map = generateRandomItemIds(0)(Random.nextInt(5)).map(id => (id.toString, Random.nextInt(1000) + 1)).toMap
+    MapBeanUtils.map2Json(map)
   }
 
   private def sendMail(senderId: Long, receiverId: Long, attachment: String): Unit = {
@@ -66,7 +67,7 @@ object MailSystem {
   }
 
   def actionSendMails(count: Int): Unit = {
-    val playersId = getAllPlayersId()
+    val playersId = allPlayersId
     val playerCount = playersId.length
     for (_ <- 1 to count) {
       val senderId = Random.nextInt(playerCount)
@@ -83,6 +84,7 @@ object MailSystem {
   def actionAddSystemMails(count: Int): Unit = {
     for (_ <- 1 to count) {
       val attachment = generateRandomAttachment()
+      println(attachment)
       addSystemMail(attachment)
     }
   }
@@ -98,7 +100,7 @@ object MailSystem {
   }
 
   private def readMail(mails: Seq[Mail], playerId: Long): Unit = {
-    PlayerService.readMail(playerId, getRandom(mails).getMailId)
+    PlayerService.readMail(PlayerService.getPlayer(playerId), getRandom(mails).getMailId)
   }
 
   def actionReadMails(count: Int): Unit = {
@@ -107,14 +109,17 @@ object MailSystem {
     if (mails.isEmpty) throw new Exception("没有邮件")
     else {
       for (_ <- 1 to count) {
-        readMail(mails, playerId)
+        try {
+          readMail(mails, playerId)
+        } catch {
+          case e: Exception => println("做点什么" + e)
+        }
       }
-      println(s"玩家 $playerId 读取了邮件")
     }
   }
 
   private def collectAttachment(mails: Seq[Mail], playerId: Long): Unit = {
-    PlayerService.collectAttachment(playerId, getRandom(mails).getMailId)
+    PlayerService.collectAttachment(PlayerService.getPlayer(playerId), getRandom(mails))
   }
 
   def actionCollectAttachments(count: Int): Unit = {
@@ -123,9 +128,12 @@ object MailSystem {
     if (mails.isEmpty) throw new Exception("没有邮件")
     else {
       for (_ <- 1 to count) {
-        collectAttachment(mails, playerId)
+        try {
+          collectAttachment(mails, playerId)
+        } catch {
+          case e: Exception => println("做点什么" + e)
+        }
       }
-      println(s"玩家 $playerId 收取了附件")
     }
   }
 

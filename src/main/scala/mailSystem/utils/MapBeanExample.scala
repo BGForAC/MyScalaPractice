@@ -9,7 +9,7 @@ object MapBeanExample{
 
   def recMapTest() = {
     val strMap = Map("mail_read" -> Map("mail_id" -> "1", "mail_id2" -> "2"), "mail_receive" -> Map("mail_id" -> "3", "mail_id2" -> "4"))
-    val str = GsonUtils.map2Json(strMap)
+    val str = MapBeanUtils.map2Json(strMap)
     println(str)
     val strMap2 = MapBean.toMutableMap(str)
     println(strMap2)
@@ -17,7 +17,7 @@ object MapBeanExample{
 
   def stringMapTest() = {
     val strMap = Map("mail_read" -> "1,2,3", "mail_receive" -> "4,5,6")
-    val str = GsonUtils.map2Json(strMap)
+    val str = MapBeanUtils.map2Json(strMap)
     println(str)
     val strMap2 = MapBean.toMutableMap(str)
     println(strMap2)

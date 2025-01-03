@@ -10,7 +10,11 @@ object ItemService {
   private val snowflakeIdGenerator = new SnowflakeIdGenerator(0, 0)
   private final val tableName = "item"
 
-  def addItem(name: String, description: String, typeCode: Long): Unit = {
+  def addItem(name: String, description: String, typeCode: Int): Unit = {
+    require(name != null && name.nonEmpty, "物品名称不能为空")
+    require(description != null && description.nonEmpty, "物品描述不能为空")
+    require(typeCode > 0, "物品类型不能为空")
+
     val itemId = snowflakeIdGenerator.nextId()
     val sql = s"insert into $tableName (item_id, description, name, type_id) values (?, ?, ?, ?)"
     DBHelper.add(sql, itemId, description, name, typeCode)
@@ -29,7 +33,7 @@ object ItemService {
         items += Item(itemId, typeId, name, description)
       }
     } finally {
-      rs._2.close()
+      DBHelper.closeRsConn(rs)
     }
     items
   }

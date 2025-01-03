@@ -45,6 +45,9 @@ case class PersonalMail(
     this.filter = filter
   }
 
+  def getSenderId: Long = senderId
+  def getReceiverId: Long = receiverId
+
   override def toString: String = {
     "PersonalMail{" +
       "senderId='" + senderId + '\'' +

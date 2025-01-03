@@ -2,7 +2,7 @@ package mailSystem.service
 
 import mailSystem.dao.DBHelper
 import mailSystem.entity.{Mail, PersonalMail, SystemMail}
-import mailSystem.utils.SnowflakeIdGenerator
+import mailSystem.utils.{MapBean, SnowflakeIdGenerator}
 
 import java.time.LocalDateTime
 import scala.collection.mutable.ArrayBuffer
@@ -34,7 +34,7 @@ object MailService {
         mails += SystemMail(mailId, content, title, attachment, filter, publicTime.toLocalDateTime, deadline.toLocalDateTime, createTime.toLocalDateTime, updateTime.toLocalDateTime)
       }
     } finally {
-      rs._2.close()
+      DBHelper.closeRsConn(rs)
     }
     mails
   }
@@ -62,7 +62,7 @@ object MailService {
         mails += PersonalMail(mailId, content, title, attachment, filter, publicTime.toLocalDateTime, deadline.toLocalDateTime, createTime.toLocalDateTime, updateTime.toLocalDateTime, senderId, receiverId)
       }
     } finally {
-      rs._2.close()
+      DBHelper.closeRsConn(rs)
     }
     mails
   }
@@ -72,6 +72,12 @@ object MailService {
   }
 
   def sendMail(mail: PersonalMail): Unit = {
+    require(mail.senderId > 0, "发件人不能为空")
+    require(mail.receiverId > 0, "收件人不能为空")
+    require(mail.title != null && mail.title.nonEmpty, "邮件标题不能为空")
+    require(mail.content != null && mail.content.nonEmpty, "邮件内容不能为空")
+    require(MapBean.toMutableMap(mail.filter) != MapBean.empty, "邮件过滤条件不能为空")
+
     val mailId = snowflakeIdGeneratorForPersonalMail.nextId()
     val sql = s"insert into $tableNameForPersonalMail (mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time, sender_id, receiver_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     val time = LocalDateTime.now
@@ -84,6 +90,10 @@ object MailService {
   }
 
   def addSystemMail(mail: SystemMail): Unit = {
+    require(mail.title != null && mail.title.nonEmpty, "邮件标题不能为空")
+    require(mail.content != null && mail.content.nonEmpty, "邮件内容不能为空")
+    require(MapBean.toMutableMap(mail.filter) != MapBean.empty, "邮件过滤条件不能为空")
+
     val mailId = snowflakeIdGeneratorForSystemMail.nextId()
     val sql = s"insert into $tableNameForSystemMail (mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
     val time = LocalDateTime.now
@@ -94,5 +104,4 @@ object MailService {
     val sql = s"delete from $tableNameForSystemMail where mail_id = ?"
     DBHelper.delete(sql, mailId)
   }
-
 }
