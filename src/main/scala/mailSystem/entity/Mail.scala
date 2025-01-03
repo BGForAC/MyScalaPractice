@@ -12,4 +12,6 @@ trait Mail {
   protected var deadline: LocalDateTime
   protected var createTime: LocalDateTime
   protected var updateTime: LocalDateTime
+
+  def getMailId: Long = mailId
 }

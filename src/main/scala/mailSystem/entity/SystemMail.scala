@@ -24,6 +24,11 @@ case class SystemMail(
     this.content = content
   }
 
+  def this(title: String, content: String, attachment: String) = {
+    this(title, content)
+    this.attachment = attachment
+  }
+
   def this(title: String, content: String, attachment: String, filter: String) = {
     this(title, content)
     this.attachment = attachment

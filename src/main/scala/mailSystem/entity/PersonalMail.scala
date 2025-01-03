@@ -32,6 +32,12 @@ case class PersonalMail(
     this.content = content
   }
 
+  def this(senderId: Long, receiverId: Long, title: String, content: String, attachment: String) = {
+    this(senderId, receiverId, title)
+    this.content = content
+    this.attachment = attachment
+  }
+
   def this(senderId: Long, receiverId: Long, title: String, content: String, attachment: String, filter: String) = {
     this(senderId, receiverId, title)
     this.content = content

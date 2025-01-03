@@ -1,6 +1,7 @@
 package mailSystem.utils
 
 import java.time.LocalDateTime
+import java.util.Properties
 
 object MyUtils {
   private def nextMoment(year: Int)(month: Int)(day: Int)(hour: Int)(minute: Int)(seconds: Int)(now: LocalDateTime): LocalDateTime = {
@@ -16,7 +17,8 @@ object MyUtils {
   val momentNext: Int => Int => Int => Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment
   val yearNext: Int => Int => Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment(1)
   val monthNext: Int => Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(1)
-  val dayNext: Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(1) val hourNext: Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(1)
+  val dayNext: Int => Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(1)
+  val hourNext: Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(1)
   val minuteNext: Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(0)(1)
 
   val generateAlphaNumericRandomLength = generateStringRandomLength(RandomGenerator.generateRandomAlphaNumeric) _
@@ -60,6 +62,26 @@ object MyUtils {
     private def randomNumeric(): Char = (random.nextInt(10) + '0').toChar
 
     def generateRandomNumeric(length: Int): String = (for (_ <- 1 to length) yield randomNumeric()).mkString
+  }
+
+  def readConfig(config: Properties, filename: String): Properties = {
+    val source = scala.io.Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(filename))
+    try {
+      for (line <- source.getLines) {
+        if (line.exists(_ == '=')) {
+          val Array(key, value) = line.split("=", 2)
+          println(s"key: $key, value: $value")
+          key match {
+            case _ if key.startsWith("//") => println(s"一个注释: $value")
+            case _ if key.trim.isEmpty => println("空键")
+            case _ => config.setProperty(key.trim, value.trim)
+          }
+        }
+      }
+    } finally {
+      source.close()
+    }
+    config
   }
 
   def main(args: Array[String]): Unit = {
