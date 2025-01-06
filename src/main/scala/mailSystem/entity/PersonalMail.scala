@@ -13,11 +13,13 @@ case class PersonalMail(
   var createTime: LocalDateTime,
   var updateTime: LocalDateTime,
   var senderId: Long,
-  var receiverId: Long
+  var receiverId: Long,
+  var read: Boolean,
+  var collect: Boolean
 ) extends Mail{
 
   def this() = {
-    this(0, "", "", "{}", "{}", null, null, null, null, 0, 0)
+    this(0, "", "", "{}", "{}", null, null, null, null, 0, 0, false, false)
   }
 
   def this(senderId: Long, receiverId: Long, title: String) = {
@@ -45,6 +47,23 @@ case class PersonalMail(
     this.filter = filter
   }
 
+  def this(senderId: Long, receiverId: Long, title: String, content: String, attachment: String, filter: String, publicTime: LocalDateTime, deadline: LocalDateTime) = {
+    this(senderId, receiverId, title, content, attachment, filter)
+    this.publicTime = publicTime
+    this.deadline = deadline
+  }
+
+  def this(senderId: Long, receiverId: Long, title: String, content: String, attachment: String, filter: String, publicTime: LocalDateTime, deadline: LocalDateTime, createTime: LocalDateTime, updateTime: LocalDateTime) = {
+    this(senderId, receiverId, title, content, attachment, filter, publicTime, deadline)
+    this.createTime = createTime
+    this.updateTime = updateTime
+  }
+
+  def this(mailId: Long, content: String, title: String, attachment: String, filter: String, publicTime: LocalDateTime, deadline: LocalDateTime, createTime: LocalDateTime, updateTime: LocalDateTime, senderId: Long, receiverId: Long) = {
+    this(senderId, receiverId, title, content, attachment, filter, publicTime, deadline, createTime, updateTime)
+    this.mailId = mailId
+  }
+
   def getSenderId: Long = senderId
   def getReceiverId: Long = receiverId
 
@@ -61,6 +80,8 @@ case class PersonalMail(
       ", deadline=" + deadline +
       ", createTime=" + createTime +
       ", updateTime=" + updateTime +
+      ", read=" + read +
+      ", collect=" + collect +
       '}'
   }
 }

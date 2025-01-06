@@ -4,10 +4,10 @@ import java.time.LocalDateTime
 import java.util.Properties
 
 object MyUtils {
-  private def nextMoment(year: Int)(month: Int)(day: Int)(hour: Int)(minute: Int)(seconds: Int)(now: LocalDateTime): LocalDateTime = {
-    now.plusYears(year).plusMonths(month).plusDays(day).plusHours(hour).plusMinutes(minute).plusSeconds(seconds)
-  }
-
+//  private def nextMoment(year: Int)(month: Int)(day: Int)(hour: Int)(minute: Int)(seconds: Int)(now: LocalDateTime): LocalDateTime = {
+//    now.plusYears(year).plusMonths(month).plusDays(day).plusHours(hour).plusMinutes(minute).plusSeconds(seconds)
+//  }
+//
 //  val nextYear: LocalDateTime => LocalDateTime = nextMoment(1)(0)(0)(0)(0)(0)
 //  val nextMonth: LocalDateTime => LocalDateTime = nextMoment(0)(1)(0)(0)(0)(0)
 //  val nextDay: LocalDateTime => LocalDateTime = nextMoment(0)(0)(1)(0)(0)(0)

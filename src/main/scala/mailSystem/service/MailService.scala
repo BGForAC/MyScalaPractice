@@ -29,9 +29,9 @@ object MailService {
         val createTime = rs._1.getTimestamp("create_time")
         val updateTime = rs._1.getTimestamp("update_time")
         if (publicTime == null || deadline == null || createTime == null || updateTime == null) {
-          throw new Exception(s"Invalid mail, time is null, check the mail: $mailId in system_mail")
+          throw new Exception(s"非法的邮箱，时间为空，请检查邮箱: $mailId in system_mail")
         }
-        mails += SystemMail(mailId, content, title, attachment, filter, publicTime.toLocalDateTime, deadline.toLocalDateTime, createTime.toLocalDateTime, updateTime.toLocalDateTime)
+        mails += new SystemMail(mailId, content, title, attachment, filter, publicTime.toLocalDateTime, deadline.toLocalDateTime, createTime.toLocalDateTime, updateTime.toLocalDateTime)
       }
     } finally {
       DBHelper.closeRsConn(rs)
@@ -57,9 +57,9 @@ object MailService {
         val senderId = rs._1.getLong("sender_id")
         val receiverId = rs._1.getLong("receiver_id")
         if (publicTime == null || deadline == null || createTime == null || updateTime == null) {
-          throw new Exception(s"Invalid mail, time is null, check the mail: $mailId in personal_mail")
+          throw new Exception(s"非法的邮箱，时间为空，请检查邮箱: $mailId in personal_mail")
         }
-        mails += PersonalMail(mailId, content, title, attachment, filter, publicTime.toLocalDateTime, deadline.toLocalDateTime, createTime.toLocalDateTime, updateTime.toLocalDateTime, senderId, receiverId)
+        mails += new PersonalMail(mailId, content, title, attachment, filter, publicTime.toLocalDateTime, deadline.toLocalDateTime, createTime.toLocalDateTime, updateTime.toLocalDateTime, senderId, receiverId)
       }
     } finally {
       DBHelper.closeRsConn(rs)

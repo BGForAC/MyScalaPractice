@@ -12,6 +12,8 @@ trait Mail {
   protected var deadline: LocalDateTime
   protected var createTime: LocalDateTime
   protected var updateTime: LocalDateTime
+  protected var read: Boolean
+  protected var collect: Boolean
 
   def getMailId: Long = mailId
   def getContent: String = content
@@ -22,4 +24,6 @@ trait Mail {
   def getDeadline: LocalDateTime = deadline
   def getCreateTime: LocalDateTime = createTime
   def getUpdateTime: LocalDateTime = updateTime
+  def isRead: Boolean = read
+  def isCollect: Boolean = collect
 }

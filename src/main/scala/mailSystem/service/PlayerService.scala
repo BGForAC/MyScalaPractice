@@ -92,7 +92,7 @@ object PlayerService {
     DBHelper.update(sql, s"${mailId.toString},", player.getPlayerId)
   }
 
-  def collectAttachment(player: Player, mail: Mail): Unit = {
+  def collectAttachment(playerId: Long, mail: Mail): Unit = {
     val attachment = MapBean.toMutableMap(mail.getAttachment).toMap.asInstanceOf[Map[String, Int]]
     if (attachment.isEmpty) throw new Exception(s"邮件 ${mail.getMailId} 没有附件")
     //    if (attachment.isEmpty) println(s"邮件 ${mail.getMailId} 没有附件")
@@ -103,10 +103,14 @@ object PlayerService {
     val sql1 = s"update $tableName set mails_collect = concat(coalesce(mails_collect), ?) where player_id = ?"
     val sql2 = s"insert into $tableNameForItem (player_id, item_id, quantity) values (?, ?, ?)" +
       s"on duplicate key update quantity = quantity + values(quantity)"
-    val para1 = Seq(sql1, s"${mail.getMailId},", player.getPlayerId)
-    val para2 = attachment.map { case (itemId, quantity) => Seq(sql2, player.getPlayerId, itemId.toLong, quantity) }.toSeq
+    val para1 = Seq(sql1, s"${mail.getMailId},", playerId)
+    val para2 = attachment.map { case (itemId, quantity) => Seq(sql2, playerId, itemId.toLong, quantity) }.toSeq
     val paras = Seq(para1) ++ para2
     DBHelper.atomicUpdate(paras)
+  }
+
+  def collectAttachment(player: Player, mail: Mail): Unit = {
+    collectAttachment(player.getPlayerId, mail)
     println(s"玩家 ${player.getName} 领取了邮件 ${mail.getMailId} 的附件")
   }
 }

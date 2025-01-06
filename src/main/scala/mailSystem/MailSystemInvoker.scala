@@ -12,23 +12,26 @@ object MailSystemInvoker {
     actionCollectAttachments(20)
   }
 
-  private def allPlayersId: Array[Long] = {
+  def allPlayersId: Array[Long] = {
     val players = PlayerService.players()
 
     if (players.isEmpty) Array.empty
     else players.map(player => player.getPlayerId).toArray
   }
 
-  private def allItemsID: Array[Long] = {
+  def allItemsID: Array[Long] = {
     val items = ItemService.items()
 
     if (items.isEmpty) Array.empty
     else items.map(item => item.getItemId).toArray
   }
 
-  private def getRandom[T](collection: Seq[T]): T = {
+  def getRandom[T](collection: Seq[T]): T = {
     collection(Random.nextInt(collection.length))
   }
+
+  def randomPlayerId: Long = getRandom(allPlayersId)
+  def randomItemId: Long = getRandom(allItemsID)
 
   def actionLoadPlayerMails(playerId: Long): ArrayBuffer[Mail] = {
     val mails: ArrayBuffer[Mail] = MailService.mails(playerId)
@@ -42,7 +45,7 @@ object MailSystemInvoker {
     (actionLoadPlayerMails(playerId), playerId)
   }
 
-  private def addPlayer(name: String): Unit = {
+  def addPlayer(name: String): Unit = {
     PlayerService.addPlayer(name)
   }
 
@@ -52,13 +55,13 @@ object MailSystemInvoker {
     }
   }
 
-  private def generateRandomItemIds(offset: Int)(length: Int): Array[Long] = {
+  def generateRandomItemIds(offset: Int)(length: Int): Array[Long] = {
     val itemsId = allItemsID
     val fixedLength = (if (offset == 0) 0 else Random.nextInt(offset)) + length
     (for (_ <- 1 to fixedLength) yield getRandom(itemsId)).toArray
   }
 
-  private def sendMail(senderId: Long, receiverId: Long, attachment: String, filter: String): Unit = {
+  def sendMail(senderId: Long, receiverId: Long, attachment: String, filter: String): Unit = {
     val newMail = new PersonalMail(senderId, receiverId, randomTitle, randomContent, attachment, filter)
     MailService.sendMail(newMail)
   }
@@ -75,7 +78,7 @@ object MailSystemInvoker {
     }
   }
 
-  private def addSystemMail(attachment: String, filter: String): Unit = {
+  def addSystemMail(attachment: String, filter: String): Unit = {
     val newMail = new SystemMail(randomTitle, randomContent, attachment, filter)
     MailService.addSystemMail(newMail)
   }
@@ -88,7 +91,7 @@ object MailSystemInvoker {
     }
   }
 
-  private def addItem(): Unit = {
+  def addItem(): Unit = {
     ItemService.addItem(randomItemName,randomItemDescription,randomItemTypeId)
   }
 
@@ -98,7 +101,7 @@ object MailSystemInvoker {
     }
   }
 
-  private def readMail(mails: Seq[Mail], playerId: Long): Unit = {
+  def readMail(mails: Seq[Mail], playerId: Long): Unit = {
     PlayerService.readMail(PlayerService.getPlayer(playerId), getRandom(mails).getMailId)
   }
 
@@ -116,7 +119,7 @@ object MailSystemInvoker {
     }
   }
 
-  private def collectAttachment(mails: Seq[Mail], playerId: Long): Unit = {
+  def collectAttachment(mails: Seq[Mail], playerId: Long): Unit = {
     PlayerService.collectAttachment(PlayerService.getPlayer(playerId), getRandom(mails))
   }
 
@@ -134,20 +137,20 @@ object MailSystemInvoker {
     }
   }
 
-  private def generateRandomAttachment(): String = {
+  def generateRandomAttachment(): String = {
     val map = generateRandomItemIds(0)(Random.nextInt(5)).map(id => (id.toString, Random.nextInt(1000) + 1)).toMap
     MapBeanUtils.map2Json(map)
   }
 
-  private def generateRandomFilter(): String = {
+  def generateRandomFilter(): String = {
     val map = Map("level" -> (Random.nextInt(100) + 1), "vip" -> (Random.nextInt(10) + 1))
     MapBeanUtils.map2Json(map)
   }
 
-  private def randomTitle: String = MyUtils.generateAlphaRandomLength(4)(6)
-  private def randomContent: String = MyUtils.generateAlphaRandomLength(100)(20)
-  private def randomPlayerName: String = MyUtils.generateAlphaRandomLength(3)(8)
-  private def randomItemDescription: String = MyUtils.generateAlphaRandomLength(20)(10)
-  private def randomItemName: String = MyUtils.generateAlphaRandomLength(5)(3)
-  private def randomItemTypeId: Int = MyUtils.generateNumericRandomLength(1)(2).toInt
+  def randomTitle: String = MyUtils.generateAlphaRandomLength(4)(6)
+  def randomContent: String = MyUtils.generateAlphaRandomLength(100)(20)
+  def randomPlayerName: String = MyUtils.generateAlphaRandomLength(3)(8)
+  def randomItemDescription: String = MyUtils.generateAlphaRandomLength(20)(10)
+  def randomItemName: String = MyUtils.generateAlphaRandomLength(5)(3)
+  def randomItemTypeId: Int = MyUtils.generateNumericRandomLength(1)(2).toInt
 }

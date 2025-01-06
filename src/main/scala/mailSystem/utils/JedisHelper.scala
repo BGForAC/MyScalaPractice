@@ -3,7 +3,6 @@ package mailSystem.utils
 import redis.clients.jedis.{Jedis, JedisPool, JedisPoolConfig}
 
 import java.util.ResourceBundle
-import scala.concurrent.duration.{Duration, MILLISECONDS}
 
 object JedisHelper {
   private val config = new JedisPoolConfig()
@@ -14,13 +13,18 @@ object JedisHelper {
   private val MAX_TOTAL = bundle.getString("max_total").toInt
   private val MAX_WAIT_MILLIS = bundle.getString("max_wait_millis").toInt
 
-  println("JedisHelper:")
-  println(HOST, PORT, MAX_TOTAL, MAX_WAIT_MILLIS)
   config.setMaxTotal(MAX_TOTAL)
   config.setMaxWaitMillis(MAX_WAIT_MILLIS)
 
   private val logger = Log4jUtils.getLogger(this.getClass)
   private val jedisPoll: JedisPool = new JedisPool(config, HOST, PORT)
+
+  val jedis = jedisPoll.getResource
+  try {
+    jedis.flushDB()
+  } finally {
+    jedis.close()
+  }
 
   def getJedis: Jedis = {
     try {
@@ -57,14 +61,12 @@ object JedisHelper {
   def main(args: Array[String]): Unit = {
     val jedis = JedisHelper.getJedis
     jedis.set("test", "test")
-    println(jedis.get("test"))
     jedis.sadd("testSet", "test1", "test2", "test3")
     val testSet = jedis.smembers("testSet")
-    testSet.forEach(println)
     jedis.lpush("testList", "test1", "test2", "test3")
     val testList = jedis.lrange("testList", 0, -1)
-    println(testList)
     testList.forEach(println)
+    println(testList.size())
     JedisHelper.closeJedis(jedis)
   }
 }
