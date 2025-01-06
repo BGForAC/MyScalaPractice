@@ -7,7 +7,7 @@ import mailSystem.utils.{MapBeanUtils, MyUtils}
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
-object MailSystemInvoke {
+object MailSystemInvoker {
   def main(args: Array[String]): Unit = {
     actionCollectAttachments(20)
   }

@@ -23300,3 +23300,81 @@
 2025-01-03 18:17:16 DEBUG Connection:131 - {conn-10005} commited
 2025-01-03 18:17:16 DEBUG Connection:131 - {conn-10005} setAutoCommit true
 2025-01-03 18:17:16 DEBUG Connection:131 - {conn-10005} pool-recycle
+2025-01-06 10:27:31 ERROR JedisHelper$:27 - 获取Jedis连接失败
+redis.clients.jedis.exceptions.JedisConnectionException: Failed to connect to any host resolved for DNS name.
+	at redis.clients.jedis.DefaultJedisSocketFactory.connectToFirstSuccessfulHost(DefaultJedisSocketFactory.java:63)
+	at redis.clients.jedis.DefaultJedisSocketFactory.createSocket(DefaultJedisSocketFactory.java:87)
+	at redis.clients.jedis.Connection.connect(Connection.java:180)
+	at redis.clients.jedis.Connection.initializeFromClientConfig(Connection.java:338)
+	at redis.clients.jedis.Connection.<init>(Connection.java:53)
+	at redis.clients.jedis.Jedis.<init>(Jedis.java:214)
+	at redis.clients.jedis.JedisFactory.makeObject(JedisFactory.java:181)
+	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:571)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:298)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:223)
+	at redis.clients.jedis.util.Pool.getResource(Pool.java:34)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:364)
+	at mailSystem.utils.JedisHelper$.getJedis(JedisHelper.scala:24)
+	at mailSystem.utils.JedisHelper$.main(JedisHelper.scala:37)
+	at mailSystem.utils.JedisHelper.main(JedisHelper.scala)
+	Suppressed: java.net.SocketTimeoutException: connect timed out
+		at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+		at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+		at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+		at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+		at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+		at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+		at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+		at java.net.Socket.connect(Socket.java:607)
+		at redis.clients.jedis.DefaultJedisSocketFactory.connectToFirstSuccessfulHost(DefaultJedisSocketFactory.java:73)
+		... 14 more
+	Suppressed: java.net.SocketTimeoutException: connect timed out
+		at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+		at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+		at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+		at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+		at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+		at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+		at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+		at java.net.Socket.connect(Socket.java:607)
+		at redis.clients.jedis.DefaultJedisSocketFactory.connectToFirstSuccessfulHost(DefaultJedisSocketFactory.java:73)
+		... 14 more
+2025-01-06 10:28:15 ERROR JedisHelper$:28 - 获取Jedis连接失败
+redis.clients.jedis.exceptions.JedisConnectionException: Failed to connect to any host resolved for DNS name.
+	at redis.clients.jedis.DefaultJedisSocketFactory.connectToFirstSuccessfulHost(DefaultJedisSocketFactory.java:63)
+	at redis.clients.jedis.DefaultJedisSocketFactory.createSocket(DefaultJedisSocketFactory.java:87)
+	at redis.clients.jedis.Connection.connect(Connection.java:180)
+	at redis.clients.jedis.Connection.initializeFromClientConfig(Connection.java:338)
+	at redis.clients.jedis.Connection.<init>(Connection.java:53)
+	at redis.clients.jedis.Jedis.<init>(Jedis.java:214)
+	at redis.clients.jedis.JedisFactory.makeObject(JedisFactory.java:181)
+	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:571)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:298)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:223)
+	at redis.clients.jedis.util.Pool.getResource(Pool.java:34)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:364)
+	at mailSystem.utils.JedisHelper$.getJedis(JedisHelper.scala:25)
+	at mailSystem.utils.JedisHelper$.main(JedisHelper.scala:38)
+	at mailSystem.utils.JedisHelper.main(JedisHelper.scala)
+	Suppressed: java.net.SocketTimeoutException: connect timed out
+		at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+		at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+		at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+		at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+		at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+		at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+		at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+		at java.net.Socket.connect(Socket.java:607)
+		at redis.clients.jedis.DefaultJedisSocketFactory.connectToFirstSuccessfulHost(DefaultJedisSocketFactory.java:73)
+		... 14 more
+	Suppressed: java.net.SocketTimeoutException: connect timed out
+		at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+		at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+		at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+		at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+		at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+		at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+		at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+		at java.net.Socket.connect(Socket.java:607)
+		at redis.clients.jedis.DefaultJedisSocketFactory.connectToFirstSuccessfulHost(DefaultJedisSocketFactory.java:73)
+		... 14 more

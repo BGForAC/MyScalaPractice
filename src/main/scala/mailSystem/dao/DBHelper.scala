@@ -9,8 +9,9 @@ import javax.sql.DataSource
 
 object DBHelper {
   private var dataSource: DataSource = _
-
   private val druidProps = MyUtils.readConfig(new Properties(), "druid.properties")
+
+  private val logger = Log4jUtils.getLogger(this.getClass)
 
   private def initDataSource(): Unit = {
     if (dataSource == null) {
@@ -18,7 +19,7 @@ object DBHelper {
         dataSource = DruidDataSourceFactory.createDataSource(druidProps)
       } catch {
         case e: Exception =>
-          Log4jUtils.getLogger(this.getClass).error("数据库连接池初始化失败")
+          logger.error("数据库连接池初始化失败", e)
           throw new Exception(e)
       }
     }
@@ -57,7 +58,8 @@ object DBHelper {
       connection.commit()
       rows
     } catch {
-      case e: Exception => throw new Exception(failComment + e)
+      case e: Exception =>
+        throw new Exception(failComment + e)
     } finally {
       DBHelper.closeConnection(connection)
     }
