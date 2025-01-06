@@ -162,7 +162,7 @@ object MailSystemImitator {
 
   //将用户的邮件领取情况与数据库同步
   def loadCollectStatus(playerId: Long, mailId: Long): Unit = {
-
+    PlayerService.get
   }
 
   //用户领取附件，在redis中记录邮件已领取状态，立刻同步到数据库
