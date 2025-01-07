@@ -54,19 +54,21 @@ case class SystemMail(
     this.mailId = mailId
   }
 
+  // json格式
   override def toString: String = {
-    "SystemMail{" +
-      "mailId=" + mailId +
-      ", content='" + content + '\'' +
-      ", title='" + title + '\'' +
-      ", attachment='" + attachment + '\'' +
-      ", filter='" + filter + '\'' +
-      ", publicTime=" + publicTime +
-      ", deadline=" + deadline +
-      ", createTime=" + createTime +
-      ", updateTime=" + updateTime +
-      ", read=" + read +
-      ", collect=" + collect +
-      '}'
+    """
+      |{
+      | "mailId": %d,
+      | "content": "%s",
+      | "title": "%s",
+      | "attachment": %s,
+      | "filter": %s,
+      | "publicTime": "%s",
+      | "deadline": "%s",
+      | "createTime": "%s",
+      | "updateTime": "%s",
+      | "read": %b,
+      | "collect": %b
+      |}""".stripMargin.format(mailId, content, title, attachment, filter, publicTime, deadline, createTime, updateTime, read, collect)
   }
 }

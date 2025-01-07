@@ -5,7 +5,7 @@ import mailSystem.entity.{Mail, PersonalMail, SystemMail}
 import mailSystem.utils.{MapBean, SnowflakeIdGenerator}
 
 import java.time.LocalDateTime
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.ListBuffer
 
 object MailService {
   private val snowflakeIdGeneratorForPersonalMail = new SnowflakeIdGenerator(0, 0)
@@ -13,9 +13,9 @@ object MailService {
   private val tableNameForPersonalMail = "personal_mail"
   private val tableNameForSystemMail = "system_mail"
 
-  def systemMails(): ArrayBuffer[Mail] = {
+  def systemMails(): ListBuffer[Mail] = {
     val sql = s"select mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time from $tableNameForSystemMail"
-    val mails: ArrayBuffer[Mail] = ArrayBuffer()
+    val mails: ListBuffer[Mail] = ListBuffer()
     val rs = DBHelper.query(sql)
     try {
       while (rs._1.next()) {
@@ -39,9 +39,9 @@ object MailService {
     mails
   }
 
-  def personalMails(playerId: Long): ArrayBuffer[Mail] = {
+  def personalMails(playerId: Long): ListBuffer[Mail] = {
     val sql = s"select mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time, sender_id, receiver_id from $tableNameForPersonalMail where receiver_id = ?"
-    val mails: ArrayBuffer[Mail] = ArrayBuffer()
+    val mails: ListBuffer[Mail] = ListBuffer()
     val rs = DBHelper.query(sql, playerId)
     try {
       while (rs._1.next()) {
@@ -67,7 +67,7 @@ object MailService {
     mails
   }
 
-  def mails(playerId: Long): ArrayBuffer[Mail] = {
+  def mails(playerId: Long): ListBuffer[Mail] = {
     systemMails() ++ personalMails(playerId)
   }
 
@@ -103,5 +103,26 @@ object MailService {
   def delSystemMail(mailId: Long): Unit = {
     val sql = s"delete from $tableNameForSystemMail where mail_id = ?"
     DBHelper.delete(sql, mailId)
+  }
+
+  def getAttachment(mailId: Long): String = {
+    val sql1 = s"select attachment from $tableNameForPersonalMail where mail_id = ?"
+    val rs = DBHelper.query(sql1, mailId)
+    var attachment = ""
+    try {
+      attachment = if (rs._1.next()) rs._1.getString("attachment") else ""
+    } finally {
+      DBHelper.closeRsConn(rs)
+    }
+    if (attachment.isEmpty) {
+      val sql2 = s"select attachment from $tableNameForSystemMail where mail_id = ?"
+      val rs = DBHelper.query(sql2, mailId)
+      try {
+        attachment = if (rs._1.next()) rs._1.getString("attachment") else ""
+      } finally {
+        DBHelper.closeRsConn(rs)
+      }
+    }
+    attachment
   }
 }

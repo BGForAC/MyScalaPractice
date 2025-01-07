@@ -41,7 +41,47 @@ object PlayerService {
     }
   }
 
-  def players(): ArrayBuffer[Player] = {
+  def getCollectStatus(playerId: Long): String = {
+    val sql = s"select mails_collect from $tableName where player_id = ?"
+    val rs = DBHelper.query(sql, playerId)
+    try {
+      if (rs._1.next()) rs._1.getString("mails_collect") else ""
+    } finally {
+      DBHelper.closeRsConn(rs)
+    }
+  }
+
+  def getReadStatus(playerId: Long): String = {
+    val sql = s"select mails_read from $tableName where player_id = ?"
+    val rs = DBHelper.query(sql, playerId)
+    try {
+      if (rs._1.next()) rs._1.getString("mails_read") else ""
+    } finally {
+      DBHelper.closeRsConn(rs)
+    }
+  }
+
+  def updateMailsRead(playerId: Long, mailsRead: String): Unit = {
+    val sql = s"update $tableName set mails_read = ? where player_id = ?"
+    DBHelper.update(sql, mailsRead, playerId)
+  }
+
+  def allIds(): ArrayBuffer[Long] = {
+    val sql = s"select player_id from $tableName"
+    val rs = DBHelper.query(sql)
+    try {
+      val playersIds: ArrayBuffer[Long] = ArrayBuffer()
+      while (rs._1.next()) {
+        val playerId = rs._1.getLong("player_id")
+        playersIds += playerId
+      }
+      playersIds
+    } finally {
+      DBHelper.closeRsConn(rs)
+    }
+  }
+
+  def allPlayers(): ArrayBuffer[Player] = {
     val sql = s"select player_id, name, mails_read, mails_collect from $tableName"
     val rs = DBHelper.query(sql)
     try {
@@ -92,25 +132,25 @@ object PlayerService {
     DBHelper.update(sql, s"${mailId.toString},", player.getPlayerId)
   }
 
-  def collectAttachment(playerId: Long, mail: Mail): Unit = {
-    val attachment = MapBean.toMutableMap(mail.getAttachment).toMap.asInstanceOf[Map[String, Int]]
-    if (attachment.isEmpty) throw new Exception(s"邮件 ${mail.getMailId} 没有附件")
-    //    if (attachment.isEmpty) println(s"邮件 ${mail.getMailId} 没有附件")
-    if (player.getMailsCollect.contains(mail.getMailId.toString)) throw new Exception(s"玩家 ${player.getName} 已经领取过邮件 ${mail.getMailId} 的附件")
-    //    if (player.getMailsCollect.contains(mail.getMailId.toString)) println(s"玩家 ${player.getName} 已经领取过邮件 ${mail.getMailId} 的附件")
+  def collectAttachment(playerId: Long, mailId: Long, attachmentJson: String): Unit = {
+    val mailsCollect = getCollectStatus(playerId)
+    if (mailsCollect.contains(mailId.toString)) throw new Exception(s"玩家 ${playerId} 已经领取过邮件 ${mailId} 的附件")
+    val attachment = MapBean.toMutableMap(attachmentJson).toMap.asInstanceOf[Map[String, Int]]
+    if (attachment.isEmpty) throw new Exception(s"邮件 ${mailId} 没有附件")
 
-//    attachment.foreach(println)
-    val sql1 = s"update $tableName set mails_collect = concat(coalesce(mails_collect), ?) where player_id = ?"
+    val sql1 = s"update $tableName set mails_collect = concat(coalesce(mails_collect, ''), ?) where player_id = ?"
     val sql2 = s"insert into $tableNameForItem (player_id, item_id, quantity) values (?, ?, ?)" +
       s"on duplicate key update quantity = quantity + values(quantity)"
-    val para1 = Seq(sql1, s"${mail.getMailId},", playerId)
+    val para1 = Seq(sql1, s"${mailId},", playerId)
     val para2 = attachment.map { case (itemId, quantity) => Seq(sql2, playerId, itemId.toLong, quantity) }.toSeq
     val paras = Seq(para1) ++ para2
+
     DBHelper.atomicUpdate(paras)
+    println(s"玩家 ${getPlayer(playerId).getName} 领取了邮件 ${mailId} 的附件")
   }
 
   def collectAttachment(player: Player, mail: Mail): Unit = {
-    collectAttachment(player.getPlayerId, mail)
-    println(s"玩家 ${player.getName} 领取了邮件 ${mail.getMailId} 的附件")
+    collectAttachment(player.getPlayerId, mail.getMailId, mail.getAttachment)
+    println(s"玩家 ${player.getPlayerId} 领取了邮件 ${mail.getMailId} 的附件")
   }
 }

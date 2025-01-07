@@ -67,7 +67,16 @@ object MapBean extends Logging {
     fields.foreach(field => {
       field.setAccessible(true)
       val name = field.getName
-      field.set(instance, map.get(name).orNull)
+      map.get(name) match {
+        case None =>
+        case Some(value) if LocalDateTimeUtils.string2Time(value.toString) != null =>
+          field.set(instance, LocalDateTimeUtils.string2Time(value.toString))
+        case Some(value) if value.isInstanceOf[MapBean] =>
+          field.set(instance, value.asInstanceOf[MapBean].toJsonString)
+        case Some(value) =>
+          field.set(instance, value)
+      }
+//      field.set(instance, map.get(name).orNull)
     })
     instance
   }

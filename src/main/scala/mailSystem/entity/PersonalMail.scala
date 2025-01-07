@@ -67,21 +67,24 @@ case class PersonalMail(
   def getSenderId: Long = senderId
   def getReceiverId: Long = receiverId
 
+  // json格式
   override def toString: String = {
-    "PersonalMail{" +
-      "senderId='" + senderId + '\'' +
-      ", receiverId='" + receiverId + '\'' +
-      ", mailId=" + mailId +
-      ", content='" + content + '\'' +
-      ", title='" + title + '\'' +
-      ", attachment='" + attachment + '\'' +
-      ", filter='" + filter + '\'' +
-      ", publicTime=" + publicTime +
-      ", deadline=" + deadline +
-      ", createTime=" + createTime +
-      ", updateTime=" + updateTime +
-      ", read=" + read +
-      ", collect=" + collect +
-      '}'
+      """
+      |{
+      |  "mailId": %d,
+      |  "content": "%s",
+      |  "title": "%s",
+      |  "attachment": %s,
+      |  "filter": %s,
+      |  "publicTime": "%s",
+      |  "deadline": "%s",
+      |  "createTime": "%s",
+      |  "updateTime": "%s",
+      |  "senderId": %d,
+      |  "receiverId": %d,
+      |  "read": %b,
+      |  "collect": %b
+      |}""".stripMargin.format(mailId, content, title, attachment, filter, publicTime, deadline, createTime, updateTime, senderId, receiverId, read, collect)
+
   }
 }

@@ -1,5 +1,6 @@
 package mailSystem.utils
 
+import redis.clients.jedis.params.SetParams
 import redis.clients.jedis.{Jedis, JedisPool, JedisPoolConfig}
 
 import java.util.ResourceBundle
@@ -19,14 +20,21 @@ object JedisHelper {
   private val logger = Log4jUtils.getLogger(this.getClass)
   private val jedisPoll: JedisPool = new JedisPool(config, HOST, PORT)
 
-  val jedis = jedisPoll.getResource
-  try {
-    jedis.flushDB()
-  } finally {
-    jedis.close()
+  private def flushRedis(): Unit = {
+    val jedis = this.getJedis
+    try {
+      jedis.flushAll()
+    } catch {
+      case e: Exception =>
+        logger.error("清空Redis失败", e)
+    } finally {
+      closeJedis(jedis)
+    }
   }
 
-  def getJedis: Jedis = {
+  flushRedis()
+
+  private def getJedis: Jedis = {
     try {
       jedisPoll.getResource
     } catch {
@@ -36,11 +44,11 @@ object JedisHelper {
     }
   }
 
-  def closeJedis(jedis: Jedis): Unit = {
+  private def closeJedis(jedis: Jedis): Unit = {
     if (jedis != null)
       try {
         jedis.close()
-        jedis.close()
+//        jedis.close() // 重复关闭不会报错
       } catch {
         case e: Exception =>
           println(e)
@@ -58,8 +66,36 @@ object JedisHelper {
       }
   }
 
+  def execute[T](call: Jedis => T): T = {
+    val jedis = this.getJedis
+    try {
+      call(jedis)
+    } catch {
+      case e: Exception =>
+        logger.error("Jedis执行失败", e)
+        throw e
+    }finally {
+      closeJedis(jedis)
+    }
+  }
+
+  def executeWithDistributionLock[T](lockKey: String, lockValue: String, expireTime: Int)(call: Jedis => T): T = {
+    execute { jedis =>
+      val set = jedis.set(lockKey, lockValue, new SetParams().nx().ex(expireTime))
+      if (set == "OK") {
+        try {
+          call(jedis)
+        } finally {
+          jedis.del(lockKey)
+        }
+      } else {
+        throw new Exception(s"获取分布式锁失败, key: $lockKey, value: $lockValue")
+      }
+    }
+  }
+
   def main(args: Array[String]): Unit = {
-    val jedis = JedisHelper.getJedis
+    val jedis = this.getJedis
     jedis.set("test", "test")
     jedis.sadd("testSet", "test1", "test2", "test3")
     val testSet = jedis.smembers("testSet")
@@ -67,6 +103,6 @@ object JedisHelper {
     val testList = jedis.lrange("testList", 0, -1)
     testList.forEach(println)
     println(testList.size())
-    JedisHelper.closeJedis(jedis)
+    closeJedis(jedis)
   }
 }

@@ -4,16 +4,16 @@ import mailSystem.entity.{Mail, PersonalMail, SystemMail}
 import mailSystem.service.{ItemService, MailService, PlayerService}
 import mailSystem.utils.{MapBeanUtils, MyUtils}
 
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
 object MailSystemInvoker {
   def main(args: Array[String]): Unit = {
-    actionCollectAttachments(20)
+    actionAddPlayers(100)
   }
 
   def allPlayersId: Array[Long] = {
-    val players = PlayerService.players()
+    val players = PlayerService.allPlayers()
 
     if (players.isEmpty) Array.empty
     else players.map(player => player.getPlayerId).toArray
@@ -33,14 +33,14 @@ object MailSystemInvoker {
   def randomPlayerId: Long = getRandom(allPlayersId)
   def randomItemId: Long = getRandom(allItemsID)
 
-  def actionLoadPlayerMails(playerId: Long): ArrayBuffer[Mail] = {
-    val mails: ArrayBuffer[Mail] = MailService.mails(playerId)
+  def actionLoadPlayerMails(playerId: Long): ListBuffer[Mail] = {
+    val mails: ListBuffer[Mail] = MailService.mails(playerId)
     println(s"玩家 $playerId 获取了邮箱")
     mails.foreach(println)
     mails
   }
 
-  def actionLoadRandomPlayerMails(): (ArrayBuffer[Mail], Long) = {
+  def actionLoadRandomPlayerMails(): (ListBuffer[Mail], Long) = {
     val playerId = getRandom(allPlayersId)
     (actionLoadPlayerMails(playerId), playerId)
   }
