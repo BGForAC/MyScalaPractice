@@ -105,6 +105,7 @@ object MailService {
     DBHelper.delete(sql, mailId)
   }
 
+  // 客户端领取附件时，服务端通过邮件ID获取附件，防止客户端篡改附件数据
   def getAttachment(mailId: Long): String = {
     val sql1 = s"select attachment from $tableNameForPersonalMail where mail_id = ?"
     val rs = DBHelper.query(sql1, mailId)

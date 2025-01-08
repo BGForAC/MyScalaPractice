@@ -20,6 +20,23 @@ object ItemService {
     DBHelper.add(sql, itemId, description, name, typeCode)
   }
 
+  def getItem(itemId: Long): Item = {
+    val sql = s"select item_id, name, description, type_id from $tableName where item_id = ?"
+    val rs = DBHelper.query(sql, itemId)
+    try {
+      if (rs._1.next()) {
+        val name = rs._1.getString("name")
+        val description = rs._1.getString("description")
+        val typeId = rs._1.getLong("type_id")
+        Item(itemId, typeId, name, description)
+      } else {
+        throw new Exception(s"没有找到物品 $itemId")
+      }
+    } finally {
+      DBHelper.closeRsConn(rs)
+    }
+  }
+
   def items(): ArrayBuffer[Item] = {
     val sql = s"select item_id, name, description, type_id from $tableName"
     val items: ArrayBuffer[Item] = ArrayBuffer()

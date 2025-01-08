@@ -2,6 +2,7 @@ package mailSystem.utils
 
 import java.time.LocalDateTime
 import java.util.Properties
+import scala.util.Random
 
 object MyUtils {
 //  private def nextMoment(year: Int)(month: Int)(day: Int)(hour: Int)(minute: Int)(seconds: Int)(now: LocalDateTime): LocalDateTime = {
@@ -32,14 +33,18 @@ object MyUtils {
   val generateUpperAlphaFixedLength = generateStringRandomLength(RandomGenerator.generateRandomUpperAlpha)(0) _
   val generateNumericFixedLength = generateStringRandomLength(RandomGenerator.generateRandomNumeric)(0) _
 
+  def getRandom[T](collection: Seq[T]): T = {
+    collection(Random.nextInt(collection.length))
+  }
+
   def generateStringRandomLength(rules: Int => Iterable[Char])(offset: Int)(length: Int): String = {
-    val random = new scala.util.Random
+    val random = new Random
     val fixedLength = (if (offset == 0) 0 else random.nextInt(offset)) + length
     rules(fixedLength).mkString
   }
 
   private object RandomGenerator {
-    private val random = new scala.util.Random
+    private val random = new Random
 
     def generateRandomAlphaNumeric(length: Int): String = random.alphanumeric.take(length).mkString
 

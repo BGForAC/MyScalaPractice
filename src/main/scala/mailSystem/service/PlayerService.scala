@@ -133,10 +133,14 @@ object PlayerService {
   }
 
   def collectAttachment(playerId: Long, mailId: Long, attachmentJson: String): Unit = {
+    val attachment = MapBean.toMutableMap(attachmentJson).toMap.asInstanceOf[Map[String, Int]]
+    collectAttachment(playerId, mailId, attachment)
+  }
+
+  def collectAttachment(playerId: Long, mailId: Long, attachment: Map[String, Int]): Unit = {
+    if (attachment.isEmpty) throw new Exception(s"邮件 ${mailId} 没有附件")
     val mailsCollect = getCollectStatus(playerId)
     if (mailsCollect.contains(mailId.toString)) throw new Exception(s"玩家 ${playerId} 已经领取过邮件 ${mailId} 的附件")
-    val attachment = MapBean.toMutableMap(attachmentJson).toMap.asInstanceOf[Map[String, Int]]
-    if (attachment.isEmpty) throw new Exception(s"邮件 ${mailId} 没有附件")
 
     val sql1 = s"update $tableName set mails_collect = concat(coalesce(mails_collect, ''), ?) where player_id = ?"
     val sql2 = s"insert into $tableNameForItem (player_id, item_id, quantity) values (?, ?, ?)" +
