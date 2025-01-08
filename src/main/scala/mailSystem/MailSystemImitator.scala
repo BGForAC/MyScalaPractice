@@ -5,6 +5,7 @@ import mailSystem.entity.{Item, Mail, PersonalMail, SystemMail}
 import mailSystem.service.{ItemService, MailService, PlayerService}
 import mailSystem.utils.{JedisHelper, MapBean, MapBeanUtils, MyUtils}
 
+import java.time.LocalDateTime
 import scala.collection.convert.ImplicitConversions.`map AsScala`
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -36,9 +37,9 @@ object MailSystemImitator {
     "distribution:load:system:mail"
   }
 
-  private final val KEY_SYSTEM_MAIL = "system_mail"
-  private final val KEY_MAIL_READ = "mails_read"
-  private final val KEY_MAIL_COLLECT = "mails_collect"
+  def keyForSystemMail = "system_mail"
+  def keyForMailsRead = "mails_read"
+  def keyForMailsCollect = "mails_collect"
 
   private def myLog(content: String): Unit = {
     println(content)
@@ -75,31 +76,31 @@ object MailSystemImitator {
 
 
     val scheduler = system.scheduler
-//    val cancellable = scheduler.scheduleWithFixedDelay(0.seconds, 10.seconds)(() => syncMailsRead())
+//    val syncRead2DB = scheduler.scheduleWithFixedDelay(0.seconds, 10.seconds)(() => syncMailsRead())
 
-//    val cancellable2 = scheduler.scheduleWithFixedDelay(0.seconds, 2.seconds)(() => {
-//      val playerId = randomPlayerIdOnLine
-//      val mailId = randomMailIdForConcretePlayer(playerId)
-//      val clientActor = clients(playerId)
-//      clientActor ! ReadMail(playerId, mailId)
-//    })
+    val readMailRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 2.seconds)(() => {
+      val playerId = randomPlayerIdOnLine
+      val mailId = randomMailIdForConcretePlayer(playerId)
+      val clientActor = clients(playerId)
+      clientActor ! ReadMail(playerId, mailId)
+    })
 
-//    val cancellable3 = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
-//      val playerId = randomPlayerIdOnLine
-//      val mailId = randomMailIdForConcretePlayer(playerId)
-//      val clientActor = clients(playerId)
-//      println(clients.exists(_._1 == playerId))
-//      clientActor ! CollectAttachment(playerId, mailId)
-//    })
+    val collectAttachmentRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
+      val playerId = randomPlayerIdOnLine
+      val mailId = randomMailIdForConcretePlayer(playerId)
+      val clientActor = clients(playerId)
+      println(clients.exists(_._1 == playerId))
+      clientActor ! CollectAttachment(playerId, mailId)
+    })
 
-//    val cancellable4 = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
-//      val sender = randomPlayerIdOnLine
-//      val receiver = randomPlayerIdOnLine
-//      val clientActor = clients(sender)
-//      clientActor ! SendPersonalMail(sender , receiver, new PersonalMail(sender, receiver, "title", "content", "{}", "{}"))
-//    })
+    val sendMailRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
+      val sender = randomPlayerIdOnLine
+      val receiver = randomPlayerIdOnLine
+      val clientActor = clients(sender)
+      clientActor ! SendPersonalMail(sender , receiver, new PersonalMail(sender, receiver, "title", "content", "{}", "{}"))
+    })
 
-    val cancellable5 = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
+    val sendSystemMailRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
       serverActor ! SendSystemMail(new SystemMail("title", "content"))
     })
 
@@ -312,13 +313,13 @@ object MailSystemImitator {
   // 与数据库进行同步，将数据库中的邮件加载到用户内存中
   def loadPlayersMail(playerId: Long): Either[String, List[Mail]] = {
     JedisHelper.execute { jedis =>
-      if (jedis.hexists(playerId2Key(playerId), KEY_MAIL_READ) && jedis.hexists(playerId2Key(playerId), KEY_MAIL_COLLECT)) {
+      if (jedis.hexists(playerId2Key(playerId), keyForMailsRead) && jedis.hexists(playerId2Key(playerId), keyForMailsCollect)) {
         myLog(s"玩家 $playerId 的邮箱已经加载到内存中")
         Left("邮件已经被加载到内存中")
-      } else if (jedis.hexists(playerId2Key(playerId), KEY_MAIL_READ) && !jedis.hexists(playerId2Key(playerId), KEY_MAIL_COLLECT)) {
+      } else if (jedis.hexists(playerId2Key(playerId), keyForMailsRead) && !jedis.hexists(playerId2Key(playerId), keyForMailsCollect)) {
         myLog(s"玩家 $playerId 的邮箱已经加载到内存中，但是领取状态更新后被删除")
         val mailsCollect = PlayerService.getCollectStatus(playerId)
-        jedis.hset(playerId2Key(playerId), KEY_MAIL_COLLECT, mailsCollect)
+        jedis.hset(playerId2Key(playerId), keyForMailsCollect, mailsCollect)
         Left("领取状态已更新")
       } else {
         myLog(s"玩家 $playerId 邮箱未加载到内存中")
@@ -330,8 +331,8 @@ object MailSystemImitator {
             myLog(s"玩家 $playerId 邮箱加载成功")
             // 讲邮件已读未读状态存入redis，将邮件存入用户内存
             val player = PlayerService.getPlayer(playerId)
-            jedis.hset(playerId2Key(playerId), KEY_MAIL_COLLECT, player.getMailsCollect)
-            jedis.hset(playerId2Key(playerId), KEY_MAIL_READ, player.getMailsRead)
+            jedis.hset(playerId2Key(playerId), keyForMailsCollect, player.getMailsCollect)
+            jedis.hset(playerId2Key(playerId), keyForMailsRead, player.getMailsRead)
             Right(mails)
         }
       }
@@ -343,14 +344,14 @@ object MailSystemImitator {
     val lockKey = distributionKeyForLoadSystemMail
     val lockValue = System.currentTimeMillis().toString
 
-    JedisHelper.executeWithDistributionLock(lockKey, lockValue, 20) { jedis =>
+    JedisHelper.execute { jedis =>
       val systemMails = mutable.ListBuffer[Mail]()
-      val mails = jedis.hgetAll(KEY_SYSTEM_MAIL)
+      val mails = jedis.hgetAll(keyForSystemMail)
       if (mails.isEmpty) {
         myLog("系统邮件未加载到缓存中, 开始加载")
         systemMails ++= MailService.systemMails()
         systemMails.foreach { mail =>
-          jedis.hset(KEY_SYSTEM_MAIL, systemMailId2Key(mail.getMailId), mail.toString)
+          jedis.hset(keyForSystemMail, systemMailId2Key(mail.getMailId), mail.toString)
         }
       } else {
         myLog("系统邮件已加载到缓存中")
@@ -369,7 +370,7 @@ object MailSystemImitator {
    */
   def readMail(playerId: Long, mailId: Long): Unit = {
     JedisHelper.execute { jedis =>
-      jedis.hget(playerId2Key(playerId), KEY_MAIL_READ) match {
+      jedis.hget(playerId2Key(playerId), keyForMailsRead) match {
         case null =>
           myLog(s"玩家 $playerId 的邮件可能未加载到缓存中, 尝试再次加载")
           loadPlayersMail(playerId)
@@ -377,7 +378,7 @@ object MailSystemImitator {
         case mailsRead =>
           if (mailsRead.contains(mailId.toString)) myLog(s"玩家 $playerId 已经阅读过邮件 $mailId") else {
             myLog(s"玩家 $playerId 阅读了邮件 $mailId")
-            jedis.hset(playerId2Key(playerId), KEY_MAIL_READ, s"$mailsRead$mailId,")
+            jedis.hset(playerId2Key(playerId), keyForMailsRead, s"$mailsRead$mailId,")
           }
       }
     }
@@ -388,7 +389,11 @@ object MailSystemImitator {
    * 附件领取成功后，将领取状态从redis中删除,保持一致性
    */
   def collectAttachment(playerId: Long, mailId: Long): Either[String, Map[Item, Int]] = {
-    val attachmentJson = MailService.getAttachment(mailId)
+    val mail = MailService.getMail(mailId)
+    val attachmentJson = mail.getAttachment
+    if (attachmentJson == "{}") return Left("邮件没有附件")
+    val deadline = mail.getDeadline
+    if (deadline.isBefore(LocalDateTime.now)) return Left("邮件已过期")
     val lockKey = distributionKeyForAttachmentCollect(playerId, mailId)
     val lockValue = System.currentTimeMillis().toString
 
@@ -396,12 +401,11 @@ object MailSystemImitator {
       JedisHelper.executeWithDistributionLock(lockKey, lockValue, 20) { jedis =>
         val attachment = MapBean.toMutableMap(attachmentJson).toMap.asInstanceOf[Map[String, Int]]
         PlayerService.collectAttachment(playerId, mailId, attachment)
-        jedis.hdel(playerId2Key(playerId), KEY_MAIL_COLLECT)
+        jedis.hdel(playerId2Key(playerId), keyForMailsCollect)
         Right(attachment.map { case (itemId, quantity) => (ItemService.getItem(itemId.toLong), quantity) })
       }
     } catch {
       case e: Exception =>
-        myLog(s"玩家 $playerId 领取邮件 $mailId 的附件失败")
         Left("领取附件失败")
     }
   }
@@ -411,11 +415,10 @@ object MailSystemImitator {
     JedisHelper.execute { jedis =>
       val players: Iterable[Long] = jedis.keys("*").toArray.flatMap { key => key2PlayerId(key.asInstanceOf[String]) }
       players.foreach { playerId =>
-        val mailsRead = jedis.hget(playerId2Key(playerId), KEY_MAIL_READ)
+        val mailsRead = jedis.hget(playerId2Key(playerId), keyForMailsRead)
         println(s"玩家 $playerId 的邮件已读状态：$mailsRead")
         if (mailsRead != null) PlayerService.updateMailsRead(playerId, mailsRead)
       }
     }
   }
-
 }

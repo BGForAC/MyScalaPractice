@@ -105,11 +105,60 @@ object MailService {
     DBHelper.delete(sql, mailId)
   }
 
+  def getMail(mailId: Long): Mail = {
+    var mail: Mail = null
+    val sql1 = s"select mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time, sender_id, receiver_id from $tableNameForPersonalMail where mail_id = ?"
+    val rs = DBHelper.query(sql1, mailId)
+    try {
+      if (rs._1.next()) {
+        val content = rs._1.getString("content")
+        val title = rs._1.getString("title")
+        val attachment = rs._1.getString("attachment")
+        val filter = rs._1.getString("filter")
+        val publicTime = rs._1.getTimestamp("public_time")
+        val deadline = rs._1.getTimestamp("deadline")
+        val createTime = rs._1.getTimestamp("create_time")
+        val updateTime = rs._1.getTimestamp("update_time")
+        val senderId = rs._1.getLong("sender_id")
+        val receiverId = rs._1.getLong("receiver_id")
+        if (publicTime == null || deadline == null || createTime == null || updateTime == null) {
+          throw new Exception(s"非法的邮箱，时间为空，请检查邮箱: $mailId in personal_mail")
+        }
+        mail = new PersonalMail(mailId, content, title, attachment, filter, publicTime.toLocalDateTime, deadline.toLocalDateTime, createTime.toLocalDateTime, updateTime.toLocalDateTime, senderId, receiverId)
+      }
+    } finally {
+      DBHelper.closeRsConn(rs)
+    }
+    if (mail == null) {
+      val sql2 = s"select mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time from $tableNameForSystemMail where mail_id = ?"
+      val rs = DBHelper.query(sql2, mailId)
+      try {
+        if (rs._1.next()) {
+          val content = rs._1.getString("content")
+          val title = rs._1.getString("title")
+          val attachment = rs._1.getString("attachment")
+          val filter = rs._1.getString("filter")
+          val publicTime = rs._1.getTimestamp("public_time")
+          val deadline = rs._1.getTimestamp("deadline")
+          val createTime = rs._1.getTimestamp("create_time")
+          val updateTime = rs._1.getTimestamp("update_time")
+          if (publicTime == null || deadline == null || createTime == null || updateTime == null) {
+            throw new Exception(s"非法的邮箱，时间为空，请检查邮箱: $mailId in system_mail")
+          }
+          mail = new SystemMail(mailId, content, title, attachment, filter, publicTime.toLocalDateTime, deadline.toLocalDateTime, createTime.toLocalDateTime, updateTime.toLocalDateTime)
+        }
+      } finally {
+        DBHelper.closeRsConn(rs)
+      }
+    }
+    mail
+  }
+
   // 客户端领取附件时，服务端通过邮件ID获取附件，防止客户端篡改附件数据
   def getAttachment(mailId: Long): String = {
+    var attachment = ""
     val sql1 = s"select attachment from $tableNameForPersonalMail where mail_id = ?"
     val rs = DBHelper.query(sql1, mailId)
-    var attachment = ""
     try {
       attachment = if (rs._1.next()) rs._1.getString("attachment") else ""
     } finally {
