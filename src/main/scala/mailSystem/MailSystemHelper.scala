@@ -59,7 +59,7 @@ object MailSystemHelper {
 
   def sendMail(senderId: Long, receiverId: Long, attachment: String, filter: String): Unit = {
     val newMail = new PersonalMail(senderId, receiverId, randomTitle, randomContent, attachment, filter)
-    MailService.addPersonalMail(newMail)
+    MailService.addPersonalMail(senderId, receiverId, newMail)
   }
 
   def actionSendMails(count: Int): Unit = {

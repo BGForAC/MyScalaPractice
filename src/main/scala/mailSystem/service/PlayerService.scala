@@ -61,6 +61,26 @@ object PlayerService {
     }
   }
 
+  def getMailCount(playerId: Long): Int = {
+    val sql = s"select mail_count from $tableName where player_id = ?"
+    val rs = DBHelper.query(sql, playerId)
+    try {
+      if (rs._1.next()) rs._1.getInt("mail_count") else throw new Exception(s"没有找到玩家 $playerId")
+    } finally {
+      DBHelper.closeRsConn(rs)
+    }
+  }
+
+  def IncMailCountByOne(playerId: Long): Unit = {
+    val sql = s"update $tableName set mail_count = mail_count + 1 where player_id = ?"
+    DBHelper.update(sql, playerId)
+  }
+
+  def decMailCountByOne(playerId: Long, mailCount: Int): Unit = {
+    val sql = s"update $tableName set mail_count = mail_count - 1 where player_id = ?"
+    DBHelper.update(sql, playerId)
+  }
+
   def updateMailsRead(playerId: Long, mailsRead: String): Unit = {
     val sql = s"update $tableName set mails_read = ? where player_id = ?"
     DBHelper.update(sql, mailsRead, playerId)
@@ -155,7 +175,6 @@ object PlayerService {
 
   def collectAttachment(player: Player, mail: Mail): Unit = {
     collectAttachment(player.getPlayerId, mail.getMailId, mail.getAttachment)
-    println(s"玩家 ${player.getPlayerId} 领取了邮件 ${mail.getMailId} 的附件")
   }
 
   def deleteMail(playerId: Long, maiLId: Long): Unit = {

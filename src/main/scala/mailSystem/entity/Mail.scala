@@ -26,6 +26,7 @@ trait Mail {
   def getUpdateTime: LocalDateTime = updateTime
   def isRead: Boolean = read
   def isCollect: Boolean = collect
+
   def setRead(read: Boolean): Unit = this.read = read
   def setCollect(collect: Boolean): Unit = this.collect = collect
 

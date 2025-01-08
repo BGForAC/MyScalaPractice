@@ -3,7 +3,7 @@ package mailSystem.dao
 import com.alibaba.druid.pool.DruidDataSourceFactory
 import mailSystem.utils.{Log4jUtils, MyUtils}
 
-import java.sql.Connection
+import java.sql.{Connection, SQLException}
 import java.util.Properties
 import javax.sql.DataSource
 
@@ -58,8 +58,12 @@ object DBHelper {
       connection.commit()
       rows
     } catch {
+      case e: SQLException =>
+        logger.error(failComment, e)
+        throw new SQLException(e)
       case e: Exception =>
-        throw new Exception(failComment + e)
+        logger.error(failComment, e)
+        throw new Exception(e)
     } finally {
       DBHelper.closeConnection(connection)
     }
@@ -86,9 +90,14 @@ object DBHelper {
       }
       (ps.executeQuery(), connection)
     } catch {
+      case e: SQLException =>
+        DBHelper.closeConnection(connection)
+        logger.error("查询失败", e)
+        throw new SQLException(e)
       case e: Exception =>
         DBHelper.closeConnection(connection)
-        throw new Exception("查询失败" + e)
+        logger.error("查询失败", e)
+        throw new Exception(e)
     }
   }
 
@@ -99,8 +108,53 @@ object DBHelper {
     DBHelper.closeConnection(rs._2)
   }
 
+  def executeUpdateWithConnection(sql: String, para: Seq[Any], connection: Connection): Int = {
+    val ps = connection.prepareStatement(sql)
+    try {
+      for (i <- para.indices) {
+        ps.setObject(i + 1, para(i))
+      }
+      ps.executeUpdate()
+    } finally {
+      ps.close()
+    }
+  }
+
+  def addWithConnection(sql: String, para: Any*)(connection: Connection): Int = {
+    executeUpdateWithConnection(sql, para, connection)
+  }
+
+  def updateWithConnection(sql: String, para: Any*)(connection: Connection): Int = {
+    executeUpdateWithConnection(sql, para, connection)
+  }
+
+  def deleteWithConnection(sql: String, para: Any*)(connection: Connection): Int = {
+    executeUpdateWithConnection(sql, para, connection)
+  }
+
+  def atomicOperation[T](call: Connection => T): T = {
+    val connection = DBHelper.getConnection
+    connection.setAutoCommit(false)
+    try {
+      val ret = call(connection)
+      connection.commit()
+      ret
+    } catch {
+      case e: SQLException if e.getSQLState == MyGlobalConfig.SQLERRORMAILCOUNTEXCEED =>
+        connection.rollback()
+        throw e
+      case e: Exception =>
+        connection.rollback()
+        throw new Exception("事务执行失败" + e)
+    } finally {
+      connection.setAutoCommit(true)
+      DBHelper.closeConnection(connection)
+    }
+  }
+
   def atomicUpdate(paras: Seq[Seq[Any]]): Unit = {
     val connection = DBHelper.getConnection
+    connection.setAutoCommit(false)
     try {
       for (i <- paras.indices) {
         val ps = connection.prepareStatement(paras(i).head.asInstanceOf[String])
@@ -119,6 +173,7 @@ object DBHelper {
         connection.rollback()
         throw new Exception("事务执行失败" + e)
     } finally {
+      connection.setAutoCommit(true)
       DBHelper.closeConnection(connection)
     }
   }
