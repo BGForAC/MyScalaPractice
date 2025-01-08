@@ -43,29 +43,14 @@ object DBHelper {
   }
 
   private def executeUpdate(sql: String, para: Seq[Any], failComment: String): Int = {
-    val connection = DBHelper.getConnection
     try {
-      var rows = 0
-      val ps = connection.prepareStatement(sql)
-      try {
-        for (i <- para.indices) {
-          ps.setObject(i + 1, para(i))
-        }
-        rows = ps.executeUpdate()
-      } finally {
-        ps.close()
-      }
-      connection.commit()
-      rows
+      atomicOperation(connection => {
+        executeUpdateWithConnection(sql, para, connection)
+      })
     } catch {
       case e: SQLException =>
         logger.error(failComment, e)
         throw new SQLException(e)
-      case e: Exception =>
-        logger.error(failComment, e)
-        throw new Exception(e)
-    } finally {
-      DBHelper.closeConnection(connection)
     }
   }
 

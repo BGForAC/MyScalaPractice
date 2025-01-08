@@ -10,10 +10,12 @@ object LocalDateTimeUtils {
       val year = date.split("-")(0).toInt
       val month = date.split("-")(1).toInt
       val day = date.split("-")(2).toInt
-      val hour = time.split(":")(0).toInt
-      val minute = time.split(":")(1).toInt
-      val second = time.split(":")(2).toInt
-      LocalDateTime.of(year, month, day, hour, minute, second)
+      time.split(":") match {
+        case Array(hour, minute, second) =>
+          LocalDateTime.of(year, month, day, hour.toInt, minute.toInt, second.toInt)
+        case Array(hour, minute) =>
+          LocalDateTime.of(year, month, day, hour.toInt, minute.toInt)
+      }
     } catch {
       case e: Exception =>
         null

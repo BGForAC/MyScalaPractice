@@ -2,6 +2,8 @@ package mailSystem.utils
 
 import mailSystem.entity.SystemMail
 
+import java.time.LocalDateTime
+
 object MapBeanUtils {
 
   def map2Json(map: Map[String, Any]): String = {
@@ -10,8 +12,8 @@ object MapBeanUtils {
     mapBean.toJsonString
   }
 
-  def json2SystemMail(mail: String): SystemMail = {
-    val mapBean = MapBean.toMutableMap(mail)
+  def json2SystemMail(mailJsonString: String): SystemMail = {
+    val mapBean = MapBean.toMutableMap(mailJsonString)
     MapBean.map2Bean(mapBean, classOf[SystemMail])
   }
 
@@ -20,9 +22,9 @@ object MapBeanUtils {
   }
 
   def main(args: Array[String]): Unit = {
-    val json = "{mail_id=1131, content=content, title=title, attachment=awd, filter=}, publicTime=null, deadline=null, createTime=null, updateTime=null, read=false, collect=false}"
-    val mail2 = json2SystemMail(json)
-    println(mail2)
+    val date = LocalDateTime.of(2021, 1, 1, 0, 14, 0)
+    println(date)
+
 
   }
 }

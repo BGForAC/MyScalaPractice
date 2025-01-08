@@ -8,7 +8,7 @@ import scala.collection.mutable.ArrayBuffer
 
 object PlayerService {
   private val snowflakeIdGenerator = new SnowflakeIdGenerator(0, 0)
-  private final val tableName = "player"
+  final val tableName = "player"
   private final val tableNameForItem = "player_items"
 
   def addPlayer(name: String): Unit = {
@@ -175,9 +175,5 @@ object PlayerService {
 
   def collectAttachment(player: Player, mail: Mail): Unit = {
     collectAttachment(player.getPlayerId, mail.getMailId, mail.getAttachment)
-  }
-
-  def deleteMail(playerId: Long, maiLId: Long): Unit = {
-
   }
 }

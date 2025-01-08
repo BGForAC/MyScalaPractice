@@ -20,7 +20,7 @@ object MailSystemImitator {
   def systemMailId2Key(systemMailId: Long): String = s"system_mail:$systemMailId"
   def distributionKeyForAttachmentCollect(playerId: Long, mailId: Long): String = s"distribution:attachment:collect:$playerId:$mailId"
   def distributionKeyForLoadSystemMail: String = "distribution:load:system:mail"
-  def distributionKeyForAddPersonalMail(receiverId: Long): String = s"distribution:add:personal:mail:$receiverId"
+  def distributionKeyForStatusChange: String = "distribution:status:change"
   def keyForSystemMail = "system_mail"
   def keyForMailsRead = "mails_read"
   def keyForMailsCollect = "mails_collect"
@@ -66,33 +66,52 @@ object MailSystemImitator {
     }
 
     val scheduler = system.scheduler
-//    def syncRead2DB = scheduler.scheduleWithFixedDelay(0.seconds, 10.seconds)(() => syncMailsRead())
-//
-//    def readMailRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 2.seconds)(() => {
-//      val playerId = randomPlayerIdOnLine
-//      val mailId = randomMailIdForConcretePlayer(playerId)
-//      val clientActor = clients(playerId)
-//      clientActor ! ReadMail(playerId, mailId)
-//    })
-//
-//    def collectAttachmentRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
-//      val playerId = randomPlayerIdOnLine
-//      val mailId = randomMailIdForConcretePlayer(playerId)
-//      val clientActor = clients(playerId)
-//      clientActor ! CollectAttachment(playerId, mailId)
-//    })
-//
-    def sendMailRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 1.seconds)(() => {
+
+    def syncRead2DBRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 10.seconds)(() => syncMailsRead())
+
+    def addClientRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 2.seconds)(() => {
+      val playerId = randomPlayerId
+      val clientActor = system.actorOf(Props(new ClientActor(playerId, serverActor, mutable.Map[Long, SystemMail](), mutable.Map[Long, PersonalMail](), mutable.Map[Long, PersonalMail]())), s"clientActor-$playerId")
+      myLog("新增客户端" + clientActor.path)
+      clients += (playerId -> clientActor)
+      serverActor ! AddClient(playerId, clientActor)
+    })
+
+    def readMailRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 2.seconds)(() => {
+      val playerId = randomPlayerIdOnLine
+      val mailId = randomMailIdForConcretePlayer(playerId)
+      val clientActor = clients(playerId)
+      clientActor ! ReadMail(playerId, mailId)
+    })
+
+    def collectAttachmentRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
+      val playerId = randomPlayerIdOnLine
+      val mailId = randomMailIdForConcretePlayer(playerId)
+      val clientActor = clients(playerId)
+      clientActor ! CollectAttachment(playerId, mailId)
+    })
+
+    def sendMailRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
       val sender = randomPlayerIdOnLine
       val receiver =  532125159960608768L
       val clientActor = clients(sender)
       clientActor ! SendPersonalMail(sender , receiver, new PersonalMail(sender, receiver, "title", "content", "{}", "{}"))
     })
-//
-//    def sendSystemMailRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
-//      serverActor ! SendSystemMail(new SystemMail("title", "content"))
-//    })
 
+    def sendSystemMailRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
+      serverActor ! SendSystemMail(new SystemMail("title", "content"))
+    })
+
+    def deleteMailRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 5.seconds)(() => {
+      val playerId = randomPlayerIdOnLine
+      val mailId = randomMailIdForConcretePlayer(playerId)
+      val clientActor = clients(playerId)
+      clientActor ! DelMail(playerId, mailId)
+    })
+
+//    val schedule1 = sendSystemMailRegularly
+//    val schedule2 = addClientRegularly
+    val schedule3 = deleteMailRegularly
 //    system.terminate()
   }
 
@@ -112,11 +131,15 @@ object MailSystemImitator {
 
   case class ReportError(msg: String)
 
+  case class SendToClient(msg: String)
+
   case class ReceiveMails(mails: List[Mail])
 
   case class ObtainItems(items: Map[Item, Int])
 
   case class CollectSuccess(mailId: Long)
+
+  case class DeleteSuccess(mailId: Long)
 
   class ServerActor(val clients: mutable.Map[Long, ActorRef]) extends Actor {
     override def receive: Receive = {
@@ -184,7 +207,12 @@ object MailSystemImitator {
       // 处理玩家删除邮件请求
       case DelMail(playerId, mailId) =>
         myLog(s"system: 玩家 $playerId 开始删除邮件 $mailId")
-        deleteMail(playerId, mailId)
+        deleteMail(playerId, mailId) match {
+          case Left(msg) =>
+            sender() ! ReportError(msg)
+          case Right(_) =>
+            sender() ! DeleteSuccess(mailId)
+        }
 
       case _ =>
         myLog(s"system: 服务端收到未知消息")
@@ -263,6 +291,16 @@ object MailSystemImitator {
         else if (sendMails.contains(mailId)) sendMails(mailId).setCollect(true)
         else if (systemMails.contains(mailId)) systemMails(mailId).setCollect(true)
         writeMailInFile(systemMails, personalMails, sendMails, playerId)
+
+      case DeleteSuccess(mailId) =>
+        myLog(s"player: 玩家 $playerId 删除邮件 $mailId 成功")
+        if (personalMails.contains(mailId)) personalMails.remove(mailId)
+        else if (sendMails.contains(mailId)) sendMails.remove(mailId)
+        else if (systemMails.contains(mailId)) systemMails.remove(mailId)
+        writeMailInFile(systemMails, personalMails, sendMails, playerId)
+
+      case SendToClient(msg) =>
+        myLog(s"player: $msg")
 
       case _ =>
         myLog("player: 客户端收到未知消息")
@@ -348,15 +386,12 @@ object MailSystemImitator {
   private def addSystemMail(mail: SystemMail): Unit = {
     JedisHelper.execute { jedis =>
       MailService.addSystemMail(mail)
-      jedis.hdel(keyForSystemMail)
+      jedis.del(keyForSystemMail)
     }
   }
 
   // 加载系统邮件, 先从redis中加载，如果没有再从数据库中加载
   private def loadSystemMails(): mutable.ListBuffer[Mail] = {
-    val lockKey = distributionKeyForLoadSystemMail
-    val lockValue = System.currentTimeMillis().toString
-
     JedisHelper.execute { jedis =>
       val systemMails = mutable.ListBuffer[Mail]()
       val mails = jedis.hgetAll(keyForSystemMail)
@@ -369,7 +404,6 @@ object MailSystemImitator {
       } else {
         myLog("process: 系统邮件已加载到缓存中")
         mails.foreach { case (mailId, mail) =>
-          //          System.out.println(mail)
           systemMails += MapBeanUtils.json2SystemMail(mail)
         }
       }
@@ -379,7 +413,7 @@ object MailSystemImitator {
 
   /*
    * 用户读取邮件，在redis中记录邮件已读状态，定时任务将状态同步到数据库
-   * 读取不存在的内存时可能会反复加载，需要修改
+   * 读取不存在的内存时可能会反复加载，需要修改，可以设置循环次数
    */
   private def readMail(playerId: Long, mailId: Long): Unit = {
     JedisHelper.execute { jedis =>
@@ -423,18 +457,60 @@ object MailSystemImitator {
     }
   }
 
-  private def deleteMail(playerId: Long, mailId: Long): Unit = {
-
+  /*
+   * 删除邮件，需要注意防止定时同步任务把缓存中邮件阅读状态同步到数据库，导致删除失败
+   * 目前没有想到好的解决方案，只能在删除和同步时加上一样的锁，保证同步任务不会导致被删除的邮件再次被同步
+   */
+  private def deleteMail(playerId: Long, mailId: Long): Either[String, Unit] = {
+    try {
+      MailService.getMail(mailId) match {
+        case mail: SystemMail =>
+          myLog(s"process: 玩家尝试 $playerId 删除系统邮件 $mailId")
+          JedisHelper.executeWithDistributionLock(distributionKeyForStatusChange, System.currentTimeMillis().toString, 20) { jedis =>
+            jedis.hdel(playerId2Key(playerId), keyForMailsRead)
+            Right(MailService.deleteSystemMail(playerId, mailId))
+          }
+        case mail: PersonalMail if mail.senderId == playerId =>
+          myLog(s"process: 玩家尝试 $playerId 删除发送的邮件 $mailId")
+          Right(MailService.deleteMailSend(playerId, mailId))
+        case mail: PersonalMail if mail.receiverId == playerId =>
+          myLog(s"process: 玩家尝试 $playerId 删除收到的邮件 $mailId")
+          JedisHelper.executeWithDistributionLock(distributionKeyForStatusChange, System.currentTimeMillis().toString, 20) { jedis =>
+            jedis.hdel(playerId2Key(playerId), keyForMailsRead)
+            Right(MailService.deleteMailReceive(playerId, mailId))
+          }
+        case _ =>
+          myLog(s"process: 玩家 $playerId 删除邮件 $mailId 失败, 删除不合法")
+          Left("删除邮件失败")
+      }
+    } catch {
+      case e: Exception =>
+        Left("删除邮件失败")
+    }
   }
 
+  // 定时任务，同步邮件已读状态到数据库，当尝试加载不存在的内存时，会反复加载，需要修改，可以设置循环次数
   private def syncMailsRead(): Unit = {
+    val key = distributionKeyForStatusChange
+    val value = System.currentTimeMillis().toString
+
     myLog("process: 同步邮件已读状态")
-    JedisHelper.execute { jedis =>
+    JedisHelper.executeWithDistributionLock(key, value, 20) { jedis =>
       val players: Iterable[Long] = jedis.keys("*").toArray.flatMap { key => key2PlayerId(key.asInstanceOf[String]) }
       players.foreach { playerId =>
-        val mailsRead = jedis.hget(playerId2Key(playerId), keyForMailsRead)
-        myLog(s"process: 玩家 $playerId 的邮件已读状态：$mailsRead")
-        if (mailsRead != null) PlayerService.updateMailsRead(playerId, mailsRead)
+        jedis.hget(playerId2Key(playerId), keyForMailsRead) match {
+          case null =>
+            myLog(s"process: 玩家 $playerId 的邮件已读状态未加载到缓存中")
+            loadPlayersMail(playerId)
+            syncMailsRead()
+          case mailsRead =>
+            if (mailsRead.isEmpty) {
+              myLog(s"process: 玩家 $playerId 的邮件已读状态为空")
+            } else {
+              myLog(s"process: 玩家 $playerId 的邮件已读状态同步到数据库")
+              PlayerService.updateMailsRead(playerId, mailsRead)
+            }
+        }
       }
     }
   }

@@ -2,7 +2,7 @@ package mailSystem.service
 
 import mailSystem.dao.DBHelper
 import mailSystem.entity.{Mail, PersonalMail, SystemMail}
-import mailSystem.utils.{MapBean, SnowflakeIdGenerator}
+import mailSystem.utils.{JedisHelper, MapBean, SnowflakeIdGenerator}
 
 import java.time.LocalDateTime
 import scala.collection.mutable.ListBuffer
@@ -12,6 +12,8 @@ object MailService {
   private val snowflakeIdGeneratorForSystemMail = new SnowflakeIdGenerator(0, 16)
   private val tableNameForPersonalMail = "personal_mail"
   private val tableNameForSystemMail = "system_mail"
+  private val tableNameForPlayer = PlayerService.tableName
+  private val tableNameForMailDel = "mail_del"
 
   def systemMails(): ListBuffer[Mail] = {
     val sql = s"select mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time from $tableNameForSystemMail"
@@ -64,11 +66,27 @@ object MailService {
     } finally {
       DBHelper.closeRsConn(rs)
     }
+    mails -- deletedMails(playerId)
+  }
+
+  def deletedMails(playerId: Long): ListBuffer[Mail] = {
+    val sql = s"select mail_id from $tableNameForMailDel where player_id = ?"
+    val mails: ListBuffer[Mail] = ListBuffer()
+    val rs = DBHelper.query(sql, playerId)
+    try {
+      while (rs._1.next()) {
+        val mailId = rs._1.getLong("mail_id")
+        val mail = getMail(mailId)
+        mails += mail
+      }
+    } finally {
+      DBHelper.closeRsConn(rs)
+    }
     mails
   }
 
   def mails(playerId: Long): ListBuffer[Mail] = {
-    systemMails() ++ personalMails(playerId)
+    systemMails() ++ personalMails(playerId) -- deletedMails(playerId)
   }
 
   def addPersonalMail(senderId: Long, receiverId: Long, mail: PersonalMail): Unit = {
@@ -81,7 +99,7 @@ object MailService {
 
     val mailId = snowflakeIdGeneratorForPersonalMail.nextId()
     val sql1 = s"insert into $tableNameForPersonalMail (mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time, sender_id, receiver_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    val sql2 = s"update player set mail_count = mail_count + 1 where player_id = ?"
+    val sql2 = s"update $tableNameForPlayer set mail_count = mail_count + 1 where player_id = ?"
     val time = LocalDateTime.now
 
     DBHelper.atomicOperation{ connection =>
@@ -90,24 +108,33 @@ object MailService {
     }
   }
 
-  // 在一个删除表中添加新行，若是私人邮件且自己是收件人，则删除邮件时，需要更新玩家的邮件数量
-  def delMail(playerId: Long, mailId: Long): Unit = {
-    val sql = s"insert into mail_del (player_id, mail_id) values (?, ?)"
-    getMail(mailId) match {
-      case mail: SystemMail =>
-        DBHelper.add(sql, playerId, mailId)
-      case mail: PersonalMail if mail.senderId == playerId =>
-        DBHelper.add(sql, playerId, mailId)
-      case mail: PersonalMail if mail.receiverId == playerId =>
-        val sql2 = s"update player set mail_count = mail_count - 1 where player_id = ?"
-        DBHelper.atomicOperation{ connection =>
-          DBHelper.addWithConnection(sql, playerId, mailId)(connection)
-          DBHelper.updateWithConnection(sql2, playerId)(connection)
-        }
-      case _ =>
-        throw new Exception(s"非法操作, $playerId 尝试删除不属于自己邮箱的邮件 $mailId")
-    }
+  // 对自己发送的邮件在一个删除表中添加新行
+  def deleteMailSend(playerId: Long, mailId: Long): Unit = {
+    val sql = s"insert into $tableNameForMailDel (player_id, mail_id, delete_time) values (?, ?, ?)"
+    DBHelper.add(sql, playerId, mailId, LocalDateTime.now)
+  }
 
+  // 对系统邮件在删除表中添加新行，并且更新阅读和领取状态
+  def deleteSystemMail(playerId: Long, mailId: Long): Unit = {
+    val sql1 = s"insert into $tableNameForMailDel (player_id, mail_id, delete_time) values (?, ?, ?)"
+    val sql2 = s"update $tableNameForPlayer set mails_collect = replace(mails_collect, '$mailId,', '')," +
+                                              s"mails_read = replace(mails_read, '$mailId,', '') where player_id = ?"
+    DBHelper.atomicOperation{ connection =>
+      DBHelper.addWithConnection(sql1, playerId, mailId, LocalDateTime.now)(connection)
+      DBHelper.updateWithConnection(sql2, playerId)(connection)
+    }
+  }
+
+  // 对收到的邮件，在一个删除表中添加新行，还需要更新玩家的邮件数量和阅读与领取状态
+  def deleteMailReceive(playerId: Long, mailId: Long): Unit = {
+    val sql1 = s"insert into $tableNameForMailDel (player_id, mail_id, delete_time) values (?, ?, ?)"
+    val sql2 = s"update $tableNameForPlayer set mail_count = mail_count - 1," +
+                                              s"mails_collect = replace(mails_collect. '$mailId,', '')," +
+                                              s"mails_read = replace(mails_read, '$mailId,', '') where player_id = ?"
+    DBHelper.atomicOperation{ connection =>
+      DBHelper.addWithConnection(sql1, playerId, mailId, LocalDateTime.now)(connection)
+      DBHelper.updateWithConnection(sql2, playerId)(connection)
+    }
   }
 
   def addSystemMail(mail: SystemMail): Unit = {
