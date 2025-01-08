@@ -63,7 +63,7 @@ object MailSystemInvoker {
 
   def sendMail(senderId: Long, receiverId: Long, attachment: String, filter: String): Unit = {
     val newMail = new PersonalMail(senderId, receiverId, randomTitle, randomContent, attachment, filter)
-    MailService.sendMail(newMail)
+    MailService.addPersonalMail(newMail)
   }
 
   def actionSendMails(count: Int): Unit = {

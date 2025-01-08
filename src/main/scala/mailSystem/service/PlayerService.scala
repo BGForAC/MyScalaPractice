@@ -153,4 +153,8 @@ object PlayerService {
     collectAttachment(player.getPlayerId, mail.getMailId, mail.getAttachment)
     println(s"玩家 ${player.getPlayerId} 领取了邮件 ${mail.getMailId} 的附件")
   }
+
+  def deleteMail(playerId: Long, maiLId: Long): Unit = {
+
+  }
 }

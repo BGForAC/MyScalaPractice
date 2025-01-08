@@ -26,4 +26,6 @@ trait Mail {
   def getUpdateTime: LocalDateTime = updateTime
   def isRead: Boolean = read
   def isCollect: Boolean = collect
+
+  def status: String = if (read && !collect) "未领取" else if (read && collect) "已领取" else "未读"
 }
