@@ -64,25 +64,6 @@ class ClientGUI(clientActor: ActorRef,
     editable = false
   }
 
-//  val systemMails = mutable.Map[Long, SystemMail]()
-//  val receiveMails = mutable.Map[Long, PersonalMail]()
-//  val sendMails = mutable.Map[Long, PersonalMail]()
-
-//  def refreshSystemMailList(systemMails: mutable.Map[Long, SystemMail]) = {
-//    this.systemMails.clear()
-//    this.systemMails ++= systemMails
-//  }
-//
-//  def refreshReceiveMailList(receiveMails: mutable.Map[Long, PersonalMail]) = {
-//    this.receiveMails.clear()
-//    this.receiveMails ++= receiveMails
-//  }
-//
-//  def refreshSendMailList(sendMails: mutable.Map[Long, PersonalMail]) = {
-//    this.sendMails.clear()
-//    this.sendMails ++= sendMails
-//  }
-//
   def refreshGUI(): Unit = {
     updateCurrentMailList
     mailList.listData = currentMailList.map(_.getTitle)
