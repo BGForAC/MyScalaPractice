@@ -17,6 +17,34 @@ import scala.util.Random
 
 object MailSystemImitator {
 
+  case class AddClient(playerId: Long, client: ActorRef)
+
+  case class DelClient(playerId: Long)
+
+  case class SendPersonalMail(sender: Long, receiver: Long, mail: PersonalMail)
+
+  case class SendSystemMail(mail: SystemMail)
+
+  case class LoadPlayersMail(playerId: Long)
+
+  case class ReadMail(playerId: Long, mailId: Long)
+
+  case class CollectAttachment(playerId: Long, mailId: Long)
+
+  case class DelMail(playerId: Long, mailId: Long)
+
+  case class Report(msg: String)
+
+  case class ReceiveMails(mails: List[Mail])
+
+  case class ObtainItems(items: Map[Item, Int])
+
+  case class CollectSuccess(mailId: Long)
+
+  case class DeleteSuccess(mailId: Long)
+
+  case class Log(content: String)
+
   def playerId2Key(playerId: Long): String = s"player:$playerId"
   def systemMailId2Key(systemMailId: Long): String = s"system_mail:$systemMailId"
   def distributionKeyForAttachmentCollect(playerId: Long, mailId: Long): String = s"distribution:attachment:collect:$playerId:$mailId"
@@ -33,8 +61,18 @@ object MailSystemImitator {
     }
   }
 
+  var serverActor: ActorRef = _
+  val clients = mutable.Map[Long, ActorRef]()
+
   private def myLog(content: String): Unit = {
-    println(content)
+    content match {
+      case msg if msg.startsWith("process") => println(s"\u001B[32m $msg \u001B[0m")
+      case msg if msg.startsWith("player") =>
+        val playerId = content.split(" ")(2).toLong
+        clients(playerId) ! Log(msg)
+      case msg if msg.startsWith("system") => serverActor ! Log(msg)
+      case _ => println(s"\u001B[31m $content \u001B[0m")
+    }
   }
 
   def main(args: Array[String]): Unit = {
@@ -51,10 +89,9 @@ object MailSystemImitator {
 
     val system = ActorSystem("MyMailSystem")
 
-    val serverActor = system.actorOf(Props(new ServerActor(mutable.Map[Long, ActorRef]())), "serverActor")
+    serverActor = system.actorOf(Props[ServerActor], "serverActor")
     myLog("新增服务端" + serverActor.path)
 
-    val clients = mutable.Map[Long, ActorRef]()
     def randomPlayerIdOnLine = clients.keySet.toSeq(Random.nextInt(clients.size))
     def randomClientActor = clients(randomPlayerIdOnLine)
 
@@ -66,7 +103,6 @@ object MailSystemImitator {
     def addConcreteClient(playerId: Long) = {
       val clientActor = system.actorOf(Props(new ClientActor(playerId, serverActor, mutable.Map[Long, SystemMail](), mutable.Map[Long, PersonalMail](), mutable.Map[Long, PersonalMail]())), s"clientActor-$playerId")
       myLog("新增客户端" + clientActor.path)
-      clients += (playerId -> clientActor)
       clientActor ! AddClient(playerId, clientActor)
     }
 
@@ -77,7 +113,6 @@ object MailSystemImitator {
 
     def delConcreteClient(playerId: Long) = {
       clients(playerId) ! DelClient(playerId)
-      clients -= playerId
     }
 
     val scheduler = system.scheduler
@@ -130,34 +165,16 @@ object MailSystemImitator {
 //    system.terminate()
   }
 
-  case class AddClient(playerId: Long, client: ActorRef)
+  class ServerActor() extends Actor {
 
-  case class DelClient(playerId: Long)
+    val serverGUI = new ServerGUI(self)
+    serverGUI.main(Array())
 
-  case class SendPersonalMail(sender: Long, receiver: Long, mail: PersonalMail)
-
-  case class SendSystemMail(mail: SystemMail)
-
-  case class LoadPlayersMail(playerId: Long)
-
-  case class ReadMail(playerId: Long, mailId: Long)
-
-  case class CollectAttachment(playerId: Long, mailId: Long)
-
-  case class DelMail(playerId: Long, mailId: Long)
-
-  case class Report(msg: String)
-
-  case class ReceiveMails(mails: List[Mail])
-
-  case class ObtainItems(items: Map[Item, Int])
-
-  case class CollectSuccess(mailId: Long)
-
-  case class DeleteSuccess(mailId: Long)
-
-  class ServerActor(val clients: mutable.Map[Long, ActorRef]) extends Actor {
     override def receive: Receive = {
+      // 为GUI提供日志
+      case Log(content) =>
+        serverGUI.log(content)
+
       // 添加客户端
       case AddClient(playerId, client) =>
         myLog(s"system: 添加客户端 ${client.path.name}")
@@ -247,6 +264,9 @@ object MailSystemImitator {
                     val personalMails: mutable.Map[Long, PersonalMail],
                     val sendMails: mutable.Map[Long, PersonalMail]) extends Actor {
 
+    val clientGUI = new ClientGUI(self)
+    clientGUI.main(Array())
+
     private def addMail(mail: Mail): Unit = {
       mail match {
         case personalMail: PersonalMail if personalMail.receiverId == playerId =>
@@ -262,6 +282,21 @@ object MailSystemImitator {
     }
 
     override def receive: Receive = {
+      // 向服务端发送连接请求
+      case AddClient(playerId, client) =>
+        clientGUI.log(s"player: 玩家 $playerId 开始连接")
+        server ! AddClient(playerId, client)
+
+      // 从服务端断开连接
+      case DelClient(playerId) =>
+        clientGUI.log(s"player: 玩家 $playerId 断开连接")
+        server ! DelClient(playerId)
+        context.stop(self)
+
+      // 为GUI提供日志
+      case Log(content) =>
+        clientGUI.log(content)
+
       // 一般发生在玩家登陆时，加载邮件到本地
       case LoadPlayersMail(playerId) =>
         myLog(s"player: 玩家 $playerId 请求拉取邮箱到本地")
@@ -297,7 +332,7 @@ object MailSystemImitator {
 
       // 错误打印
       case Report(msg) =>
-        myLog(s"player: $msg")
+        myLog(s"player: 玩家 $playerId 收到邮件 $msg")
 
       // 领取附件成功,打印附件信息
       case ObtainItems(items) =>
@@ -314,6 +349,7 @@ object MailSystemImitator {
         else if (systemMails.contains(mailId)) systemMails(mailId).setCollect(true)
         writeMailInFile(systemMails, personalMails, sendMails, playerId)
 
+      // 删除邮件成功，更新本地邮件
       case DeleteSuccess(mailId) =>
         myLog(s"player: 玩家 $playerId 删除邮件 $mailId 成功")
         if (personalMails.contains(mailId)) personalMails.remove(mailId)
@@ -321,17 +357,8 @@ object MailSystemImitator {
         else if (systemMails.contains(mailId)) systemMails.remove(mailId)
         writeMailInFile(systemMails, personalMails, sendMails, playerId)
 
-      case AddClient(playerId, client) =>
-        myLog(s"player: 玩家 $playerId 请求连接到客户端 ${client.path.name}")
-        server ! AddClient(playerId, client)
-
-      case DelClient(playerId) =>
-        myLog(s"player: 玩家 $playerId 准备断开连接")
-        server ! DelClient(playerId)
-        context.stop(self)
-
       case _ =>
-        myLog("player: 客户端收到未知消息")
+        myLog(s"player: 玩家 $playerId 收到未知消息")
     }
   }
 
