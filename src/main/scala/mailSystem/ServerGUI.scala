@@ -1,11 +1,9 @@
 package mailSystem
 
-import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+import akka.actor.{ActorRef, ActorSystem, Props}
 
-import scala.collection.mutable
 import scala.swing._
 import scala.swing.event.ButtonClicked
-import MailSystemImitator.ServerActor
 
 class ServerGUI(serverActor: ActorRef) extends SimpleSwingApplication {
   val logArea = new TextArea {

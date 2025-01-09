@@ -89,7 +89,8 @@ object MailService {
     systemMails() ++ personalMails(playerId) -- deletedMails(playerId)
   }
 
-  def addPersonalMail(senderId: Long, receiverId: Long, mail: PersonalMail): Unit = {
+  // 待修改：目前就先用同样的参数，每次要改两遍，后面再改
+  def addPersonalMail(senderId: Long, receiverId: Long, mail: PersonalMail): PersonalMail = {
     require(senderId > 0, "发件人不能为空")
     require(receiverId > 0, "收件人不能为空")
     require(senderId != receiverId, "发件人和收件人不能相同")
@@ -101,11 +102,13 @@ object MailService {
     val sql1 = s"insert into $tableNameForPersonalMail (mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time, sender_id, receiver_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     val sql2 = s"update $tableNameForPlayer set mail_count = mail_count + 1 where player_id = ?"
     val time = LocalDateTime.now
+    val personalMail = new PersonalMail(mailId, mail.content, mail.title, mail.attachment, mail.filter, time, time.plusMonths(1), time, time, mail.senderId, mail.receiverId)
 
     DBHelper.atomicOperation{ connection =>
       DBHelper.addWithConnection(sql1, mailId, mail.content, mail.title, mail.attachment, mail.filter, time, time.plusMonths(1), time, time, mail.senderId, mail.receiverId)(connection)
       DBHelper.updateWithConnection(sql2, mail.receiverId)(connection)
     }
+    personalMail
   }
 
   // 对自己发送的邮件在一个删除表中添加新行
@@ -137,15 +140,18 @@ object MailService {
     }
   }
 
-  def addSystemMail(mail: SystemMail): Unit = {
+  // 待修改：目前就先用同样的参数，每次要改两遍，后面再改
+  def addSystemMail(mail: SystemMail): SystemMail = {
     require(mail.title != null && mail.title.nonEmpty, "邮件标题不能为空")
     require(mail.content != null && mail.content.nonEmpty, "邮件内容不能为空")
-//    require(MapBean.toMutableMap(mail.filter) != MapBean.empty, "邮件过滤条件不能为空")
+    //    require(MapBean.toMutableMap(mail.filter) != MapBean.empty, "邮件过滤条件不能为空")
 
     val mailId = snowflakeIdGeneratorForSystemMail.nextId()
     val sql = s"insert into $tableNameForSystemMail (mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
     val time = LocalDateTime.now
+    val systemMail = new SystemMail(mailId, mail.content, mail.title, mail.attachment, mail.filter, time, time.plusMonths(1), time, time)
     DBHelper.add(sql, mailId, mail.content, mail.title, mail.attachment, mail.filter, time, time.plusMonths(1), time, time)
+    systemMail
   }
 
   def delSystemMail(mailId: Long): Unit = {
