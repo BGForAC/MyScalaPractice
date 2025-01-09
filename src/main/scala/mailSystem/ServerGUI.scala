@@ -1,9 +1,13 @@
 package mailSystem
 
 import akka.actor.{ActorRef, ActorSystem, Props}
+import com.typesafe.config.ConfigFactory
+import mailSystem.MailSystemImitator.{ServerActor, syncMailsRead}
 
+import scala.collection.mutable
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.{DurationInt, FiniteDuration}
 import scala.swing._
-import scala.swing.event.ButtonClicked
 
 class ServerGUI(serverActor: ActorRef) extends SimpleSwingApplication {
   val logArea = new TextArea {
@@ -19,28 +23,38 @@ class ServerGUI(serverActor: ActorRef) extends SimpleSwingApplication {
   def top: Frame = new MainFrame {
     title = "邮箱系统"
 
-    val startButton = new Button {
-      text = "启动服务器"
-    }
-
     contents = new BoxPanel(Orientation.Vertical) {
-      contents += startButton
       contents += new ScrollPane(logArea)
       border = Swing.EmptyBorder(10, 10, 10, 10)
     }
+  }
+}
 
-    listenTo(startButton)
+object ServerGUIOpen {
+  def main(args: Array[String]): Unit = {
+    val config = ConfigFactory.parseString(
+      """
+        |akka {
+        |  actor {
+        |    allow-java-serialization = on
+        |    serialize-messages = on
+        |    provider = "akka.remote.RemoteActorRefProvider"
+        |  }
+        |  remote {
+        |    artery {
+        |      canonical.hostname = "127.0.0.1"
+        |      canonical.port = 2552
+        |    }
+        |  }
+        |}
+        |""".stripMargin)
+    val system = ActorSystem("MyMailSystem", config)
+    val serverActor = system.actorOf(Props(new ServerActor(mutable.Map[Long, ActorRef]())), "serverActor")
 
-    reactions += {
-      case ButtonClicked(`startButton`) =>
-        logArea.append("服务器启动中...\n")
-        startServer()
-    }
+    val scheduler = system.scheduler
 
-    def startServer(): Unit = {
-      val system = ActorSystem("MyMailSystem")
-      val serverActor = system.actorOf(Props(), "serverActor")
-      logArea.append("服务器已启动\n")
-    }
+    def syncRead2DBRegularly(rate: FiniteDuration) = scheduler.scheduleWithFixedDelay(0.seconds, rate)(() => syncMailsRead())
+
+    syncRead2DBRegularly(10.seconds)
   }
 }

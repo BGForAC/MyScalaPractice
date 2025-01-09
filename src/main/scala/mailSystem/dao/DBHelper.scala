@@ -3,7 +3,7 @@ package mailSystem.dao
 import com.alibaba.druid.pool.DruidDataSourceFactory
 import mailSystem.utils.{Log4jUtils, MyUtils}
 
-import java.sql.{Connection, SQLException}
+import java.sql.{Connection, SQLException, SQLIntegrityConstraintViolationException}
 import java.util.Properties
 import javax.sql.DataSource
 
@@ -127,6 +127,11 @@ object DBHelper {
     } catch {
       case e: SQLException if e.getSQLState == MyGlobalConfig.SQLERRORMAILCOUNTEXCEED =>
         connection.rollback()
+        logger.error("事务执行失败，邮件数量超过限制", e)
+        throw e
+      case e: SQLIntegrityConstraintViolationException =>
+        connection.rollback()
+        logger.error("事务执行失败，违反完整性约束", e)
         throw e
       case e: Exception =>
         connection.rollback()

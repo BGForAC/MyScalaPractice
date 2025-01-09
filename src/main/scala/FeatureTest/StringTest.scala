@@ -7,6 +7,8 @@ object StringTest extends App {
   val a = "123"
   println("123" + a)
 
+  println("".split(",").mkString("Array(", ", ", ")").foreach(println))
+
   def matchString(str: String) = {
     str match {
 //      case "1" + (e: String) => println(e) // 编译不通过
