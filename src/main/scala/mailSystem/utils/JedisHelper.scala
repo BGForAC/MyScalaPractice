@@ -40,7 +40,7 @@ object JedisHelper {
     } catch {
       case e: Exception =>
         logger.error("获取Jedis连接失败", e)
-        null
+        throw e
     }
   }
 

@@ -6,6 +6,7 @@ import mailSystem.entity.{Item, Mail, PersonalMail, SystemMail}
 import mailSystem.service.{ItemService, MailService, PlayerService}
 import mailSystem.utils.{JedisHelper, MapBean, MapBeanUtils, MyUtils}
 
+import java.lang.Thread.sleep
 import java.sql.SQLException
 import java.time.LocalDateTime
 import scala.collection.convert.ImplicitConversions.`map AsScala`
@@ -57,25 +58,33 @@ object MailSystemImitator {
     def randomPlayerIdOnLine = clients.keySet.toSeq(Random.nextInt(clients.size))
     def randomClientActor = clients(randomPlayerIdOnLine)
 
-    for (i <- 1 to 20) {
+    def addRandomClient = {
       val playerId = randomPlayerId
-      val clientActor = system.actorOf(Props(new ClientActor(playerId, serverActor, mutable.Map[Long, SystemMail](), mutable.Map[Long, PersonalMail](), mutable.Map[Long, PersonalMail]())), s"clientActor-$playerId-$i")
+      addConcreteClient(playerId)
+    }
+
+    def addConcreteClient(playerId: Long) = {
+      val clientActor = system.actorOf(Props(new ClientActor(playerId, serverActor, mutable.Map[Long, SystemMail](), mutable.Map[Long, PersonalMail](), mutable.Map[Long, PersonalMail]())), s"clientActor-$playerId")
       myLog("新增客户端" + clientActor.path)
       clients += (playerId -> clientActor)
-      serverActor ! AddClient(playerId, clientActor)
+      clientActor ! AddClient(playerId, clientActor)
+    }
+
+    def delRandomClient = {
+      val playerId = randomPlayerIdOnLine
+      delConcreteClient(playerId)
+    }
+
+    def delConcreteClient(playerId: Long) = {
+      clients(playerId) ! DelClient(playerId)
+      clients -= playerId
     }
 
     val scheduler = system.scheduler
 
     def syncRead2DBRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 10.seconds)(() => syncMailsRead())
 
-    def addClientRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 2.seconds)(() => {
-      val playerId = randomPlayerId
-      val clientActor = system.actorOf(Props(new ClientActor(playerId, serverActor, mutable.Map[Long, SystemMail](), mutable.Map[Long, PersonalMail](), mutable.Map[Long, PersonalMail]())), s"clientActor-$playerId")
-      myLog("新增客户端" + clientActor.path)
-      clients += (playerId -> clientActor)
-      serverActor ! AddClient(playerId, clientActor)
-    })
+    def clientConnectRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 2.seconds)(() => addRandomClient)
 
     def readMailRegularly = scheduler.scheduleWithFixedDelay(0.seconds, 2.seconds)(() => {
       val playerId = randomPlayerIdOnLine
@@ -109,13 +118,21 @@ object MailSystemImitator {
       clientActor ! DelMail(playerId, mailId)
     })
 
+    addConcreteClient(532125159977385984L)
+    sleep(10000)
+    delConcreteClient(532125159977385984L)
+    sleep(10000)
+    addConcreteClient(532125159977385984L)
+
 //    val schedule1 = sendSystemMailRegularly
 //    val schedule2 = addClientRegularly
-    val schedule3 = deleteMailRegularly
+//    val schedule3 = deleteMailRegularly
 //    system.terminate()
   }
 
   case class AddClient(playerId: Long, client: ActorRef)
+
+  case class DelClient(playerId: Long)
 
   case class SendPersonalMail(sender: Long, receiver: Long, mail: PersonalMail)
 
@@ -129,9 +146,7 @@ object MailSystemImitator {
 
   case class DelMail(playerId: Long, mailId: Long)
 
-  case class ReportError(msg: String)
-
-  case class SendToClient(msg: String)
+  case class Report(msg: String)
 
   case class ReceiveMails(mails: List[Mail])
 
@@ -148,6 +163,13 @@ object MailSystemImitator {
         myLog(s"system: 添加客户端 ${client.path.name}")
         clients += (playerId -> client)
         client ! LoadPlayersMail(playerId)
+        client ! Report("连接成功")
+
+      // 删除客户端，先删用户列表，防止定时任务执行时发现用户信息不在缓存中再次加载，导致用户再次登陆时无法更新邮箱
+      case DelClient(playerId) =>
+        myLog(s"system: 删除客户端 ${clients(playerId).path.name}")
+        clients -= playerId
+        deleteClient(playerId)
 
       // 收到玩家发送邮件的请求，将邮件存入数据库，判断是否成功(暂未实现),向发送方添加一封已发送邮件，如果接收方在线，直接发送邮件,不在线存入数据库
       case SendPersonalMail(senderId, receiverId, mail) =>
@@ -155,7 +177,7 @@ object MailSystemImitator {
         addPersonalMail(senderId, receiverId, mail) match {
           case Left(msg) =>
             myLog(s"system: $msg")
-            sender() ! ReportError(msg)
+            sender() ! Report(msg)
           case Right(mail) =>
             myLog(s"system: 玩家 $senderId 发送邮件成功")
             clients(senderId) ! ReceiveMails(List(mail))
@@ -180,7 +202,7 @@ object MailSystemImitator {
         loadPlayersMail(playerId) match {
           case Left(msg) =>
             myLog(s"system: $msg")
-            sender() ! ReportError(msg)
+            sender() ! Report(msg)
           case Right(mails) =>
             myLog(s"system: 玩家 $playerId 邮箱更新成功")
             sender() ! ReceiveMails(mails)
@@ -196,7 +218,7 @@ object MailSystemImitator {
         myLog(s"system: 玩家 $playerId 开始领取邮件 $mailId 的附件")
         collectAttachment(playerId, mailId) match {
           case Left(msg) =>
-            sender() ! ReportError(msg)
+            sender() ! Report(msg)
           case Right(attachment) =>
             myLog(s"system: 玩家 $playerId 领取邮件 $mailId 的附件成功")
             sender() ! ObtainItems(attachment)
@@ -209,7 +231,7 @@ object MailSystemImitator {
         myLog(s"system: 玩家 $playerId 开始删除邮件 $mailId")
         deleteMail(playerId, mailId) match {
           case Left(msg) =>
-            sender() ! ReportError(msg)
+            sender() ! Report(msg)
           case Right(_) =>
             sender() ! DeleteSuccess(mailId)
         }
@@ -274,7 +296,7 @@ object MailSystemImitator {
         server ! DelMail(playerId, mailId)
 
       // 错误打印
-      case ReportError(msg) =>
+      case Report(msg) =>
         myLog(s"player: $msg")
 
       // 领取附件成功,打印附件信息
@@ -299,8 +321,14 @@ object MailSystemImitator {
         else if (systemMails.contains(mailId)) systemMails.remove(mailId)
         writeMailInFile(systemMails, personalMails, sendMails, playerId)
 
-      case SendToClient(msg) =>
-        myLog(s"player: $msg")
+      case AddClient(playerId, client) =>
+        myLog(s"player: 玩家 $playerId 请求连接到客户端 ${client.path.name}")
+        server ! AddClient(playerId, client)
+
+      case DelClient(playerId) =>
+        myLog(s"player: 玩家 $playerId 准备断开连接")
+        server ! DelClient(playerId)
+        context.stop(self)
 
       case _ =>
         myLog("player: 客户端收到未知消息")
@@ -325,6 +353,13 @@ object MailSystemImitator {
       fos.write("\n".getBytes)
     }
     fos.close()
+  }
+
+  // 删除客户端
+  private def deleteClient(playerId: Long): Unit = {
+    JedisHelper.execute{ jedis =>
+      jedis.hdel(playerId2Key(playerId), keyForMailsRead)
+    }
   }
 
   // 将邮件写入文件
