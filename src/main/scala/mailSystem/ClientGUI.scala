@@ -83,6 +83,14 @@ class ClientGUI(clientActor: ActorRef,
     mailList.listData = currentMailList
   }
 
+  def refreshCollectAttachment(mailId: Long): Unit = {
+    println("刷新附件")
+    if (selectedMail != null && selectedMail.getMailId == mailId) {
+      selectedMail.setCollect(true)
+      mailDisplay.text = selectedMail.toString
+    }
+  }
+
   def log(message: String): Unit = {
     logArea.append(message + "\n")
   }
@@ -157,7 +165,6 @@ class ClientGUI(clientActor: ActorRef,
 
     def disconnect(): Unit = {
       clientActor ! MailSystemImitator.RequestDelPlayer(playerId)
-      this.close()
     }
   }
 
@@ -279,7 +286,7 @@ object ClientLogin extends SimpleSwingApplication {
       val serverActorPath = s"akka://MyMailSystem@127.0.0.1:2552/user/serverActor"
       val serverActor = system.actorSelection(serverActorPath).resolveOne(10.seconds).onComplete{
         case scala.util.Success(serverActor) =>
-          val clientActor = system.actorOf(Props(new ClientActor(playerId, serverActor, systemMails, receiveMails, sendMails)), "clientActor")
+          val clientActor = system.actorOf(Props(new ClientActor(playerId, serverActor, systemMails, receiveMails, sendMails, system)), "clientActor")
           clientActor ! MailSystemImitator.RequestAddPlayer(playerId, clientActor)
           this.close()
         case scala.util.Failure(exception) => println("连接失败")

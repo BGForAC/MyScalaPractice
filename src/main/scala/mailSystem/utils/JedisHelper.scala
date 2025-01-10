@@ -24,9 +24,11 @@ object JedisHelper {
     val jedis = this.getJedis
     try {
       jedis.flushAll()
+      println("Redis已清空")
     } catch {
       case e: Exception =>
         logger.error("清空Redis失败", e)
+//        throw e
     } finally {
       closeJedis(jedis)
     }
@@ -48,12 +50,14 @@ object JedisHelper {
     if (jedis != null)
       try {
         jedis.close()
-//        jedis.close() // 重复关闭不会报错
       } catch {
         case e: Exception =>
-          println(e)
           logger.error("关闭Jedis连接失败", e)
+          throw e
       }
+    else {
+      logger.error("尝试关闭空Jedis连接")
+    }
   }
 
   def closePool(): Unit = {
@@ -63,7 +67,11 @@ object JedisHelper {
       } catch {
         case e: Exception =>
           logger.error("关闭JedisPool失败", e)
+          throw e
       }
+    else {
+      logger.error("尝试关闭空的JedisPool")
+    }
   }
 
   def execute[T](call: Jedis => T): T = {
@@ -89,6 +97,7 @@ object JedisHelper {
           jedis.del(lockKey)
         }
       } else {
+        logger.error(s"获取分布式锁失败, key: $lockKey, value: $lockValue")
         throw new Exception(s"获取分布式锁失败, key: $lockKey, value: $lockValue")
       }
     }

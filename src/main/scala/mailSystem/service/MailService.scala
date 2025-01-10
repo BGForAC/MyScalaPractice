@@ -42,9 +42,9 @@ object MailService {
   }
 
   def personalMails(playerId: Long): ListBuffer[Mail] = {
-    val sql = s"select mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time, sender_id, receiver_id from $tableNameForPersonalMail where receiver_id = ?"
+    val sql = s"select mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time, sender_id, receiver_id from $tableNameForPersonalMail where receiver_id = ? or sender_id = ?"
     val mails: ListBuffer[Mail] = ListBuffer()
-    val rs = DBHelper.query(sql, playerId)
+    val rs = DBHelper.query(sql, playerId, playerId)
     try {
       while (rs._1.next()) {
         val mailId = rs._1.getLong("mail_id")
