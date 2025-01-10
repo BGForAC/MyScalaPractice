@@ -2,7 +2,7 @@ package mailSystem.service
 
 import mailSystem.dao.DBHelper
 import mailSystem.entity.{Mail, PersonalMail, SystemMail}
-import mailSystem.utils.{JedisHelper, MapBean, SnowflakeIdGenerator}
+import mailSystem.utils.{SnowflakeIdGenerator}
 
 import java.time.LocalDateTime
 import scala.collection.mutable.ListBuffer
@@ -66,7 +66,7 @@ object MailService {
     } finally {
       DBHelper.closeRsConn(rs)
     }
-    mails -- deletedMails(playerId)
+    mails
   }
 
   def deletedMails(playerId: Long): ListBuffer[Mail] = {
@@ -86,7 +86,7 @@ object MailService {
   }
 
   def mails(playerId: Long): ListBuffer[Mail] = {
-    systemMails() ++ personalMails(playerId) -- deletedMails(playerId)
+    systemMails() ++ personalMails(playerId)
   }
 
   // 待修改：目前就先用同样的参数，每次要改两遍，后面再改
@@ -132,7 +132,7 @@ object MailService {
   def deleteMailReceive(playerId: Long, mailId: Long): Unit = {
     val sql1 = s"insert into $tableNameForMailDel (player_id, mail_id, delete_time) values (?, ?, ?)"
     val sql2 = s"update $tableNameForPlayer set mail_count = mail_count - 1," +
-                                              s"mails_collect = replace(mails_collect. '$mailId,', '')," +
+                                              s"mails_collect = replace(mails_collect, '$mailId,', '')," +
                                               s"mails_read = replace(mails_read, '$mailId,', '') where player_id = ?"
     DBHelper.atomicOperation{ connection =>
       DBHelper.addWithConnection(sql1, playerId, mailId, LocalDateTime.now)(connection)
@@ -154,10 +154,12 @@ object MailService {
     systemMail
   }
 
-  def delSystemMail(mailId: Long): Unit = {
-    val sql = s"delete from $tableNameForSystemMail where mail_id = ?"
-    DBHelper.delete(sql, mailId)
-  }
+
+//  // 真正意义上的删邮件
+//  def delSystemMail(mailId: Long): Unit = {
+//    val sql = s"delete from $tableNameForSystemMail where mail_id = ?"
+//    DBHelper.delete(sql, mailId)
+//  }
 
   def getMail(mailId: Long): Mail = {
     var mail: Mail = null

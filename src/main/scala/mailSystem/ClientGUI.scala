@@ -1,8 +1,7 @@
 package mailSystem
 
-import akka.actor.{Actor, ActorRef, Props}
+import akka.actor.{ActorRef, Props}
 import com.typesafe.config.ConfigFactory
-import mailSystem.MailSystemImitator.{ClientActor, RequestGetClientActor}
 import mailSystem.entity.{Mail, PersonalMail, SystemMail}
 
 import scala.collection.mutable
@@ -16,27 +15,30 @@ class ClientGUI(clientActor: ActorRef,
                 systemMails: mutable.Map[Long, SystemMail],
                 receiveMails: mutable.Map[Long, PersonalMail],
                 sendMails: mutable.Map[Long, PersonalMail]) extends SimpleSwingApplication {
-  val logArea = new TextArea {
+
+  private val mailBoxStatus = new Label("")
+
+  val logArea: TextArea = new TextArea {
     rows = 20
     columns = 50
     editable = false
   }
 
-  val mailTypeFilter = new ComboBox(List("所有", "系统邮件", "收件箱", "发件箱")) {
+  private val mailTypeFilter = new ComboBox(List("所有", "系统邮件", "收件箱", "发件箱")) {
     listenTo(selection)
     reactions += {
       case _ => refreshGUI()
     }
   }
 
-  val mailStatusFilter = new ComboBox(List("所有", "已读", "未读", "已收取", "未收取")) {
+  private val mailStatusFilter = new ComboBox(List("所有", "已读", "未读", "已收取", "未收取")) {
     listenTo(selection)
     reactions += {
       case _ => refreshGUI()
     }
   }
 
-  def currentMailList: List[Mail] = {
+  private def currentMailList: List[Mail] = {
     val mailList = mailTypeFilter.selection.item match {
       case "系统邮件" => systemMails.values
       case "收件箱" => receiveMails.values
@@ -53,10 +55,10 @@ class ClientGUI(clientActor: ActorRef,
   }
 
   // 选中的邮件，因为每次更新都会重新赋值ListView的listData，所以需要一个变量来保存选中的邮件
-  var selectedMail: Mail = null
+  private var selectedMail: Option[Mail] = None
 
   // 展示过滤后的邮件列表，点击即可查看邮件详细信息
-  val mailList = new ListView(List.empty[Mail]) {
+  private val mailList = new ListView(List.empty[Mail]) {
     selection.intervalMode = ListView.IntervalMode.Single
     listenTo(selection)
     reactions += {
@@ -66,13 +68,13 @@ class ClientGUI(clientActor: ActorRef,
        * selection.items.head.toString会报错，因为原先的selection.items的值被修改后已经不存在了,所以为空
        */
       case _ if selection.items.nonEmpty =>
-        selectedMail = selection.items.head.asInstanceOf[Mail].setReadAndReturn(true)
+        selectedMail = Option(selection.items.head.setReadAndReturn(true))
         mailDisplay.text = selectedMail.toString
-        clientActor ! MailSystemImitator.RequestReadMail(playerId, selection.items.head.asInstanceOf[Mail].getMailId)
+        clientActor ! Messages.RequestReadMail(playerId, selection.items.head.getMailId)
     }
   }
 
-  val mailDisplay = new TextArea {
+  private val mailDisplay = new TextArea {
     rows = 20
     columns = 50
     editable = false
@@ -80,14 +82,17 @@ class ClientGUI(clientActor: ActorRef,
 
   def refreshGUI(): Unit = {
     println("刷新GUI")
+    mailBoxStatus.text = s"邮件箱状态: 收件箱(${receiveMails.size}/100) 发件箱(${sendMails.size}) 系统邮件(${systemMails.size})"
     mailList.listData = currentMailList
   }
 
   def refreshCollectAttachment(mailId: Long): Unit = {
     println("刷新附件")
-    if (selectedMail != null && selectedMail.getMailId == mailId) {
-      selectedMail.setCollect(true)
-      mailDisplay.text = selectedMail.toString
+    selectedMail match {
+      case Some(mail) if mail.getMailId == mailId =>
+        mail.setCollect(true)
+        mailDisplay.text = mail.toString
+      case _ =>
     }
   }
 
@@ -98,23 +103,26 @@ class ClientGUI(clientActor: ActorRef,
   def top: Frame = new MainFrame {
     title = s"邮箱系统,用户 $playerId"
 
-    val sendMailButton = new Button {
+    val sendMailButton: Button = new Button {
       text = "发送邮件"
     }
 
-    val collectAttachmentButton = new Button {
+    val collectAttachmentButton: Button = new Button {
       text = "收取附件"
     }
 
-    val deleteMailButton = new Button {
+    val deleteMailButton: Button = new Button {
       text = "删除邮件"
     }
 
-    val disConnectButton = new Button {
+    val disConnectButton: Button = new Button {
       text = "断开连接"
     }
 
     contents = new BoxPanel(Orientation.Vertical) {
+      contents += new BoxPanel(Orientation.Horizontal) {
+        contents += mailBoxStatus
+      }
       contents += new BoxPanel(Orientation.Horizontal) {
         contents += sendMailButton
         contents += collectAttachmentButton
@@ -156,34 +164,48 @@ class ClientGUI(clientActor: ActorRef,
     }
 
     def collectAttachment(): Unit = {
-      clientActor ! MailSystemImitator.RequestCollectAttachment(playerId, selectedMail.getMailId)
+      selectedMail match {
+        case Some(mail) if !mail.haveAttachment =>
+          Dialog.showMessage(null, "没有附件", "错误", Dialog.Message.Error)
+        case Some(mail) if mail.haveAttachment && !mail.isCollect =>
+          clientActor ! Messages.RequestCollectAttachment(playerId, mail.getMailId)
+        case Some(mail) if mail.isCollect =>
+          Dialog.showMessage(null, "附件已收取", "错误", Dialog.Message.Error)
+        case _ =>
+          Dialog.showMessage(null, "请选择要收取附件的邮件", "错误", Dialog.Message.Error)
+      }
     }
 
     def deleteMail(): Unit = {
-      clientActor ! MailSystemImitator.RequestDelMail(playerId, selectedMail.getMailId)
+      selectedMail match {
+        case Some(mail) =>
+          clientActor ! Messages.RequestDelMail(playerId, mail.getMailId)
+        case _ =>
+          Dialog.showMessage(null, "请选择要删除的邮件", "错误", Dialog.Message.Error)
+      }
     }
 
     def disconnect(): Unit = {
-      clientActor ! MailSystemImitator.RequestDelPlayer(playerId)
+      clientActor ! Messages.RequestDelPlayer(playerId)
     }
   }
 
-  case class SendMailDialog() extends Dialog {
+  private case class SendMailDialog() extends Dialog {
     title = "发送邮件"
     modal = true
 
-    val receiverIdField = new TextField(10)
-    val titleField = new TextField(20)
-    val contentField = new TextArea {
+    private val receiverIdField = new TextField(10)
+    private val titleField = new TextField(20)
+    private val contentField = new TextArea {
       rows = 10
       columns = 50
     }
 
-    val sendButton = new Button {
+    private val sendButton = new Button {
       text = "发送"
     }
 
-    val cancelButton = new Button {
+    private val cancelButton: Button = new Button {
       text = "取消"
     }
 
@@ -211,16 +233,20 @@ class ClientGUI(clientActor: ActorRef,
 
     reactions += {
       case ButtonClicked(`sendButton`) =>
-        require(receiverIdField.text.nonEmpty, "收件人ID不能为空")
-        require(titleField.text.nonEmpty, "标题不能为空")
-        require(contentField.text.nonEmpty, "内容不能为空")
-
-        val receiverId = receiverIdField.text.toLong
-        clientActor ! MailSystemImitator.RequestSendMail(playerId, receiverId, new PersonalMail(playerId, receiverId, titleField.text, contentField.text))
+        sendMail()
         close()
 
       case ButtonClicked(`cancelButton`) =>
         close()
+    }
+
+    private def sendMail(): Unit = {
+      require(receiverIdField.text.nonEmpty, "收件人ID不能为空")
+      require(titleField.text.nonEmpty, "标题不能为空")
+      require(contentField.text.nonEmpty, "内容不能为空")
+
+      val receiverId = receiverIdField.text.toLong
+      clientActor ! Messages.RequestSendMail(playerId, receiverId, new PersonalMail(playerId, receiverId, titleField.text, contentField.text))
     }
   }
 }
@@ -231,7 +257,7 @@ object ClientLogin extends SimpleSwingApplication {
     title = "登录"
     val serverAddress = new TextField(30)
     val playerIdField = new TextField(30)
-    val loginButton = new Button {
+    val loginButton: Button = new Button {
       text = "登录"
     }
 
@@ -282,14 +308,14 @@ object ClientLogin extends SimpleSwingApplication {
       val receiveMails = mutable.Map[Long, PersonalMail]()
       val sendMails = mutable.Map[Long, PersonalMail]()
       val system = akka.actor.ActorSystem("MyMailSystem", config)
-//      val serverActorPath = s"akka://MyMailSystem@$serverAddressStr/user/serverActor"
-      val serverActorPath = s"akka://MyMailSystem@127.0.0.1:2552/user/serverActor"
-      val serverActor = system.actorSelection(serverActorPath).resolveOne(10.seconds).onComplete{
+      val serverActorPath = s"akka://MyMailSystem@$serverAddressStr/user/serverActor"
+      val serverActorDefaultPath = s"akka://MyMailSystem@127.0.0.1:2552/user/serverActor"
+      system.actorSelection(serverActorDefaultPath).resolveOne(10.seconds).onComplete{
         case scala.util.Success(serverActor) =>
           val clientActor = system.actorOf(Props(new ClientActor(playerId, serverActor, systemMails, receiveMails, sendMails, system)), "clientActor")
-          clientActor ! MailSystemImitator.RequestAddPlayer(playerId, clientActor)
+          clientActor ! Messages.RequestAddPlayer(playerId, clientActor)
           this.close()
-        case scala.util.Failure(exception) => println("连接失败")
+        case scala.util.Failure(e) => println("连接失败" + e)
       }
     }
   }

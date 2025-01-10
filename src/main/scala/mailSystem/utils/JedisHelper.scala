@@ -60,7 +60,7 @@ object JedisHelper {
     }
   }
 
-  def closePool(): Unit = {
+  private def closePool(): Unit = {
     if (jedisPoll != null)
       try {
         jedisPoll.close()

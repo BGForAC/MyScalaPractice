@@ -2,18 +2,14 @@ package mailSystem
 
 import akka.actor.{ActorRef, ActorSystem, Props}
 import com.typesafe.config.ConfigFactory
-import mailSystem.MailSystemImitator.{ServerActor, Terminate, syncMailsRead}
 
-import java.lang.Thread.sleep
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration.{DurationInt, FiniteDuration}
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
 class ServerGUI(serverActor: ActorRef) extends SimpleSwingApplication {
 
-  val logArea = new TextArea {
+  val logArea: TextArea = new TextArea {
     rows = 50
     columns = 80
     editable = false
@@ -32,7 +28,7 @@ class ServerGUI(serverActor: ActorRef) extends SimpleSwingApplication {
 
     reactions += {
       case ButtonClicked(`closeButton`) =>
-        serverActor ! Terminate()
+        serverActor ! Messages.Terminate()
     }
 
     contents = new BoxPanel(Orientation.Vertical) {
@@ -43,7 +39,7 @@ class ServerGUI(serverActor: ActorRef) extends SimpleSwingApplication {
   }
 }
 
-object ServerGUIOpen {
+object ServerStart {
   def main(args: Array[String]): Unit = {
     val config = ConfigFactory.parseString(
       """
@@ -63,11 +59,8 @@ object ServerGUIOpen {
         |""".stripMargin)
     val system = ActorSystem("MyMailSystem", config)
     val serverActor = system.actorOf(Props(new ServerActor(mutable.Map[Long, ActorRef](), system)), "serverActor")
-
-    val scheduler = system.scheduler
-
-    def syncRead2DBRegularly(rate: FiniteDuration) = scheduler.scheduleWithFixedDelay(0.seconds, rate)(() => syncMailsRead())
-
-    syncRead2DBRegularly(10.seconds)
+    if (serverActor == null) {
+      println("serverActor创建失败")
+    }
   }
 }

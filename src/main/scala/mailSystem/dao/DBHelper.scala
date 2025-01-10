@@ -93,7 +93,7 @@ object DBHelper {
     DBHelper.closeConnection(rs._2)
   }
 
-  def executeUpdateWithConnection(sql: String, para: Seq[Any], connection: Connection): Int = {
+  private def executeUpdateWithConnection(sql: String, para: Seq[Any], connection: Connection): Int = {
     val ps = connection.prepareStatement(sql)
     try {
       for (i <- para.indices) {

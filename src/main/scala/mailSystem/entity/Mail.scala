@@ -36,4 +36,11 @@ trait Mail {
   def setCollect(collect: Boolean): Unit = this.collect = collect
 
   def status: String = if (read && !collect) "未领取" else if (read && collect) "已领取" else "未读"
+
+  override def equals(obj: Any): Boolean = obj match {
+    case mail: Mail => mail.getMailId == this.getMailId
+    case _ => false
+  }
+
+  override def hashCode(): Int = mailId.hashCode()
 }

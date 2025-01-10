@@ -22,6 +22,10 @@ object MyUtils {
 //  val hourNext: Int => Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(1)
 //  val minuteNext: Int => LocalDateTime => LocalDateTime = nextMoment(0)(0)(0)(0)(1)
 
+  def getRandomElementInCollection[T](collection: Seq[T]): T = {
+    collection(Random.nextInt(collection.length))
+  }
+
   val generateAlphaNumericRandomLength = generateStringRandomLength(RandomGenerator.generateRandomAlphaNumeric) _
   val generateAlphaRandomLength = generateStringRandomLength(RandomGenerator.generateRandomAlpha) _
   val generateLowerAlphaRandomLength = generateStringRandomLength(RandomGenerator.generateRandomLowerAlpha) _
@@ -32,10 +36,6 @@ object MyUtils {
   val generateLowerAlphaFixedLength = generateStringRandomLength(RandomGenerator.generateRandomLowerAlpha)(0) _
   val generateUpperAlphaFixedLength = generateStringRandomLength(RandomGenerator.generateRandomUpperAlpha)(0) _
   val generateNumericFixedLength = generateStringRandomLength(RandomGenerator.generateRandomNumeric)(0) _
-
-  def getRandom[T](collection: Seq[T]): T = {
-    collection(Random.nextInt(collection.length))
-  }
 
   def generateStringRandomLength(rules: Int => Iterable[Char])(offset: Int)(length: Int): String = {
     val random = new Random
