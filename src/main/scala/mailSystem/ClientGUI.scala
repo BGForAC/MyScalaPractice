@@ -2,8 +2,9 @@ package mailSystem
 
 import akka.actor.{ActorRef, Props}
 import com.typesafe.config.ConfigFactory
-import mailSystem.entity.{Mail, PersonalMail, SystemMail}
+import mailSystem.entity.{Item, Mail, PersonalMail, SystemMail}
 
+import java.lang.Thread.sleep
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.DurationInt
@@ -17,7 +18,8 @@ class ClientGUI(clientActor: ActorRef,
                 playerId: Long,
                 systemMails: mutable.Map[Long, SystemMail],
                 receiveMails: mutable.Map[Long, PersonalMail],
-                sendMails: mutable.Map[Long, PersonalMail]) extends SimpleSwingApplication {
+                sendMails: mutable.Map[Long, PersonalMail],
+                items: mutable.Map[Item, Int]) extends SimpleSwingApplication {
   private val MAXSIZE = 200
 
   private val mailBoxStatus = new Label("")
@@ -84,10 +86,34 @@ class ClientGUI(clientActor: ActorRef,
     editable = false
   }
 
+  private val itemDisplay = new TextArea {
+    rows = 20
+    columns = 50
+    editable = false
+  }
+
   def refreshGUI(): Unit = {
     println("刷新GUI")
     mailBoxStatus.text = s"邮件箱状态: 收件箱(${receiveMails.size}/$MAXSIZE) 发件箱(${sendMails.size}) 系统邮件(${systemMails.size})"
     mailList.listData = currentMailList
+  }
+
+  var lastItems: mutable.Map[Item, Int] = mutable.Map[Item, Int]()
+
+  def refreshItem(): Unit = {
+    println("刷新物品")
+    itemDisplay.text = ""
+    // 每次刷新物品后， 在物品数量后显示这次刷新增加的物品数量
+    items.foreach{
+      case (item, quantity) =>
+        println(lastItems.getOrElse(item, 0))
+        val change = quantity - lastItems.getOrElse(item, 0)
+        // 前缀补充到30个字符长度
+        val prefix = s"物品 ${item.getName} * $quantity".padTo(30, ' ')
+        val suffix = if (change > 0) s" +$change" else if (change < 0) s" -$change" else ""
+        itemDisplay.append(prefix + suffix + "\n")
+    }
+    lastItems = items.clone()
   }
 
   def refreshCollectAttachment(mailId: Long): Unit = {
@@ -140,6 +166,7 @@ class ClientGUI(clientActor: ActorRef,
       }
       contents += new ScrollPane(mailList)
       contents += new ScrollPane(mailDisplay)
+      contents += new ScrollPane(itemDisplay)
       border = Swing.EmptyBorder(10, 10, 10, 10)
     }
 

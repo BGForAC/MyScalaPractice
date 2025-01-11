@@ -144,30 +144,4 @@ object DBHelper {
       DBHelper.closeConnection(connection)
     }
   }
-
-  def atomicUpdate(paras: Seq[Seq[Any]]): Unit = {
-    val connection = DBHelper.getConnection
-    connection.setAutoCommit(false)
-    try {
-      for (i <- paras.indices) {
-        val ps = connection.prepareStatement(paras(i).head.asInstanceOf[String])
-        try {
-          for (j <- 1 until paras(i).length) {
-            ps.setObject(j, paras(i)(j))
-          }
-          ps.executeUpdate()
-        } finally {
-          ps.close()
-        }
-      }
-      connection.commit()
-    } catch {
-      case e: Exception =>
-        connection.rollback()
-        throw new Exception("事务执行失败" + e)
-    } finally {
-      connection.setAutoCommit(true)
-      DBHelper.closeConnection(connection)
-    }
-  }
 }

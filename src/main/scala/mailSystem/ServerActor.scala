@@ -42,6 +42,7 @@ class ServerActor(clients: mutable.Map[Long, ActorRef], actorSystem: ActorSystem
             clients += (playerId -> client)
             client ! ReceiveReport("连接成功")
             client ! RequestLoadMails(playerId)
+            client ! RequestLoadItems(playerId)
           }
         case None =>
           client ! ReceiveReport("用户不存在")
@@ -104,6 +105,17 @@ class ServerActor(clients: mutable.Map[Long, ActorRef], actorSystem: ActorSystem
         case Right(mails) =>
           log(s"system: 玩家 $playerId 邮箱更新成功")
           sender() ! ReceiveMails(mails)
+      }
+
+    case RequestLoadItems(playerId) =>
+      log(s"system: 玩家 $playerId 开始请求更新背包")
+      loadPlayersItems(playerId) match {
+        case Left(msg) =>
+          log(s"system: $msg")
+          sender() ! ReceiveReport(msg)
+        case Right(items) =>
+          log(s"system: 玩家 $playerId 背包更新成功")
+          sender() ! ReceiveItems(items)
       }
 
     // 处理玩家阅读邮件请求，不需要等数据库和缓存更新，玩家本地直接更新成已读

@@ -17,6 +17,8 @@ object Messages {
 
   case class RequestLoadMails(playerId: Long)
 
+  case class RequestLoadItems(playerId: Long)
+
   case class RequestReadMail(playerId: Long, mailId: Long)
 
   case class RequestCollectAttachment(playerId: Long, mailId: Long)
@@ -26,6 +28,8 @@ object Messages {
   case class ReceiveReport(msg: String)
 
   case class ReceiveMails(mails: List[Mail])
+
+  case class ReceiveItems(items: Map[Item, Int])
 
   case class ReceiveObtainItems(items: Map[Item, Int], mailId: Long)
 

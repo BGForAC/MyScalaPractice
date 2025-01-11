@@ -1,6 +1,6 @@
 package mailSystem.utils
 
-import mailSystem.entity.SystemMail
+import mailSystem.entity.{Item, SystemMail}
 
 import java.time.LocalDateTime
 
@@ -15,6 +15,11 @@ object MapBeanUtils {
   def json2SystemMail(mailJsonString: String): SystemMail = {
     val mapBean = MapBean.toMutableMap(mailJsonString)
     MapBean.map2Bean(mapBean, classOf[SystemMail])
+  }
+
+  def json2Item(itemJsonString: String): Item = {
+    val mapBean = MapBean.toMutableMap(itemJsonString)
+    MapBean.map2Bean(mapBean, classOf[Item])
   }
 
   def systemMail2Json(systemMail: SystemMail): String = {

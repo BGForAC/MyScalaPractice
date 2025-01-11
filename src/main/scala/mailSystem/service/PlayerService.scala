@@ -6,6 +6,9 @@ import mailSystem.utils.{MapBean, SnowflakeIdGenerator}
 
 import scala.collection.mutable.ArrayBuffer
 
+/**
+ * 这个类负责玩家信息的增删改查
+ */
 object PlayerService {
   private val snowflakeIdGenerator = new SnowflakeIdGenerator(0, 0)
   final val tableName = "player"

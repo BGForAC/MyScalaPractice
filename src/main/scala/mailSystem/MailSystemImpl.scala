@@ -15,6 +15,8 @@ import scala.collection.mutable
  * 这个类用于提供邮件系统的外部接口的实现
  */
 object MailSystemImpl {
+  private def itemId2Key(itemId: Long): String = s"item:$itemId"
+
   private def playerId2Key(playerId: Long): String = s"player:$playerId"
 
   private def systemMailId2Key(systemMailId: Long): String = s"system_mail:$systemMailId"
@@ -28,6 +30,8 @@ object MailSystemImpl {
   private def keyForMailsRead = "mails_read"
 
   private def keyForMailsCollect = "mails_collect"
+
+  private def keyForItems = "items"
 
   private def key2PlayerId(key: String): Option[Long] = {
     key match {
@@ -95,6 +99,33 @@ object MailSystemImpl {
             Right(mails)
         }
       }
+    }
+  }
+
+  // 获取物品信息, 用于显示, 先从redis中加载，如果没有再从数据库中加载
+  def getItem(itemId: Long): Item = {
+    JedisHelper.execute { jedis =>
+      jedis.hget(keyForItems, itemId2Key(itemId)) match {
+        case null =>
+          myLog(s"process: 物品 $itemId 未加载到缓存中, 开始加载")
+          val item = ItemService.getItem(itemId)
+          jedis.hset("item", itemId.toString, item.toString)
+          item
+        case itemName =>
+          myLog(s"process: 物品 $itemId 已加载到缓存中")
+          MapBeanUtils.json2Item(itemName)
+      }
+    }
+  }
+
+  // 加载用户背包
+  def loadPlayersItems(playerId: Long): Either[String, Map[Item, Int]] = {
+    try {
+      val items = PlayerService.getItems(playerId)
+      Right(items.map { case (itemId, quantity) => (getItem(itemId), quantity) })
+    } catch {
+      case e: Exception =>
+        Left("加载背包失败" + e.getMessage)
     }
   }
 

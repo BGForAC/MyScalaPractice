@@ -2,7 +2,7 @@ package mailSystem
 
 import akka.actor.{Actor, ActorRef, ActorSystem}
 import Messages._
-import mailSystem.entity.{Mail, PersonalMail, SystemMail}
+import mailSystem.entity.{Item, Mail, PersonalMail, SystemMail}
 
 import scala.collection.mutable
 
@@ -17,7 +17,9 @@ class ClientActor(val playerId: Long,
                   val sendMails: mutable.Map[Long, PersonalMail],
                   val actorSystem: ActorSystem) extends Actor {
 
-  private val clientGUI = new ClientGUI(self, playerId, systemMails, personalMails, sendMails)
+  val items: mutable.Map[Item, Int] = mutable.Map()
+
+  private val clientGUI = new ClientGUI(self, playerId, systemMails, personalMails, sendMails, items)
   clientGUI.main(Array())
 
   override def postStop(): Unit = {
@@ -27,6 +29,10 @@ class ClientActor(val playerId: Long,
 
   private def refreshGUI(): Unit = {
     clientGUI.refreshGUI()
+  }
+
+  private def refreshItem(): Unit = {
+    clientGUI.refreshItem()
   }
 
   private def refreshGUIAttachmentCollect(mailId: Long): Unit = {
@@ -49,6 +55,12 @@ class ClientActor(val playerId: Long,
         log(s"player: 玩家 $playerId 收到一封系统邮件 ${systemMail.getMailId}")
         systemMails += (systemMail.getMailId -> systemMail)
     }
+  }
+
+  private def collectItem(item: Item, quantity: Int): Unit = {
+    log(s"player: 玩家 $playerId 收到物品 ${item.getName} * $quantity")
+    if (items.contains(item)) items(item) += quantity
+    else items += (item -> quantity)
   }
 
   override def receive: Receive = {
@@ -77,6 +89,11 @@ class ClientActor(val playerId: Long,
       log(s"player: 玩家 $playerId 请求拉取邮箱到本地")
       server ! RequestLoadMails(playerId)
 
+    // 一般发生在玩家登陆时，加载物品到本地
+    case RequestLoadItems(playerId) =>
+      log(s"player: 玩家 $playerId 请求拉取物品到本地")
+      server ! RequestLoadItems(playerId)
+
     // 发送邮件
     case RequestSendMail(sender, receiver, mail) =>
       log(s"player: 玩家 $sender 请求发送邮件给玩家 $receiver")
@@ -86,6 +103,11 @@ class ClientActor(val playerId: Long,
     case ReceiveMails(mails) =>
       mails.foreach(addMail)
       refreshGUI()
+
+    // 玩家收到物品时，打印物品信息
+    case ReceiveItems(items) =>
+      items.foreach{ case (item, quantity) => collectItem(item, quantity) }
+      refreshItem()
 
     // 阅读邮件，直接更新本地的阅读状态
     case RequestReadMail(playerId, mailId) =>
@@ -113,10 +135,9 @@ class ClientActor(val playerId: Long,
     // 领取附件成功,打印附件信息
     case ReceiveObtainItems(items, mailId) =>
       log(s"player: 玩家 $playerId 领取邮件 $mailId 的附件成功")
-      items.foreach { case (item, quantity) =>
-        log(s"player: 玩家 $playerId 领取了 ${item.getName} * $quantity")
-      }
+      items.foreach { case (item, quantity) => collectItem(item, quantity) }
       refreshGUIAttachmentCollect(mailId)
+      refreshItem()
 
     // 领取附件成功，更新本地领取状态
     case ReceiveCollectSuccess(mailId) =>

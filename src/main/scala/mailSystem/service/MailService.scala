@@ -15,6 +15,7 @@ object MailService {
   private val snowflakeIdGeneratorForSystemMail = new SnowflakeIdGenerator(0, 16)
   private val tableNameForPersonalMail = "personal_mail"
   private val tableNameForSystemMail = "system_mail"
+  // 后续会使用接口实现隔离，又或者没有隔离的需求
   private val tableNameForPlayer = PlayerService.tableName
   private val tableNameForMailDel = "mail_del"
 
