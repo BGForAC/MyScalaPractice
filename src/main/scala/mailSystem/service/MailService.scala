@@ -142,7 +142,9 @@ object MailService {
     }
   }
 
-  // 待修改：目前就先用同样的参数，每次要改两遍，后面再改
+  /**
+   * 添加系统邮件
+   */
   def addSystemMail(mail: SystemMail): SystemMail = {
     require(mail.title != null && mail.title.nonEmpty, "邮件标题不能为空")
     require(mail.content != null && mail.content.nonEmpty, "邮件内容不能为空")
@@ -151,7 +153,7 @@ object MailService {
     val sql = s"insert into $tableNameForSystemMail (mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
     val time = LocalDateTime.now
     val systemMail = new SystemMail(mailId, mail.content, mail.title, mail.attachment, mail.filter, time, time.plusMonths(1), time, time)
-    DBHelper.add(sql, mailId, mail.content, mail.title, mail.attachment, mail.filter, time, time.plusMonths(1), time, time)
+    DBHelper.add(sql, systemMail.getMailId, systemMail.getContent, systemMail.getTitle, systemMail.getAttachment, systemMail.getFilter, systemMail.getPublicTime, systemMail.getPublicTime.plusMonths(1), systemMail.getCreateTime, systemMail.getUpdateTime)
     systemMail
   }
 
@@ -162,6 +164,9 @@ object MailService {
 //    DBHelper.delete(sql, mailId)
 //  }
 
+  /**
+   * 获取邮件
+   */
   def getMail(mailId: Long): Mail = {
     var mail: Mail = null
     val sql1 = s"select mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time, sender_id, receiver_id from $tableNameForPersonalMail where mail_id = ?"

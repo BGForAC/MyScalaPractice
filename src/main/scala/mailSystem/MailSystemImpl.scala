@@ -1,6 +1,6 @@
 package mailSystem
 
-import mailSystem.dao.MyGlobalConfig
+import mailSystem.dao.MyGlobal
 import mailSystem.entity.{Item, Mail, PersonalMail, SystemMail}
 import mailSystem.service.MailService.deletedMails
 import mailSystem.service.{ItemService, MailService, PlayerService}
@@ -35,7 +35,6 @@ object MailSystemImpl {
       case _ => None
     }
   }
-
 
   private def myLog(content: String): Unit = {
     content match {
@@ -125,7 +124,7 @@ object MailSystemImpl {
     try {
       Right(MailService.addPersonalMail(senderId, receiverId, mail))
     } catch {
-      case e: SQLException if e.getSQLState == MyGlobalConfig.SQLERRORMAILCOUNTEXCEED =>
+      case e: SQLException if e.getSQLState == MyGlobal.SQLERRORMAILCOUNTEXCEED =>
         myLog(s"process: 玩家 $receiverId 邮箱已满")
         Left("收件人邮箱已满发送失败")
       case e: IllegalArgumentException =>
@@ -161,13 +160,13 @@ object MailSystemImpl {
 
   /*
    * 用户读取邮件，在redis中记录邮件已读状态，定时任务将状态同步到数据库
-   * 读取不存在的内存时可能会反复加载，需要修改，可以设置循环次数
+   * 读取不存在的邮件Id或者读取不存在的用户时可能会反复加载，需要修改，可以设置循环次数
    */
   def readMail(playerId: Long, mailId: Long): Unit = {
     JedisHelper.execute { jedis =>
       jedis.hget(playerId2Key(playerId), keyForMailsRead) match {
         case null =>
-          myLog(s"process: 玩家 $playerId 的邮件可能未加载到缓存中, 尝试再次加载")
+          myLog(s"process: 玩家 $playerId 的阅读情况可能未加载到缓存中, 尝试再次加载")
           loadPlayersMail(playerId)
           readMail(playerId, mailId)
         case mailsRead =>
@@ -213,7 +212,7 @@ object MailSystemImpl {
   }
 
   /*
-   * 删除邮件，需要注意防止定时同步任务把缓存中邮件阅读状态同步到数据库，导致删除失败
+   * 删除邮件，需要注意防止定时同步任务在删除数据库中的邮件信息后又把缓存中未删除的邮件阅读状态同步到数据库，导致删除失败
    * 目前没有想到更好的解决方案，只能在删除和同步时加上一样的分布式锁，保证同步任务不会导致被删除的邮件再次被同步
    */
   def deleteMail(playerId: Long, mailId: Long): Either[String, Unit] = {
@@ -244,7 +243,7 @@ object MailSystemImpl {
     }
   }
 
-  // 定时任务，同步邮件已读状态到数据库，当尝试加载不存在的内存时，会反复加载，需要修改，可以设置循环次数
+  // 定时任务，同步邮件已读状态到数据库
   def syncMailsRead(): Unit = {
     val key = distributionKeyForStatusChange
     val value = System.currentTimeMillis().toString
@@ -258,7 +257,6 @@ object MailSystemImpl {
             case null =>
               myLog(s"process: 玩家 $playerId 的邮件已读状态未加载到缓存中")
               loadPlayersMail(playerId)
-              syncMailsRead()
             case mailsRead =>
               if (mailsRead.isEmpty) {
                 myLog(s"process: 玩家 $playerId 的邮件已读状态为空")

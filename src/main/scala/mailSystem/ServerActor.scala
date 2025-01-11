@@ -8,6 +8,9 @@ import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.DurationInt
 
+/**
+ * 服务端Actor
+ */
 class ServerActor(clients: mutable.Map[Long, ActorRef], actorSystem: ActorSystem) extends Actor {
 
   private val serverGUI = new ServerGUI(self)
@@ -78,7 +81,7 @@ class ServerActor(clients: mutable.Map[Long, ActorRef], actorSystem: ActorSystem
 
     // 发送系统邮件给所有在线玩家，将邮件存入数据库和删除缓存
     case SendSystemMail(mail) =>
-      log(s"system: 发送系统邮件 ${mail.mailId} 给所有在线玩家")
+      log(s"system: 发送系统邮件给所有在线玩家")
       addSystemMail(mail) match {
         case Left(msg) =>
           log(s"system: 发送系统邮件 ${mail.mailId} 失败")

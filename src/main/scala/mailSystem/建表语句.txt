@@ -1,0 +1,110 @@
+create table item
+(
+    item_id     bigint       not null comment '物品id'
+        primary key,
+    description varchar(301) null comment '物品描述',
+    name        varchar(31)  not null comment '物品名称',
+    type_id     int          not null comment '物品类型编码'
+)
+    comment '物品' charset = utf8mb3;
+
+create table item
+(
+    item_id     bigint       not null comment '物品id'
+        primary key,
+    description varchar(301) null comment '物品描述',
+    name        varchar(31)  not null comment '物品名称',
+    type_id     int          not null comment '物品类型编码'
+)
+    comment '物品' charset = utf8mb3;
+
+create table personal_mail
+(
+    mail_id     bigint auto_increment
+        primary key,
+    content     varchar(300) null comment '邮件内容',
+    title       varchar(40)  not null comment '邮件标题',
+    attachment  json         null comment '附件',
+    filter      json         null comment '过滤器',
+    public_time datetime     not null comment '发送时间',
+    deadline    datetime     not null comment '截止日期',
+    sender_id   bigint       not null comment '发件人',
+    receiver_id bigint       not null comment '收件人',
+    create_time datetime     not null comment '记录创建的时间',
+    update_time datetime     null comment '资料修改的时间',
+    constraint personal_mail_player_player_id_fk
+        foreign key (receiver_id) references player (player_id)
+            on update cascade on delete cascade,
+    constraint personal_mail_player_player_id_fk_2
+        foreign key (sender_id) references player (player_id)
+            on update cascade on delete cascade
+)
+    comment '个人邮件' charset = utf8mb3;
+
+create table player
+(
+    player_id     bigint        not null comment '用户id'
+        primary key,
+    name          varchar(15)   null comment '名字',
+    mails_read    text          not null comment '玩家阅读的邮件',
+    mails_collect text          not null comment '玩家领取的邮件',
+    mail_count    int default 0 not null comment '邮件数量',
+)
+    comment '用户' charset = utf8mb3;
+
+create table player_items
+(
+    player_id bigint not null comment '玩家id',
+    item_id   bigint not null comment '物品id',
+    quantity  int    not null comment '物品数量',
+    primary key (player_id, item_id),
+    constraint player_items_ibfk_1
+        foreign key (player_id) references player (player_id)
+            on update cascade on delete cascade,
+    constraint player_items_ibfk_2
+        foreign key (item_id) references item (item_id)
+)
+    comment '用户物品' charset = utf8mb3;
+
+create index item_id
+    on player_items (item_id);
+
+create table system_mail
+(
+    mail_id     bigint       not null comment '邮件id'
+        primary key,
+    content     varchar(300) null comment '邮件内容',
+    title       varchar(40)  not null comment '邮件标题',
+    attachment  json         null comment '附件',
+    filter      json         null comment '过滤器',
+    public_time datetime     not null comment '发布时间',
+    deadline    datetime     not null comment '截止日期',
+    create_time datetime     not null comment '记录创建的时间',
+    update_time datetime     null comment '资料修改的时间'
+)
+    comment '系统邮件' charset = utf8mb3;
+
+create definer = root@localhost trigger check_mail_count_insert
+    before insert
+    on player
+    for each row
+BEGIN 
+    if new.mail_count > 200 then
+        signal SQLSTATE '25213'
+        set message_text = '邮箱已满';
+    end if;
+end;
+
+create definer = root@localhost trigger check_mail_count_update
+    before update
+    on player
+    for each row
+begin 
+    if new.mail_count > 200 then
+        signal sqlstate '25213'
+        set message_text = '邮箱已满';
+    end if;
+end;
+
+
+

@@ -10,6 +10,9 @@ import scala.concurrent.duration.DurationInt
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
+/**
+ * 客户端GUI
+ */
 class ClientGUI(clientActor: ActorRef,
                 playerId: Long,
                 systemMails: mutable.Map[Long, SystemMail],

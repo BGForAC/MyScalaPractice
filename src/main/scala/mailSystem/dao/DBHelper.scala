@@ -128,7 +128,7 @@ object DBHelper {
       connection.commit()
       ret
     } catch {
-      case e: SQLException if e.getSQLState == MyGlobalConfig.SQLERRORMAILCOUNTEXCEED =>
+      case e: SQLException if e.getSQLState == MyGlobal.SQLERRORMAILCOUNTEXCEED =>
         connection.rollback()
         logger.error("事务执行失败，邮件数量超过限制", e)
         throw e

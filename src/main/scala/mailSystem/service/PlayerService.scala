@@ -157,6 +157,9 @@ object PlayerService {
     collectAttachment(playerId, mailId, attachment)
   }
 
+  /**
+   * 领取邮件附件
+   */
   def collectAttachment(playerId: Long, mailId: Long, attachment: Map[String, Int]): Unit = {
     if (attachment.isEmpty) throw new Exception(s"邮件 ${mailId} 没有附件")
     val mailsCollect = getCollectStatus(playerId)

@@ -11,6 +11,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.DurationInt
 import scala.reflect.ClassTag
 
+/**
+ * 邮件系统模拟器
+ */
 object MailSystemImitator {
   def createServer(): (ActorSystem, ActorRef) = {
     val config = ConfigFactory.parseString(
@@ -35,8 +38,8 @@ object MailSystemImitator {
   }
 
   def serverStart[T: ClassTag](wrapper: ((ActorSystem, ActorRef)) => Any): Unit = {
-    val classTag = implicitly[ClassTag[T]]
-    println(classTag.runtimeClass.getSimpleName)
+//    val classTag = implicitly[ClassTag[T]]
+//    println(classTag.runtimeClass.getSimpleName)
     val config = ConfigFactory.parseString(
       """
         |akka {
@@ -87,7 +90,6 @@ object MailSystemImitator {
     println(classTag.runtimeClass.getSimpleName)
     call match {
       case f if classTag.runtimeClass.getSimpleName == "SchedulerUtils" => f(scheduler.asInstanceOf[T])
-      case f if classTag.runtimeClass.getSimpleName == "WrapPlayerId" => f(WrapPlayerId(fixedPlayerId, scheduler).asInstanceOf[T])
     }
     system.terminate().onComplete {
       case scala.util.Success(value) => println("系统关闭成功" + value)
@@ -104,8 +106,7 @@ object MailSystemImitator {
     sleep(20000)
   }
 
-  private def sendRandomMail2FixedPlayer(wrappedScheduler: WrapPlayerId): Unit = {
-    val WrapPlayerId(playerId, scheduler) = wrappedScheduler
+  private def sendRandomMail2FixedPlayer(playerId: Long)(scheduler: SchedulerUtils): Unit = {
     for (_ <- 1 to 20) {
       scheduler.addRandomClient()
     }
@@ -114,16 +115,21 @@ object MailSystemImitator {
     sleep(20000)
   }
 
-  var fixedPlayerId: Long = 0L
+  private def sendRandomSystemMail(scheduler: SchedulerUtils): Unit = {
+    for (_ <- 1 to 20) {
+      scheduler.addRandomClient()
+    }
+    sleep(10000)
+    scheduler.sendSystemMailRegularly(1.seconds)
+    sleep(20000)
+  }
 
   def main(args: Array[String]): Unit = {
-    fixedPlayerId = 532125159365017600L
 //    serverStart(callWrapper(sendRandomMail))
-    serverStart(callWrapper(sendRandomMail2FixedPlayer))
+    serverStart(callWrapper(sendRandomMail2FixedPlayer(532125159406960640L)))
+//    serverStart(callWrapper(sendRandomSystemMail))
 //    val server = serverStart(callWrapper) _
 //    server(sendRandomMail2FixedPlayer)
 //    server(sendRandomMail)
   }
-
-  case class WrapPlayerId(playerId: Long, scheduler: SchedulerUtils)
 }

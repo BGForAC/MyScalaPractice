@@ -6,7 +6,10 @@ import mailSystem.entity.{Mail, PersonalMail, SystemMail}
 
 import scala.collection.mutable
 
-// 当使用同一个actorSystem创建多个客户端时，修改RequestDelPlayer的实现，不再关闭actorSystem，而是关闭Actor，Terminate也关注一下
+/**
+ * 客户端Actor
+ * 当使用同一个actorSystem创建多个客户端时，需要关闭部分客户端时，需要修改RequestDelPlayer的实现，不再关闭actorSystem，而是关闭Actor，Terminate也一起改
+ */
 class ClientActor(val playerId: Long,
                   val server: ActorRef,
                   val systemMails: mutable.Map[Long, SystemMail],

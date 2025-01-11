@@ -7,6 +7,9 @@ import scala.collection.mutable
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
+/**
+ * 服务器GUI
+ */
 class ServerGUI(serverActor: ActorRef) extends SimpleSwingApplication {
 
   val logArea: TextArea = new TextArea {
