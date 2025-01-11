@@ -2,7 +2,6 @@ package mailSystem
 
 import akka.actor._
 import com.typesafe.config.ConfigFactory
-import mailSystem.entity.{PersonalMail, SystemMail}
 import utils.SchedulerUtils
 
 import java.lang.Thread.sleep

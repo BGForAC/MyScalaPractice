@@ -5,8 +5,6 @@ import mailSystem.entity.{Item, Mail, PersonalMail, SystemMail}
 
 object Messages {
 
-  case class RequestGetClientActor(playerId: Long)
-
   case class RequestAddPlayer(playerId: Long, client: ActorRef)
 
   case class RequestDelPlayer(playerId: Long)

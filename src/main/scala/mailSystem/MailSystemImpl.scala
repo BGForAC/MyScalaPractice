@@ -102,6 +102,27 @@ object MailSystemImpl {
     }
   }
 
+  // 加载系统邮件, 先从redis中加载，如果没有再从数据库中加载
+  private def loadSystemMails(): mutable.ListBuffer[Mail] = {
+    JedisHelper.execute { jedis =>
+      val systemMails = mutable.ListBuffer[Mail]()
+      val mails = jedis.hgetAll(keyForSystemMail)
+      if (mails.isEmpty) {
+        myLog("process: 系统邮件未加载到缓存中, 开始加载")
+        systemMails ++= MailService.systemMails()
+        systemMails.foreach { mail =>
+          jedis.hset(keyForSystemMail, systemMailId2Key(mail.getMailId), mail.toString)
+        }
+      } else {
+        myLog("process: 系统邮件已加载到缓存中")
+        mails.foreach { case (_, mail) =>
+          systemMails += MapBeanUtils.json2SystemMail(mail)
+        }
+      }
+      systemMails
+    }
+  }
+
   // 获取物品信息, 用于显示, 先从redis中加载，如果没有再从数据库中加载
   def getItem(itemId: Long): Item = {
     JedisHelper.execute { jedis =>
@@ -126,27 +147,6 @@ object MailSystemImpl {
     } catch {
       case e: Exception =>
         Left("加载背包失败" + e.getMessage)
-    }
-  }
-
-  // 加载系统邮件, 先从redis中加载，如果没有再从数据库中加载
-  private def loadSystemMails(): mutable.ListBuffer[Mail] = {
-    JedisHelper.execute { jedis =>
-      val systemMails = mutable.ListBuffer[Mail]()
-      val mails = jedis.hgetAll(keyForSystemMail)
-      if (mails.isEmpty) {
-        myLog("process: 系统邮件未加载到缓存中, 开始加载")
-        systemMails ++= MailService.systemMails()
-        systemMails.foreach { mail =>
-          jedis.hset(keyForSystemMail, systemMailId2Key(mail.getMailId), mail.toString)
-        }
-      } else {
-        myLog("process: 系统邮件已加载到缓存中")
-        mails.foreach { case (_, mail) =>
-          systemMails += MapBeanUtils.json2SystemMail(mail)
-        }
-      }
-      systemMails
     }
   }
 

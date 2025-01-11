@@ -4,7 +4,6 @@ import akka.actor.{ActorRef, Props}
 import com.typesafe.config.ConfigFactory
 import mailSystem.entity.{Item, Mail, PersonalMail, SystemMail}
 
-import java.lang.Thread.sleep
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.DurationInt
