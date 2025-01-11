@@ -4,6 +4,7 @@ import mailSystem.dao.DBHelper
 import mailSystem.entity.{Mail, PersonalMail, SystemMail}
 import mailSystem.utils.SnowflakeIdGenerator
 
+import java.sql.Connection
 import java.time.LocalDateTime
 import scala.collection.mutable.ListBuffer
 
@@ -155,6 +156,13 @@ object MailService {
     val systemMail = new SystemMail(mailId, mail.content, mail.title, mail.attachment, mail.filter, time, time.plusMonths(1), time, time)
     DBHelper.add(sql, systemMail.getMailId, systemMail.getContent, systemMail.getTitle, systemMail.getAttachment, systemMail.getFilter, systemMail.getPublicTime, systemMail.getPublicTime.plusMonths(1), systemMail.getCreateTime, systemMail.getUpdateTime)
     systemMail
+  }
+
+  // 更新邮件领取时间，只更新用户收到的邮件，系统邮件暂时无法处理，需要额外加表
+  def updateMailUpdateTimeInterface(mailId: Long)(connection: Connection): Unit = {
+    val sql = s"update $tableNameForPersonalMail set update_time = ? where mail_id = ?"
+    val time = LocalDateTime.now
+    DBHelper.updateWithConnection(sql, time, mailId)(connection)
   }
 
 

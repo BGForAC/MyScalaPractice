@@ -177,6 +177,7 @@ object PlayerService {
       attachment.foreach { case (itemId, quantity) =>
         DBHelper.addWithConnection(sql2, playerId, itemId.toLong, quantity)(connection)
       }
+      MailService.updateMailUpdateTimeInterface(mailId)(connection)
     }
   }
 
