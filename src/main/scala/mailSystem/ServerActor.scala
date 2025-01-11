@@ -13,6 +13,8 @@ class ServerActor(clients: mutable.Map[Long, ActorRef], actorSystem: ActorSystem
   private val serverGUI = new ServerGUI(self)
   serverGUI.main(Array())
 
+  override def postStop(): Unit = serverGUI.quit()
+
   def log(content: String): Unit = {
     serverGUI.log(content)
   }
@@ -62,9 +64,9 @@ class ServerActor(clients: mutable.Map[Long, ActorRef], actorSystem: ActorSystem
           log(s"system: 玩家 $senderId 发送邮件成功")
           def sendMessage(playerId: Long): Unit = {
             clients.get(playerId) match {
-              case Some(playerId) =>
+              case Some(clientActor) =>
                 log(s"system: 玩家 $playerId 在线，直接发送邮件")
-                playerId ! ReceiveMails(List(mail))
+                clientActor ! ReceiveMails(List(mail))
               case None =>
                 log(s"system: 玩家 $playerId 不在线，邮件已存入数据库")
             }

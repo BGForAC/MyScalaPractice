@@ -5,6 +5,9 @@ import redis.clients.jedis.{Jedis, JedisPool, JedisPoolConfig}
 
 import java.util.ResourceBundle
 
+/**
+ * 工具类，用于Redis操作
+ */
 object JedisHelper {
   private val config = new JedisPoolConfig()
   private val bundle = ResourceBundle.getBundle("jedis")
@@ -70,7 +73,7 @@ object JedisHelper {
           throw e
       }
     else {
-      logger.error("尝试关闭空的JedisPool")
+      logger.warn("尝试关闭空的JedisPool")
     }
   }
 

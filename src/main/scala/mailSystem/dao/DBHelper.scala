@@ -7,6 +7,9 @@ import java.sql.{Connection, SQLException, SQLIntegrityConstraintViolationExcept
 import java.util.Properties
 import javax.sql.DataSource
 
+/**
+ * 工具类，用于数据库操作
+ */
 object DBHelper {
   private var dataSource: DataSource = _
   private val druidProps = MyUtils.readConfig(new Properties(), "druid.properties")

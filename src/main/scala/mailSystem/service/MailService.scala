@@ -7,6 +7,9 @@ import mailSystem.utils.{SnowflakeIdGenerator}
 import java.time.LocalDateTime
 import scala.collection.mutable.ListBuffer
 
+/**
+ * 这个类负责提供接口进行邮件的增删改查，和简单的检查
+ */
 object MailService {
   private val snowflakeIdGeneratorForPersonalMail = new SnowflakeIdGenerator(0, 0)
   private val snowflakeIdGeneratorForSystemMail = new SnowflakeIdGenerator(0, 16)
@@ -96,7 +99,6 @@ object MailService {
     require(senderId != receiverId, "发件人和收件人不能相同")
     require(mail.title != null && mail.title.nonEmpty, "邮件标题不能为空")
     require(mail.content != null && mail.content.nonEmpty, "邮件内容不能为空")
-//    require(MapBean.toMutableMap(mail.filter) != MapBean.empty, "邮件过滤条件不能为空")
 
     val mailId = snowflakeIdGeneratorForPersonalMail.nextId()
     val sql1 = s"insert into $tableNameForPersonalMail (mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time, sender_id, receiver_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
@@ -144,7 +146,6 @@ object MailService {
   def addSystemMail(mail: SystemMail): SystemMail = {
     require(mail.title != null && mail.title.nonEmpty, "邮件标题不能为空")
     require(mail.content != null && mail.content.nonEmpty, "邮件内容不能为空")
-    //    require(MapBean.toMutableMap(mail.filter) != MapBean.empty, "邮件过滤条件不能为空")
 
     val mailId = snowflakeIdGeneratorForSystemMail.nextId()
     val sql = s"insert into $tableNameForSystemMail (mail_id, content, title, attachment, filter, public_time, deadline, create_time, update_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?)"

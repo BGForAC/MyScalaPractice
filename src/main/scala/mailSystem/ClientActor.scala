@@ -17,6 +17,11 @@ class ClientActor(val playerId: Long,
   private val clientGUI = new ClientGUI(self, playerId, systemMails, personalMails, sendMails)
   clientGUI.main(Array())
 
+  override def postStop(): Unit = {
+    server ! RequestDelPlayer(playerId)
+    clientGUI.quit()
+  }
+
   private def refreshGUI(): Unit = {
     clientGUI.refreshGUI()
   }
@@ -51,7 +56,6 @@ class ClientActor(val playerId: Long,
     case Terminate() =>
       log(s"player: 服务端关闭，玩家 $playerId 断开连接")
       //        context.stop(self)
-      clientGUI.quit()
       actorSystem.terminate()
 
     // 向服务端发送连接请求
@@ -62,9 +66,7 @@ class ClientActor(val playerId: Long,
     // 从服务端断开连接
     case RequestDelPlayer(playerId) =>
       log(s"player: 玩家 $playerId 请求断开连接")
-      server ! RequestDelPlayer(playerId)
       //        context.stop(self)
-      clientGUI.quit()
       actorSystem.terminate()
 
     // 一般发生在玩家登陆时，加载邮件到本地

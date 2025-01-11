@@ -11,6 +11,9 @@ import java.time.LocalDateTime
 import scala.collection.convert.ImplicitConversions.`map AsScala`
 import scala.collection.mutable
 
+/**
+ * 这个类用于提供邮件系统的外部接口的实现
+ */
 object MailSystemImpl {
   private def playerId2Key(playerId: Long): String = s"player:$playerId"
 
