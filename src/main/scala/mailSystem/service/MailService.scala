@@ -2,7 +2,7 @@ package mailSystem.service
 
 import mailSystem.dao.DBHelper
 import mailSystem.entity.{Mail, PersonalMail, SystemMail}
-import mailSystem.utils.{SnowflakeIdGenerator}
+import mailSystem.utils.SnowflakeIdGenerator
 
 import java.time.LocalDateTime
 import scala.collection.mutable.ListBuffer
@@ -92,7 +92,6 @@ object MailService {
     systemMails() ++ personalMails(playerId)
   }
 
-  // 待修改：目前就先用同样的参数，每次要改两遍，后面再改
   def addPersonalMail(senderId: Long, receiverId: Long, mail: PersonalMail): PersonalMail = {
     require(senderId > 0, "发件人不能为空")
     require(receiverId > 0, "收件人不能为空")
@@ -107,7 +106,7 @@ object MailService {
     val personalMail = new PersonalMail(mailId, mail.content, mail.title, mail.attachment, mail.filter, time, time.plusMonths(1), time, time, mail.senderId, mail.receiverId)
 
     DBHelper.atomicOperation{ connection =>
-      DBHelper.addWithConnection(sql1, mailId, mail.content, mail.title, mail.attachment, mail.filter, time, time.plusMonths(1), time, time, mail.senderId, mail.receiverId)(connection)
+      DBHelper.addWithConnection(sql1, personalMail.getMailId, personalMail.getContent, personalMail.getTitle, personalMail.getAttachment, personalMail.getFilter, personalMail.getPublicTime, personalMail.getDeadline, personalMail.getCreateTime, personalMail.getUpdateTime, personalMail.getSenderId, personalMail.getReceiverId)(connection)
       DBHelper.updateWithConnection(sql2, mail.receiverId)(connection)
     }
     personalMail

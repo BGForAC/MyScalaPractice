@@ -183,6 +183,14 @@ object MailSystemImpl {
    * 附件领取成功后，将领取状态从redis中删除,保持一致性
    */
   def collectAttachment(playerId: Long, mailId: Long): Either[String, Map[Item, Int]] = {
+    JedisHelper.execute { jedis =>
+      val mailsCollect = jedis.hget(playerId2Key(playerId), keyForMailsCollect)
+      if (mailsCollect != null && mailsCollect.contains(mailId.toString)) {
+        myLog(s"process: 玩家 $playerId 已经领取过邮件 $mailId 的附件")
+        return Left("已经领取过附件")
+      }
+    }
+
     val mail = MailService.getMail(mailId)
     if (mail == null) return Left("邮件不存在")
     mail match {
@@ -192,7 +200,10 @@ object MailSystemImpl {
     val attachmentJson = mail.getAttachment
     if (attachmentJson == "{}") return Left("邮件没有附件")
     val deadline = mail.getDeadline
+    val publicTime = mail.getPublicTime
     if (deadline.isBefore(LocalDateTime.now)) return Left("邮件已过期")
+    if (publicTime.isAfter(LocalDateTime.now)) return Left("邮件未到领取时间")
+
     val lockKey = distributionKeyForAttachmentCollect(playerId, mailId)
     val lockValue = System.currentTimeMillis().toString
 
@@ -219,16 +230,16 @@ object MailSystemImpl {
     try {
       MailService.getMail(mailId) match {
         case mail: SystemMail =>
-          myLog(s"process: 玩家尝试 $playerId 删除系统邮件 $mailId")
+          myLog(s"process: 玩家 $playerId 尝试删除系统邮件 $mailId")
           JedisHelper.executeWithDistributionLock(distributionKeyForStatusChange, System.currentTimeMillis().toString, 20) { jedis =>
             jedis.del(playerId2Key(playerId))
             Right(MailService.deleteSystemMail(playerId, mail.getMailId))
           }
         case mail: PersonalMail if mail.senderId == playerId =>
-          myLog(s"process: 玩家尝试 $playerId 删除发送的邮件 $mailId")
+          myLog(s"process: 玩家 $playerId 尝试删除发送的邮件 $mailId")
           Right(MailService.deleteMailSend(playerId, mail.getMailId))
         case mail: PersonalMail if mail.receiverId == playerId =>
-          myLog(s"process: 玩家尝试 $playerId 删除收到的邮件 $mailId")
+          myLog(s"process: 玩家 $playerId 尝试删除收到的邮件 $mailId")
           JedisHelper.executeWithDistributionLock(distributionKeyForStatusChange, System.currentTimeMillis().toString, 20) { jedis =>
             jedis.del(playerId2Key(playerId))
             Right(MailService.deleteMailReceive(playerId, mail.getMailId))

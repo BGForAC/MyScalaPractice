@@ -168,12 +168,13 @@ object PlayerService {
     val sql1 = s"update $tableName set mails_collect = concat(coalesce(mails_collect, ''), ?) where player_id = ?"
     val sql2 = s"insert into $tableNameForItem (player_id, item_id, quantity) values (?, ?, ?)" +
       s"on duplicate key update quantity = quantity + values(quantity)"
-    val para1 = Seq(sql1, s"${mailId},", playerId)
-    val para2 = attachment.map { case (itemId, quantity) => Seq(sql2, playerId, itemId.toLong, quantity) }.toSeq
-    val paras = Seq(para1) ++ para2
 
-    DBHelper.atomicUpdate(paras)
-    println(s"玩家 ${getPlayer(playerId).getName} 领取了邮件 ${mailId} 的附件")
+    DBHelper.atomicOperation{ connection =>
+      DBHelper.updateWithConnection(sql1, s"$mailId,", playerId)(connection)
+      attachment.foreach { case (itemId, quantity) =>
+        DBHelper.addWithConnection(sql2, playerId, itemId.toLong, quantity)(connection)
+      }
+    }
   }
 
   def collectAttachment(player: Player, mail: Mail): Unit = {
