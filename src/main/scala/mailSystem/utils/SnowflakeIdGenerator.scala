@@ -2,9 +2,9 @@ package mailSystem.utils
 
 class SnowflakeIdGenerator(datacenterId: Long, workerId: Long) {
   private val epoch = 1609459200000L
-  private val datacenterIdBits = 5L
-  private val workerIdBits = 5L
-  private val sequenceBits = 12L
+  val datacenterIdBits = 5L
+  val workerIdBits = 5L
+  val sequenceBits = 12L
 
   private val maxDatacenterId = ~(-1L << datacenterIdBits)
   private val maxWorkerId = ~(-1L << workerIdBits)

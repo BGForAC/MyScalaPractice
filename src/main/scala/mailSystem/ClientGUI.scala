@@ -106,7 +106,6 @@ class ClientGUI(clientActor: ActorRef,
     // 每次刷新物品后， 在物品数量后显示这次刷新增加的物品数量
     items.foreach{
       case (item, quantity) =>
-        println(lastItems.getOrElse(item, 0))
         val change = quantity - lastItems.getOrElse(item, 0)
         // 前缀补充到30个字符长度
         val prefix = s"物品 ${item.getName} * $quantity".padTo(30, ' ')
