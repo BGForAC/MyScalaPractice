@@ -2,7 +2,7 @@ package mailSystem
 
 import akka.actor._
 import com.typesafe.config.ConfigFactory
-import utils.SchedulerUtils
+import mailSystem.utils.SchedulerUtils
 
 import java.lang.Thread.sleep
 import scala.collection.mutable
@@ -36,7 +36,7 @@ object MailSystemImitator {
     (system, serverActor)
   }
 
-  def serverStart[T: ClassTag](wrapper: ((ActorSystem, ActorRef)) => Any): Unit = {
+  private def serverStart[T: ClassTag](wrapper: ((ActorSystem, ActorRef)) => Any): Unit = {
 //    val classTag = implicitly[ClassTag[T]]
 //    println(classTag.runtimeClass.getSimpleName)
     val config = ConfigFactory.parseString(
@@ -46,7 +46,7 @@ object MailSystemImitator {
         |    default-dispatcher {
         |      fork-join-executor {
         |        parallelism-min = 20
-        |        parallelism-factor = 3.0
+        |        parallelism-factor = 4.0
         |        parallelism-max = 64
         |        task-peeking-mode = "FIFO"
         |      }
@@ -82,7 +82,7 @@ object MailSystemImitator {
     loop()
   }
 
-  def callWrapper[T: ClassTag](call: T => Any)(systems: (ActorSystem, ActorRef)) : Any = {
+  private def callWrapper[T: ClassTag](call: T => Any)(systems: (ActorSystem, ActorRef)): Any = {
     val (system, serverActor) = systems
     val scheduler = new SchedulerUtils(system, serverActor)
     val classTag = implicitly[ClassTag[T]]
@@ -124,11 +124,12 @@ object MailSystemImitator {
   }
 
   def main(args: Array[String]): Unit = {
-//    serverStart(callWrapper(sendRandomMail))
+    //    serverStart(callWrapper(sendRandomMail))
     serverStart(callWrapper(sendRandomMail2FixedPlayer(532125159406960640L)))
-//    serverStart(callWrapper(sendRandomSystemMail))
-//    val server = serverStart(callWrapper) _
-//    server(sendRandomMail2FixedPlayer)
-//    server(sendRandomMail)
+
+    //    serverStart(callWrapper(sendRandomSystemMail))
+    //    val server = serverStart(callWrapper) _
+    //    server(sendRandomMail2FixedPlayer)
+    //    server(sendRandomMail)
   }
 }

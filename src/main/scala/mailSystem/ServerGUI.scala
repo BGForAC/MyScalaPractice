@@ -11,7 +11,6 @@ import scala.swing.event.ButtonClicked
  * 服务器GUI
  */
 class ServerGUI(serverActor: ActorRef) extends SimpleSwingApplication {
-
   val logArea: TextArea = new TextArea {
     rows = 50
     columns = 80

@@ -70,6 +70,7 @@ class JpsBitMap(grid: Array[Array[Byte]]) {
       }
       println()
     }
+    grid.count(_.count(_ == 0) > 0)
   }
 
   private def surroundedWithObstacle(map: Array[Array[Int]]):Array[Array[Int]]  = {
