@@ -1,8 +1,7 @@
 package mailSystem.service
 
-import mailSystem.dao.DBHelper
 import mailSystem.entity.Item
-import mailSystem.utils.SnowflakeIdGenerator
+import mailSystem.utils.{DBHelper, SnowflakeIdGenerator}
 
 import scala.collection.mutable.ArrayBuffer
 

@@ -1,6 +1,7 @@
 package mailSystem
 
 import akka.actor.{ActorRef, ActorSystem, Props}
+import akka.routing.RoundRobinPool
 import com.typesafe.config.ConfigFactory
 
 import scala.collection.mutable
@@ -60,7 +61,8 @@ object ServerStart {
         |}
         |""".stripMargin)
     val system = ActorSystem("MyMailSystem", config)
-    val serverActor = system.actorOf(Props(new ServerActor(mutable.Map[Long, ActorRef](), system)), "serverActor")
+    val clients = mutable.Map[Long, ActorRef]()
+    val serverActor = system.actorOf(RoundRobinPool(5).props(Props(new ServerActor(clients, system))), "serverActor")
     if (serverActor == null) {
       println("serverActor创建失败")
     }

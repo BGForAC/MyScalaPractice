@@ -86,3 +86,2501 @@ java.lang.Exception: 事务执行失败java.sql.SQLException: sql injection viol
 	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:00 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994418251
+2025-01-16 10:27:00 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994418251
+2025-01-16 10:27:00 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994418251
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:00 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994418251
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:02 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994418251
+2025-01-16 10:27:02 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994418251
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:10 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994430538
+2025-01-16 10:27:10 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994430538
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:10 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994430538
+2025-01-16 10:27:10 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994430538
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:12 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994432511
+2025-01-16 10:27:12 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994432511
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:20 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994440551
+2025-01-16 10:27:20 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994440551
+2025-01-16 10:27:20 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994440551
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:20 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994440551
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:22 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994442533
+2025-01-16 10:27:22 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994442533
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:30 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994450571
+2025-01-16 10:27:30 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994450571
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:30 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994450571
+2025-01-16 10:27:30 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994450571
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:32 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994452555
+2025-01-16 10:27:32 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994452555
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:40 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994460602
+2025-01-16 10:27:40 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994460602
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:40 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994460602
+2025-01-16 10:27:40 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994460602
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:42 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994462576
+2025-01-16 10:27:42 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994462576
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:50 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994470621
+2025-01-16 10:27:50 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994470621
+2025-01-16 10:27:50 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994470621
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:50 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994470621
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:27:52 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994472581
+2025-01-16 10:27:52 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994472581
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:00 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994480661
+2025-01-16 10:28:00 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994480661
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:00 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994480661
+2025-01-16 10:28:00 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994480661
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:02 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994482606
+2025-01-16 10:28:02 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994482606
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:10 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994490682
+2025-01-16 10:28:10 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994490682
+2025-01-16 10:28:10 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994490682
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:10 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994490682
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:12 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994492638
+2025-01-16 10:28:12 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994492638
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:20 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994500707
+2025-01-16 10:28:20 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994500707
+2025-01-16 10:28:20 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994500707
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:20 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994500707
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:22 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994502641
+2025-01-16 10:28:22 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994502641
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:30 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994510719
+2025-01-16 10:28:30 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994510720
+2025-01-16 10:28:30 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994510720
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:30 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994510719
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:32 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994512661
+2025-01-16 10:28:32 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994512661
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:40 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994520746
+2025-01-16 10:28:40 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994520746
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:40 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994520745
+2025-01-16 10:28:40 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994520745
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:42 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994522682
+2025-01-16 10:28:42 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994522682
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:50 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994530849
+2025-01-16 10:28:50 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994530849
+2025-01-16 10:28:50 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994530849
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:50 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994530849
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:28:52 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994532711
+2025-01-16 10:28:52 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994532711
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:29:04 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994544422
+2025-01-16 10:29:04 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994544422
+2025-01-16 10:29:04 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994544422
+2025-01-16 10:29:04 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994544422
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:29:04 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994544422
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:29:04 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994544422
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:30:01 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994601643
+2025-01-16 10:30:01 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994601643
+2025-01-16 10:30:01 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994601643
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:30:01 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994601643
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:30:03 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994601643
+2025-01-16 10:30:03 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994601643
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:30:11 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994611855
+2025-01-16 10:30:11 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994611855
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:30:11 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994611855
+2025-01-16 10:30:11 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994611855
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:30:13 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994613847
+2025-01-16 10:30:13 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994613847
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:30:21 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994621858
+2025-01-16 10:30:21 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994621859
+2025-01-16 10:30:21 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994621859
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:30:21 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994621858
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:294)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:05 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994844897
+2025-01-16 10:34:05 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994844897
+2025-01-16 10:34:05 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994844898
+2025-01-16 10:34:05 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994844898
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:05 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994844898
+2025-01-16 10:34:05 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994844897
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:05 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994844897
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:05 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994844898
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:15 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994855105
+2025-01-16 10:34:15 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994855106
+2025-01-16 10:34:15 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994855105
+2025-01-16 10:34:15 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994855106
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:15 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994855105
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:15 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994855106
+2025-01-16 10:34:15 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994855106
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:15 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994855105
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:25 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994865123
+2025-01-16 10:34:25 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994865123
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:25 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994865123
+2025-01-16 10:34:25 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994865123
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:25 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994865123
+2025-01-16 10:34:25 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994865123
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:25 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994865123
+2025-01-16 10:34:25 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994865123
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:35 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994875145
+2025-01-16 10:34:35 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994875145
+2025-01-16 10:34:35 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994875145
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:35 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994875145
+2025-01-16 10:34:35 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994875145
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:35 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994875145
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:45 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994885162
+2025-01-16 10:34:45 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994885162
+2025-01-16 10:34:45 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994885162
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:45 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994885162
+2025-01-16 10:34:45 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994885163
+2025-01-16 10:34:45 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994885163
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:45 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994885162
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:45 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994885162
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:55 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994895182
+2025-01-16 10:34:55 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994895182
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:55 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994895182
+2025-01-16 10:34:55 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994895181
+2025-01-16 10:34:55 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994895182
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:55 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994895183
+2025-01-16 10:34:55 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994895183
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:34:55 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994895181
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:05 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994905202
+2025-01-16 10:35:05 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994905203
+2025-01-16 10:35:05 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994905202
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:05 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994905203
+2025-01-16 10:35:05 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994905203
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:05 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994905203
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:15 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994915229
+2025-01-16 10:35:15 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994915229
+2025-01-16 10:35:15 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994915229
+2025-01-16 10:35:15 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994915229
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:15 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994915229
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:15 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994915229
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:25 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994925261
+2025-01-16 10:35:25 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994925261
+2025-01-16 10:35:25 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994925261
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:25 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994925261
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:25 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994925261
+2025-01-16 10:35:25 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994925261
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:25 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994925262
+2025-01-16 10:35:25 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994925262
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:35 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994935286
+2025-01-16 10:35:35 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994935286
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:35 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994935286
+2025-01-16 10:35:35 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994935286
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:35 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994935287
+2025-01-16 10:35:35 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994935287
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:45 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994945300
+2025-01-16 10:35:45 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994945301
+2025-01-16 10:35:45 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994945300
+2025-01-16 10:35:45 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994945301
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:45 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994945301
+2025-01-16 10:35:45 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994945300
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:45 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994945301
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:45 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994945300
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:55 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994955332
+2025-01-16 10:35:55 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994955332
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:55 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994955332
+2025-01-16 10:35:55 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994955332
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:55 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994955332
+2025-01-16 10:35:55 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994955332
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:35:55 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736994955332
+2025-01-16 10:35:55 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736994955332
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:36:00 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 邮件不存在: 532181116977676288
+	at mailSystem.service.MailService$.getMail(MailService.scala:208)
+	at mailSystem.service.MailService$.deletedMails(MailService.scala:94)
+	at mailSystem.MailSystemImpl$.$anonfun$loadPlayersMail$1(MailSystemImpl.scala:76)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.MailSystemImpl$.loadPlayersMail(MailSystemImpl.scala:63)
+	at mailSystem.ServerActor$$anonfun$receive$1.applyOrElse(ServerActor.scala:101)
+	at akka.actor.Actor.aroundReceive(Actor.scala:537)
+	at akka.actor.Actor.aroundReceive$(Actor.scala:535)
+	at mailSystem.ServerActor.aroundReceive(ServerActor.scala:14)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:580)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:548)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:270)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:231)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:243)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:36:59 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995017259
+2025-01-16 10:36:59 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995017261
+2025-01-16 10:36:59 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995017259
+2025-01-16 10:36:59 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995017261
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:36:59 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995017259
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:36:59 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995017259
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:09 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995029556
+2025-01-16 10:37:09 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995029556
+2025-01-16 10:37:09 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995029556
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:09 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995029556
+2025-01-16 10:37:09 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995029556
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:09 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995029556
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:19 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995039578
+2025-01-16 10:37:19 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995039578
+2025-01-16 10:37:19 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995039579
+2025-01-16 10:37:19 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995039579
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:19 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995039578
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:19 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995039578
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:29 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995049606
+2025-01-16 10:37:29 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995049606
+2025-01-16 10:37:29 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995049606
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:29 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995049606
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:39 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995059626
+2025-01-16 10:37:39 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995059626
+2025-01-16 10:37:39 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995059626
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:39 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995059626
+2025-01-16 10:37:39 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995059626
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:39 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995059626
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:49 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995069648
+2025-01-16 10:37:49 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995069648
+2025-01-16 10:37:49 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995069648
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:49 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995069648
+2025-01-16 10:37:49 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995069648
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:49 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995069648
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:59 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995079666
+2025-01-16 10:37:59 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995079666
+2025-01-16 10:37:59 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995079666
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:59 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995079666
+2025-01-16 10:37:59 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995079666
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:37:59 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995079666
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:09 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995089686
+2025-01-16 10:38:09 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995089686
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:09 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995089686
+2025-01-16 10:38:09 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995089686
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:09 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995089686
+2025-01-16 10:38:09 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995089686
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:19 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995099715
+2025-01-16 10:38:19 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995099715
+2025-01-16 10:38:19 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995099715
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:19 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995099715
+2025-01-16 10:38:19 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995099715
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:19 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995099715
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:29 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995109739
+2025-01-16 10:38:29 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995109739
+2025-01-16 10:38:29 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995109739
+2025-01-16 10:38:29 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995109739
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:29 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995109739
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:29 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995109739
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:39 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995119758
+2025-01-16 10:38:39 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995119758
+2025-01-16 10:38:39 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995119758
+2025-01-16 10:38:39 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995119758
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:39 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995119758
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:39 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995119758
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:49 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995129777
+2025-01-16 10:38:49 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995129777
+2025-01-16 10:38:49 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995129777
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:49 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995129777
+2025-01-16 10:38:49 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995129777
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:49 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995129777
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:59 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995139802
+2025-01-16 10:38:59 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995139802
+2025-01-16 10:38:59 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995139802
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:59 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995139802
+2025-01-16 10:38:59 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995139802
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:38:59 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995139802
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:09 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995149813
+2025-01-16 10:39:09 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995149813
+2025-01-16 10:39:09 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995149813
+2025-01-16 10:39:09 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995149813
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:09 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995149813
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:09 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995149813
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:19 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995159837
+2025-01-16 10:39:19 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995159837
+2025-01-16 10:39:19 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995159837
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:19 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995159837
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:29 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995169862
+2025-01-16 10:39:29 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995169862
+2025-01-16 10:39:29 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995169862
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:29 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995169862
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:39 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995179871
+2025-01-16 10:39:39 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995179871
+2025-01-16 10:39:39 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995179871
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:39 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995179871
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:49 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995189902
+2025-01-16 10:39:49 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995189902
+2025-01-16 10:39:49 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995189902
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:49 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995189902
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:49 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995189906
+2025-01-16 10:39:49 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995189906
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:59 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995199908
+2025-01-16 10:39:59 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995199908
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:39:59 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995199926
+2025-01-16 10:39:59 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995199926
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:40:09 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995209932
+2025-01-16 10:40:09 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995209932
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:40:09 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995209947
+2025-01-16 10:40:09 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995209947
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:40:19 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995219972
+2025-01-16 10:40:19 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995219972
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:40:29 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995229978
+2025-01-16 10:40:29 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995229978
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:40:39 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995239997
+2025-01-16 10:40:39 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995239997
+2025-01-16 10:40:39 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995239997
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:40:39 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995239997
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:40:50 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995250021
+2025-01-16 10:40:50 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995250021
+2025-01-16 10:40:50 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995250021
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:40:50 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995250021
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:41:00 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995260049
+2025-01-16 10:41:00 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995260049
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:41:00 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995260049
+2025-01-16 10:41:00 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995260049
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:41:10 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995270070
+2025-01-16 10:41:10 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995270070
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:41:10 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995270070
+2025-01-16 10:41:10 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995270070
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:41:20 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995280086
+2025-01-16 10:41:20 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995280086
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:41:20 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995280086
+2025-01-16 10:41:20 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995280086
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:41:30 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995290106
+2025-01-16 10:41:30 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995290106
+2025-01-16 10:41:30 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995290106
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:41:30 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995290106
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:41:40 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995300134
+2025-01-16 10:41:40 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995300134
+2025-01-16 10:41:40 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995300134
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:41:40 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995300134
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:41:50 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995310140
+2025-01-16 10:41:50 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995310140
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:42:00 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995320162
+2025-01-16 10:42:00 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995320162
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:42:10 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995330200
+2025-01-16 10:42:10 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995330200
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:42:20 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995340220
+2025-01-16 10:42:20 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995340220
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:42:30 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995350236
+2025-01-16 10:42:30 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995350236
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:42:40 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995360265
+2025-01-16 10:42:40 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995360265
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:42:50 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995370266
+2025-01-16 10:42:50 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995370266
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:43:00 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995380291
+2025-01-16 10:43:00 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995380291
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:43:10 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995390320
+2025-01-16 10:43:10 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995390320
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:43:40 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995420406
+2025-01-16 10:43:40 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995420406
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:46:00 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995560812
+2025-01-16 10:46:00 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995560812
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:46:10 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995570766
+2025-01-16 10:46:10 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995570766
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:46:20 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995580794
+2025-01-16 10:46:20 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995580794
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:46:20 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995580857
+2025-01-16 10:46:20 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995580857
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:46:30 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995590876
+2025-01-16 10:46:30 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995590876
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-01-16 10:46:40 ERROR JedisHelper$:103 - 获取分布式锁失败, key: distribution:status:change, value: 1736995600904
+2025-01-16 10:46:40 ERROR JedisHelper$:86 - Jedis执行失败
+java.lang.Exception: 获取分布式锁失败, key: distribution:status:change, value: 1736995600904
+	at mailSystem.utils.JedisHelper$.$anonfun$executeWithDistributionLock$1(JedisHelper.scala:104)
+	at mailSystem.utils.JedisHelper$.execute(JedisHelper.scala:83)
+	at mailSystem.utils.JedisHelper$.executeWithDistributionLock(JedisHelper.scala:94)
+	at mailSystem.MailSystemImpl$.syncMailsRead(MailSystemImpl.scala:293)
+	at mailSystem.ServerActor.$anonfun$new$1(ServerActor.scala:25)
+	at akka.actor.Scheduler$$anon$1$$anon$2.run(Scheduler.scala:83)
+	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)

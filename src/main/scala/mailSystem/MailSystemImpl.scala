@@ -1,10 +1,9 @@
 package mailSystem
 
-import mailSystem.dao.MyGlobal
 import mailSystem.entity.{Item, Mail, PersonalMail, SystemMail}
 import mailSystem.service.MailService.deletedMails
 import mailSystem.service.{ItemService, MailService, PlayerService}
-import mailSystem.utils.{JedisHelper, MapBean, MapBeanUtils}
+import mailSystem.utils.{JedisHelper, MapBean, MapBeanUtils, MyGlobal}
 
 import java.sql.{SQLException, SQLIntegrityConstraintViolationException}
 import java.time.LocalDateTime
@@ -307,6 +306,7 @@ object MailSystemImpl {
               }
           }
         }
+        myLog("process: 同步邮件已读状态成功")
       }
     } catch {
       case e: Exception =>

@@ -1,8 +1,7 @@
 package mailSystem.service
 
-import mailSystem.dao.DBHelper
 import mailSystem.entity.{Mail, PersonalMail, SystemMail}
-import mailSystem.utils.SnowflakeIdGenerator
+import mailSystem.utils.{DBHelper, SnowflakeIdGenerator}
 
 import java.sql.Connection
 import java.time.LocalDateTime
