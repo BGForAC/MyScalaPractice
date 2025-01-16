@@ -19,7 +19,7 @@ class ClientGUI(clientActor: ActorRef,
                 receiveMails: mutable.Map[Long, PersonalMail],
                 sendMails: mutable.Map[Long, PersonalMail],
                 items: mutable.Map[Item, Int]) extends SimpleSwingApplication {
-  private val MAXSIZE = 200
+  private val MAX_SIZE = 200
 
   private val mailBoxStatus = new Label("")
 
@@ -93,7 +93,7 @@ class ClientGUI(clientActor: ActorRef,
 
   def refreshGUI(): Unit = {
     println("刷新GUI")
-    mailBoxStatus.text = s"邮件箱状态: 收件箱(${receiveMails.size}/$MAXSIZE) 发件箱(${sendMails.size}) 系统邮件(${systemMails.size})"
+    mailBoxStatus.text = s"邮件箱状态: 收件箱(${receiveMails.size}/$MAX_SIZE) 发件箱(${sendMails.size}) 系统邮件(${systemMails.size})"
     mailList.listData = currentMailList
   }
 

@@ -74,7 +74,6 @@ object MailSystemImpl {
         myLog(s"process: 玩家 $playerId 邮箱未加载到内存中")
         val mails = MailService.personalMails(playerId)
         mails ++= loadSystemMails()
-        println(deletedMails(playerId))
         mails --= deletedMails(playerId)
         mails.toList match {
           case Nil => Left("用户没有邮件")
@@ -155,7 +154,7 @@ object MailSystemImpl {
     try {
       Right(MailService.addPersonalMail(senderId, receiverId, mail))
     } catch {
-      case e: SQLException if e.getSQLState == MyGlobal.SQLERRORMAILCOUNTEXCEED =>
+      case e: SQLException if e.getSQLState == MyGlobal.SQL_ERROR_MAIL_COUNT_EXCEED =>
         myLog(s"process: 玩家 $receiverId 邮箱已满")
         Left("收件人邮箱已满发送失败")
       case e: IllegalArgumentException =>
