@@ -88,7 +88,7 @@ object MailSystemImitator {
     val classTag = implicitly[ClassTag[T]]
     println(classTag.runtimeClass.getSimpleName)
     call match {
-      case f if classTag.runtimeClass.getSimpleName == "SchedulerUtils" => f(scheduler.asInstanceOf[T])
+      case f if classTag.runtimeClass.getSimpleName == SchedulerUtils.getClass.getSimpleName => f(scheduler.asInstanceOf[T])
     }
     system.terminate().onComplete {
       case scala.util.Success(value) => println("系统关闭成功" + value)
